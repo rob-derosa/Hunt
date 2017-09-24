@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+	x:TypeArguments="local:CreateGameViewModel"
+	x:Class="Hunt.Mobile.Common.CreateGamePage">
+
+	<local:BaseContentPage.RootContent>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				Title="Create a Game"
+				CanClose="true" />
+			
+			<ScrollView Grid.Row="1"
+				AutomationId="createGameScrollView">
+				
+				<Grid RowSpacing="0"
+					VerticalOptions="FillAndExpand">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="70" />
+					</Grid.RowDefinitions>
+
+					<Grid Grid.Row="1"
+						VerticalOptions="Start"
+						ColumnSpacing="0"
+						RowSpacing="-10"
+						Margin="40,-20,20,20">
+						
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="90" />
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+							<RowDefinition Height="70" />
+						</Grid.RowDefinitions>
+						
+						<ContentView Grid.Row="1" Style="{StaticResource separator}" Margin="-40,0,-120,-10" />
+						<ContentView Grid.Row="3" Style="{StaticResource separator}" Margin="-40,0,-120,-10" />
+						<ContentView Grid.Row="5" Style="{StaticResource separator}" Margin="-40,0,-120,-10" />
+						<ContentView Grid.Row="8" Style="{StaticResource separator}" Margin="-40,0,-120,-10" />
+						<ContentView Grid.Row="10" Style="{StaticResource separator}" Margin="-40,0,-120,-10" />
+						<ContentView Grid.Row="12" Style="{StaticResource separator}" Margin="-40,0,-120,-10" />
+
+						<!-- how many teams -->
+							
+						<Label Text="HOW MANY TEAMS SHOULD PARTICIPATE?"
+							FontSize="12"
+							Margin="0,40,0,0"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="Start"
+							VerticalOptions="Center" />
+						
+						<Slider Grid.Row="1"
+							Value="{Binding TeamCount}"
+							Maximum="5"
+							Minimum="2"
+							AutomationId="teamCountSlider"
+							xfg:SliderGloss.MinTrackTintColor="{StaticResource accent}"
+							xfg:SliderGloss.MaxTrackTintColor="{StaticResource lightGray}"
+							HorizontalOptions="FillAndExpand" />
+
+						<Label Grid.Row="1"
+							Grid.Column="1"
+							Text="{Binding TeamCount}"
+							TextColor="{StaticResource lightGray}"
+							Style="{StaticResource H1}"
+							Margin="20,0,0,0"
+							HorizontalOptions="Center"
+							VerticalOptions="Center" />
+
+						<!-- how many players per team -->
+
+						<Label Grid.Row="2"
+							Margin="0,40,0,0"
+							Text="HOW MANY PLAYERS ON EACH TEAM?"
+							FontSize="12"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="Start"
+							VerticalOptions="Center" />
+						
+						<Slider
+							Grid.Row="3"
+							Value="{Binding PlayerCount}"
+							Maximum="4"
+							Minimum="2"
+							AutomationId="playerCountSlider"
+							xfg:SliderGloss.MinTrackTintColor="{StaticResource accent}"
+							xfg:SliderGloss.MaxTrackTintColor="{StaticResource lightGray}"
+							HorizontalOptions="FillAndExpand" />
+
+						<Label Grid.Row="3"
+							Text="{Binding PlayerCount}"
+							TextColor="{StaticResource lightGray}"
+							Margin="20,0,0,0"
+							Grid.Column="1"
+							Style="{StaticResource H1}"
+							HorizontalOptions="Center"
+							VerticalOptions="Center" />
+
+						<!-- duration of game -->
+
+						<Label Grid.Row="4"
+							Margin="0,40,0,0"
+							Text="HOW LONG SHOULD THE HUNT LAST?"
+							FontSize="12"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="Start"
+							VerticalOptions="Center" />
+						
+						<Slider Grid.Row="5"
+							Maximum="180"
+							Minimum="5"
+							AutomationId="minutesSlider"
+							Value="{Binding GameLengthMinutes}"
+							xfg:SliderGloss.MinTrackTintColor="{StaticResource accent}"
+							xfg:SliderGloss.MaxTrackTintColor="{StaticResource lightGray}"
+							HorizontalOptions="FillAndExpand" />
+
+						<StackLayout Grid.Row="5"
+							Grid.Column="1"
+							Margin="20,0,0,0"
+							Spacing="0">
+							
+							<Label
+								Text="{Binding GameLength}"
+								TextColor="{StaticResource lightGray}"
+								Style="{StaticResource H1}"
+								HorizontalOptions="Center"
+								VerticalOptions="Center" />
+							
+							<Label Text="M   I   N"
+								HorizontalOptions="Center"
+								Margin="0,-10,0,0"
+								FontSize="12" />
+						</StackLayout>
+
+						<!-- which role -->
+						
+						<Label Grid.Row="7"
+							Margin="0,40,0,0"
+							Text="WHICH ROLE WOULD YOU LIKE TO TAKE?"
+							FontSize="12"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="Start"
+							VerticalOptions="Center" />
+						
+						<Grid
+							Margin="0,10,0,0"
+							Grid.ColumnSpan="2"
+							ColumnSpacing="16"
+							Grid.Row="8"
+							HorizontalOptions="FillAndExpand">
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<Label Text="PLAYER"
+								FontSize="12"
+								HorizontalOptions="End"
+								VerticalOptions="Center" />
+
+							<Switch
+								Grid.Column="1"
+								IsToggled="{Binding IsCoordinator}"
+								VerticalOptions="Center"
+								HorizontalOptions="Center"
+								AutomationId="isCoordinatorSwitch"
+								xfg:SwitchGloss.ThumbOnTintColor="#FFF"
+								xfg:SwitchGloss.OnTintColor="{StaticResource accent}" />
+							
+							<Label Text="COORDINATOR"
+								Grid.Column="2"
+								FontSize="12"
+								HorizontalOptions="Start"
+								VerticalOptions="Center" />
+						</Grid>
+
+						<!-- populate teams with players -->
+						
+						<Label Grid.Row="9"
+							Margin="0,40,0,0"
+							Text="ADD SOME PLAYERS TO THE GAME?"
+							FontSize="12"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="Start"
+							VerticalOptions="Center" />
+						
+						<Grid
+							Grid.Row="10"
+							Margin="0,10,0,0"
+							Grid.ColumnSpan="2"
+							ColumnSpacing="16"
+							HorizontalOptions="FillAndExpand">
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<Label Text="NO, THANKS"
+								FontSize="12"
+								HorizontalOptions="End"
+								VerticalOptions="Center" />
+
+							<Switch
+								Grid.Column="1"
+								IsToggled="{Binding PopulateTeams}"
+								VerticalOptions="Center"
+								HorizontalOptions="Center"
+								AutomationId="populateTeamsSwitch"
+								xfg:SwitchGloss.ThumbOnTintColor="#FFF"
+								xfg:SwitchGloss.OnTintColor="{StaticResource accent}" />
+							
+							<Label Text="YES, PLEASE"
+								Grid.Column="2"
+								FontSize="12"
+								HorizontalOptions="Start"
+								VerticalOptions="Center" />
+						</Grid>
+
+						<!-- populate treasures -->
+
+						<Label Grid.Row="11"
+							Margin="0,0,0,-40"
+							Text="ADD SOME TREASURE TO THE GAME?"
+							FontSize="12"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="Start"
+							VerticalOptions="Center" />
+						
+						<Grid
+							Grid.Row="12"
+							ColumnSpacing="16"
+							Margin="0,10,0,0"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="FillAndExpand">
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<Label Text="NO, THANKS"
+								FontSize="12"
+								HorizontalOptions="End"
+								VerticalOptions="Center" />
+
+							<Switch
+								Grid.Column="1"
+								IsToggled="{Binding PopulateTreasure}"
+								VerticalOptions="Center"
+								HorizontalOptions="Center"
+								AutomationId="populateTreasureSwitch"
+								xfg:SwitchGloss.ThumbOnTintColor="#FFF"
+								xfg:SwitchGloss.OnTintColor="{StaticResource accent}" />
+							
+							<Label Text="YES, PLEASE"
+								Grid.Column="2"
+								FontSize="12"
+								HorizontalOptions="Start"
+								VerticalOptions="Center" />
+						</Grid>
+
+						<!-- populate acquired treasures -->
+
+						<Label Grid.Row="13"
+							Margin="0,0,0,-40"
+							Text="ACQUIRE TREASURE FOR MY TEAM?"
+							FontSize="12"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="Start"
+							VerticalOptions="Center" />
+						
+						<Grid
+							Grid.Row="14"
+							ColumnSpacing="16"
+							Margin="0,10,0,0"
+							Grid.ColumnSpan="2"
+							HorizontalOptions="FillAndExpand">
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<Label Text="NO, THANKS"
+								FontSize="12"
+								HorizontalOptions="End"
+								VerticalOptions="Center" />
+
+							<Switch
+								Grid.Column="1"
+								IsToggled="{Binding PopulateAcquiredTreasure}"
+								VerticalOptions="Center"
+								HorizontalOptions="Center"
+								AutomationId="populateAcquiredTreasureSwitch"
+								xfg:SwitchGloss.ThumbOnTintColor="#FFF"
+								xfg:SwitchGloss.OnTintColor="{StaticResource accent}" />
+							
+							<Label Text="YES, PLEASE"
+								Grid.Column="2"
+								FontSize="12"
+								HorizontalOptions="Start"
+								VerticalOptions="Center" />
+						</Grid>
+					</Grid>
+
+					<!-- button bar -->
+				
+					<Grid
+						Grid.Row="2"
+						VerticalOptions="EndAndExpand"
+						Margin="0,10,0,0">
+						<Button
+							Clicked="ContinueClicked"
+							HorizontalOptions="FillAndExpand"
+							VerticalOptions="Center" />
+
+						<local:SvgImage
+							Margin="0,6,0,0"
+							Clicked="ContinueClicked"
+							AutomationId="continueButton"
+							Source="checkmark.svg"
+							HorizontalOptions="Center"
+							VerticalOptions="Center" />
+					</Grid>
+				</Grid>
+			</ScrollView>
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>

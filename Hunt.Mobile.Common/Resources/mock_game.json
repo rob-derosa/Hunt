@@ -1,0 +1,279 @@
+﻿{
+	"name": null,
+	"entryCode": "000000",
+	"teamCount": 5,
+	"playerCountPerTeam": 4,
+	"startDate": "2017-09-16T16:22:40.570981-06:00",
+	"endDate": null,
+	"createDate": null,
+	"durationInMinutes": 60,
+	"coordinator": {
+		"email": "jon@hbo.com",
+		"firstName": null,
+		"lastName": null,
+		"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/jon.jpg",
+		"alias": "Jon",
+		"installId": null,
+		"id": "5c174b55-b3ed-4dbe-8f50-b417078b3f47"
+	},
+	"teams": [
+		{
+			"name": "House Stark",
+			"avatar": null,
+			"players": [
+				{
+					"email": "ned@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/ned.jpg",
+					"alias": "Ned",
+					"installId": null,
+					"id": "c5a44c14-7235-4589-a8c0-a197515c40d1"
+				},
+				{
+					"email": "sansa@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/sansa.jpg",
+					"alias": "Sansa",
+					"installId": null,
+					"id": "5695e4c5-203d-437e-be99-3287dc6092f8"
+				},
+				{
+					"email": "arya@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/arya.jpg",
+					"alias": "Arya",
+					"installId": null,
+					"id": "78f7dfd1-0813-4f70-bc7a-bc35b7f1b61c"
+				}
+			],
+			"acquiredTreasure": [],
+			"id": "70bd782b-899d-49d6-a068-fdaf5bdbcf4e"
+		},
+		{
+			"name": "House Lannister",
+			"avatar": null,
+			"players": [
+				{
+					"email": "cersei@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/cersei.jpg",
+					"alias": "Cersei",
+					"installId": null,
+					"id": "d2f69956-fe67-43eb-8646-68868ee1d379"
+				},
+				{
+					"email": "jamie@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/jamie.jpg",
+					"alias": "Jamie",
+					"installId": null,
+					"id": "6dae39f1-d2ad-4201-9212-ff42cb623a33"
+				},
+				{
+					"email": "joffrey@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/joffrey.jpg",
+					"alias": "Joffrey",
+					"installId": null,
+					"id": "ba0da63e-1895-4fff-8883-2aab28bf6f57"
+				},
+				{
+					"email": "tyrion@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/tyrion.jpg",
+					"alias": "Tyrion",
+					"installId": null,
+					"id": "c442ad4f-1906-4c1c-bdf0-693de867044c"
+				}
+			],
+			"acquiredTreasure": [
+				{
+					"treasureId": "963ffd0d-7111-44b1-8ea8-3f5f2de1f47f",
+					"playerId": "d2f69956-fe67-43eb-8646-68868ee1d379",
+					"location": null,
+					"imageSource": "https://huntappstorage.blob.core.windows.net/images/treasures/dog.jpg",
+					"claimedTimeStamp": "2017-09-16T12:42:40.573013-06:00",
+					"id": "c0c2096b-4f97-4a86-a86c-4f1ec17e35f4"
+				},
+				{
+					"treasureId": "fddc6d19-f00a-4dd6-8465-9b4f2776b009",
+					"playerId": "c442ad4f-1906-4c1c-bdf0-693de867044c",
+					"location": null,
+					"imageSource": "https://huntappstorage.blob.core.windows.net/images/treasures/dog.jpg",
+					"claimedTimeStamp": "2017-09-16T12:42:40.573142-06:00",
+					"id": "52ffc598-0368-4812-9de2-531c3039728d"
+				}
+			],
+			"id": "7b5c382b-4d71-4b47-a3da-ca8b1bd91a4d"
+		},
+		{
+			"name": "House Targaryen",
+			"avatar": null,
+			"players": [
+				{
+					"email": "danny@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/danny.jpg",
+					"alias": "Danny",
+					"installId": null,
+					"id": "e001d9a5-c4e9-4db1-980a-8b555c17af13"
+				},
+				{
+					"email": "viserys@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/viserys.jpg",
+					"alias": "Viserys",
+					"installId": null,
+					"id": "39644c97-a0b4-4019-b29c-bb2d9c7e8a8f"
+				}
+			],
+			"acquiredTreasure": [],
+			"id": "1621cc12-47c0-4620-b106-5edaad2cc219"
+		},
+		{
+			"name": "House Greyjoy",
+			"avatar": null,
+			"players": [
+				{
+					"email": "yara@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/yara.jpg",
+					"alias": "Yara",
+					"installId": null,
+					"id": "0e8d175d-7483-4ed3-af5a-49ac41c97e55"
+				},
+				{
+					"email": "theon@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/theon.jpg",
+					"alias": "Theon",
+					"installId": null,
+					"id": "eb661d93-c7c2-410f-a715-5ee9c3ab224f"
+				},
+				{
+					"email": "euron@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/euron.jpg",
+					"alias": "Euron",
+					"installId": null,
+					"id": "7e6765db-00f1-43c2-8630-f215ca269ae6"
+				}
+			],
+			"acquiredTreasure": [],
+			"id": "90985764-5931-4156-bbdf-aefd7dfa4ad1"
+		},
+		{
+			"name": "House Bolton",
+			"avatar": null,
+			"players": [
+				{
+					"email": "ramsay@hbo.com",
+					"firstName": null,
+					"lastName": null,
+					"avatar": "https://huntappstorage.blob.core.windows.net/images/avatars/ramsay.jpg",
+					"alias": "Ramsay",
+					"installId": null,
+					"id": "5e6ec228-6738-41ea-b7b4-958d05f8af4b"
+				}
+			],
+			"acquiredTreasure": [],
+			"id": "9e8b1005-aecf-4392-99f3-fb840db780cf"
+		}
+	],
+	"winningTeamId": null,
+	"treasures": [
+		{
+			"hint": "Not a cat",
+			"imageSource": "https://huntappstorage.blob.core.windows.net/images/treasures/dog.jpg",
+			"attributes": [
+				{
+					"name": "dog",
+					"serviceType": 1,
+					"id": "57fc440c-6fbb-49a8-93a2-187b7b5ae869"
+				},
+				{
+					"name": "laying",
+					"serviceType": 1,
+					"id": "0ba19c2c-ef28-4127-94ce-d1a1982d179a"
+				},
+				{
+					"name": "floor",
+					"serviceType": 1,
+					"id": "88cb8e5a-bd82-4c60-bb5e-f69887b99791"
+				}
+			],
+			"location": null,
+			"isRequired": false,
+			"pointValue": 75,
+			"id": "fddc6d19-f00a-4dd6-8465-9b4f2776b009"
+		},
+		{
+			"hint": "What has a neck, no head, yet still wears a cap?",
+			"imageSource": "https://huntappstorage.blob.core.windows.net/images/treasures/wine_bottle.jpg",
+			"attributes": [
+				{
+					"name": "bottle",
+					"serviceType": 1,
+					"id": "e266cf4b-7c5c-4812-8f9f-1fa14d873612"
+				},
+				{
+					"name": "beverage",
+					"serviceType": 1,
+					"id": "5a46e5b2-a703-473e-96f5-6e1b0feb4619"
+				},
+				{
+					"name": "table",
+					"serviceType": 1,
+					"id": "77fe668c-59cd-4fd8-8c31-5380a819e47c"
+				}
+			],
+			"location": null,
+			"isRequired": false,
+			"pointValue": 50,
+			"id": "639dc326-1c52-4548-82fa-e35b4e67a7d3"
+		},
+		{
+			"hint": "What has a soul, a tongue and eyes but isn't alive?",
+			"imageSource": "https://huntappstorage.blob.core.windows.net/images/treasures/dog.jpg",
+			"attributes": [
+				{
+					"name": "shoes",
+					"serviceType": 1,
+					"id": "24feedba-5208-4ee7-99f0-be3e680b7c4f"
+				},
+				{
+					"name": "footwear",
+					"serviceType": 1,
+					"id": "1619e9e5-c060-4e5a-a9b1-814b2a282306"
+				},
+				{
+					"name": "leather",
+					"serviceType": 1,
+					"id": "7d2b4081-3137-446c-9196-036cba840c61"
+				}
+			],
+			"location": null,
+			"isRequired": false,
+			"pointValue": 75,
+			"id": "963ffd0d-7111-44b1-8ea8-3f5f2de1f47f"
+		}
+	],
+	"_rid": null,
+	"_etag": null,
+	"_attachments": null,
+	"_ts": 0,
+	"_self": null,
+	"id": null,
+}

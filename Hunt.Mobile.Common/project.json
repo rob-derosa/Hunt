@@ -1,0 +1,28 @@
+﻿{
+  "dependencies": {
+    "Ansuria.XFGloss": "1.0.6.59",
+    "Com.Airbnb.Xamarin.Forms.Lottie": "2.3.2",
+    "Microsoft.Azure.Mobile": "0.15.0",
+    "Microsoft.Azure.Mobile.Analytics": "0.15.0",
+    "Microsoft.Azure.Mobile.Crashes": "0.15.0",
+    "Microsoft.Azure.Mobile.Distribute": "0.15.0",
+    "Microsoft.Azure.Mobile.Push": "0.15.0",
+    "Newtonsoft.Json": "10.0.3",
+    "PCLCrypto": "2.0.147",
+    "Plugin.MediaManager": "0.4.4",
+    "Refractored.XamForms.PullToRefresh": "1.1.0",
+    "SkiaSharp.Svg": "1.59.1",
+    "SkiaSharp.Views.Forms": "1.59.1.1",
+    "System.ValueTuple": "4.4.0",
+    "WindowsAzure.Storage": "8.4.0",
+    "Xam.Plugin.Connectivity": "3.0.2",
+    "Xam.Plugin.Media": "3.0.1",
+    "Xam.Plugins.Forms.ImageCircle": "1.8.1",
+    "Xam.Plugins.Settings": "3.0.1",
+    "Xamarin.Forms": "2.3.4.270",
+    "ZXing.Net.Mobile.Forms": "2.2.9"
+  },
+  "frameworks": {
+    ".NETPortable,Version=v4.5,Profile=Profile111": {}
+  }
+}

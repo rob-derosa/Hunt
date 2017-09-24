@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	x:TypeArguments="local:ShareGameInviteViewModel"
+	x:Class="Hunt.Mobile.Common.ShareGameInvitePage">
+
+	<local:BaseContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				Title="Entry Code"
+				CanClose="true" />
+			
+			<ScrollView Grid.Row="1">
+				<Grid Margin="40">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+					<Image Source="{Binding QRCodeImage}"
+						HeightRequest="250"
+						WidthRequest="250"
+						BackgroundColor="#4000"
+						IsVisible="{Binding IsNotBusy}"
+						HorizontalOptions="Center"
+						AutomationId="qrCodeImage"
+						VerticalOptions="Center" />
+
+					<Label Grid.Row="1" Text="{Binding Game.EntryCode}"
+						HorizontalOptions="Center"
+						IsVisible="{Binding IsNotBusy}"
+						AutomationId="entryCode"
+						VerticalOptions="Center"
+						HorizontalTextAlignment="Center">
+						<Label.FontSize>
+							<OnPlatform x:TypeArguments="x:Double" iOS="60" Android="40" />
+						</Label.FontSize>
+					</Label>
+				</Grid>
+			</ScrollView>
+		</Grid>
+	</local:BaseContentPage.Content>
+</local:BaseContentPage>

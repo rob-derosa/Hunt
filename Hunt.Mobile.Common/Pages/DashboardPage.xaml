@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:circle="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	x:TypeArguments="local:DashboardViewModel"
+	x:Class="Hunt.Mobile.Common.DashboardPage">
+	
+	<local:BaseContentPage.RootContent>
+		<Grid RowSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				Title="Dashboard"
+				CanMoveBack="false">
+				<local:NavigationBar.LeftToolbar>
+					<local:SvgImage
+						Source="logout.svg"
+						AutomationId="logoutButton"
+						Clicked="SignOutClicked" />
+				</local:NavigationBar.LeftToolbar>
+			</local:NavigationBar>
+
+			<pull:PullToRefreshLayout
+				Grid.Row="1"
+				RefreshCommand="{Binding RefreshCommand}"
+				IsRefreshing="{Binding IsRefreshingGame}">
+
+				<ScrollView>
+					<Grid RowSpacing="0">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<!-- header -->
+
+						<StackLayout
+							Spacing="40"
+							Margin="0,20,0,26"
+							HorizontalOptions="Center"
+							VerticalOptions="Center">
+
+							<Label
+								Margin="0"
+								Style="{StaticResource H2}"
+								Text="{Binding Player.Alias,
+									Source={x:Static local:App.Instance}, StringFormat='Greetings, {0}'}"
+								VerticalOptions="Center"
+								HorizontalTextAlignment="Center" />
+
+							<circle:CircleImage
+								VerticalOptions="Center"
+								HorizontalOptions="Center"
+								WidthRequest="100"
+								HeightRequest="100">
+								<circle:CircleImage.Source>
+									<UriImageSource CachingEnabled="true"
+									Uri="{Binding Player.Avatar, Source={x:Static local:App.Instance}}" />
+								</circle:CircleImage.Source>
+							</circle:CircleImage>
+
+							<Label
+								Margin="20,-10,20,0"
+								FontSize="Small"
+								Text="You can get started by joining&#x0a;a rousing game of hunt or creating a new one."
+								IsVisible="{Binding HasExistingGame,
+									Converter={x:Static local:InverseBoolConverter.Instance}}"
+								VerticalOptions="Center"
+								HorizontalTextAlignment="Center" />
+
+							<Label Grid.Row="2"
+								Margin="20,-10,20,0"
+								FontSize="Small"
+								Text="Looks like you're already involved in a game. You can load it by clicking that handsome button below."
+								IsVisible="{Binding HasExistingGame}"
+								VerticalOptions="Center"
+								HorizontalTextAlignment="Center" />
+						</StackLayout>
+
+						<ContentView
+							HeightRequest="1"
+							Grid.Style="{StaticResource separator}" />
+
+						<Grid Grid.Row="1"
+							RowSpacing="0"
+							VerticalOptions="FillAndExpand">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition />
+							</Grid.RowDefinitions>
+
+							<Grid VerticalOptions="FillAndExpand"
+								HeightRequest="54"
+								IsVisible="{Binding HasExistingGame, Converter={x:Static local:InverseBoolConverter.Instance}}"
+								Margin="20,0,0,0">
+								
+								<Entry x:Name="entryCodeEntry"
+									Placeholder="Entry code to join goes here"
+									Text="{Binding EntryCode}"
+									local:EntryExtend.MaxLength="6"
+									HorizontalOptions="Start"
+									VerticalOptions="Center"
+									AutomationId="entryCodeEntry"
+									Keyboard="Numeric">
+									<Entry.Margin>
+										<OnPlatform x:TypeArguments="Thickness">
+											<OnPlatform.iOS>0</OnPlatform.iOS>
+											<OnPlatform.Android>-6,0,0,0</OnPlatform.Android>
+										</OnPlatform>
+									</Entry.Margin>
+								</Entry>
+
+								<local:SvgImage
+									Source="qr_code_scan.svg"
+									Clicked="ScanCodeClicked"
+									Margin="0,0,30,0"
+									VerticalOptions="Center"
+									AutomationId="scanQrButton"
+									HorizontalOptions="End" />
+							</Grid>
+							
+							<ContentView
+								IsVisible="{Binding HasExistingGame, Converter={x:Static local:InverseBoolConverter.Instance}}"
+								HeightRequest="1"
+								Grid.Style="{StaticResource separator}" />
+							
+							<Grid Grid.Row="1"
+								HeightRequest="54"
+								VerticalOptions="FillAndExpand"
+								Margin="20,0,0,0">
+
+								<Label Text="View past hunts"
+									HorizontalTextAlignment="Center"
+									HorizontalOptions="Start"
+									VerticalOptions="Center" />
+
+								<local:SvgImage
+									Source="accessory_right.svg"
+									Margin="0,0,20,0"
+									VerticalOptions="Center"
+									HorizontalOptions="End" />
+
+								<Button BackgroundColor="Transparent"
+									HorizontalOptions="FillAndExpand"
+									VerticalOptions="FillAndExpand"
+									AutomationId="pastGamesButton"
+									Clicked="PastGamesClicked" />
+							</Grid>
+							
+							<ContentView
+								Grid.Row="1"
+								Style="{StaticResource separator}" />
+						</Grid>
+
+						<Button Text="Go to current game"
+							Grid.Row="2"
+							Clicked="ContinueToGameClicked"
+							IsVisible="{Binding HasExistingGame}"
+							HorizontalOptions="FillAndExpand"
+							AutomationId="goToGameButton"
+							VerticalOptions="End" />
+					</Grid>
+				</ScrollView>
+			</pull:PullToRefreshLayout>
+			
+			<local:ImageButton
+				Grid.Row="1"
+				IsVisible="{Binding HasExistingGame, Converter={x:Static local:InverseBoolConverter.Instance}}"
+				ImageSource="fab_add.png"
+				Clicked="CreateGameClicked"
+				WidthRequest="60"
+				HeightRequest="60"
+				Margin="0,0,20,20"
+				VerticalOptions="End"
+				AutomationId="createGameButton"
+				HorizontalOptions="End" />
+
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>

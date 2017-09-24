@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	x:Class="Hunt.Mobile.Common.NavigationBar"
+	BackgroundColor="#07FFFFFF"
+	HorizontalOptions="FillAndExpand"
+	VerticalOptions="Start">
+	<ContentView.Content>
+
+		<Grid x:Name="root"
+			HeightRequest="40">
+			<Grid.Margin>
+				<OnPlatform x:TypeArguments="Thickness" iOS="25,30,25,10" Android="25,10,25,10" />
+			</Grid.Margin>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<StackLayout
+				Spacing="14"
+				VerticalOptions="Center"
+				HorizontalOptions="Start"
+				Orientation="Horizontal">
+
+				<local:SvgImage
+					Source="back_arrow.svg"
+					AutomationId="backButton"
+					VerticalOptions="Center"
+					IsVisible="{Binding CanMoveBack}"
+					Clicked="OnBackClicked" />
+
+				<ContentView x:Name="leftToolbarView" />
+			</StackLayout>
+
+			<Label Text="{Binding Title}"
+				Grid.ColumnSpan="3"
+				HorizontalOptions="Center"
+				VerticalOptions="Center"
+				FontSize="Large">
+			</Label>
+
+			<StackLayout
+				Grid.Column="2"
+				Spacing="14"
+				VerticalOptions="Center"
+				HorizontalOptions="Start"
+				Orientation="Horizontal">
+
+				<ContentView x:Name="rightToolbarView" />
+
+				<local:SvgImage
+					Source="close_x.svg"
+					AutomationId="closeButton"
+					VerticalOptions="Center"
+					IsVisible="{Binding CanClose}"
+					Clicked="OnCloseClicked" />
+			</StackLayout>
+			
+			<ContentView
+				Margin="-25,-30,-25,-10"
+				Grid.ColumnSpan="3"
+				Style="{StaticResource separator}" />
+		</Grid>
+	</ContentView.Content>
+</ContentView>

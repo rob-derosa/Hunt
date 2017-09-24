@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	x:TypeArguments="local:AddTreasureViewModel"
+	x:Class="Hunt.Mobile.Common.AssignAttributesPage">
+
+	<local:BaseContentPage.RootContent>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				Title="Assign Tags"
+				CanMoveBack="true" />
+			
+			<ScrollView
+				Grid.Row="1">
+
+				<StackLayout x:Name="rootView"
+					Spacing="20">
+
+					<Label Text="Select up to 2 tags to assign to this treasure. For players to acquire this treasure, they will need to solve the hint and submit a photo that has matching tags. Each tag is worth 25 points."
+						HorizontalOptions="Center"
+						HorizontalTextAlignment="Center"
+						Margin="30" />
+				</StackLayout>
+			</ScrollView>
+
+			<Button Text="Save"
+				Clicked="SaveClicked"
+				AutomationId="saveButton"
+				Grid.Row="2" />
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>

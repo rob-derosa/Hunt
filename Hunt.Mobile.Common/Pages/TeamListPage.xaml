@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	x:TypeArguments="local:TeamListViewModel"
+	x:Class="Hunt.Mobile.Common.TeamListPage">
+
+	<local:BaseContentPage.RootContent>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				x:Name="navBar"
+				CanMoveBack="true" />
+			
+			<ScrollView x:Name="scrollView"
+				Grid.Row="1" />
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>

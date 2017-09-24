@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	xmlns:ci="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+	x:TypeArguments="local:RegistrationViewModel"
+	x:Class="Hunt.Mobile.Common.RegistrationPage">
+
+	<local:BaseContentPage.RootContent>
+		<ScrollView>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height=".5*" />
+					<RowDefinition Height=".5*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<StackLayout
+					VerticalOptions="Center"
+					HorizontalOptions="Center"
+					Margin="40,0">
+
+					<Label
+						Margin="0,20,0,0"
+						Style="{StaticResource H1}"
+						Text="Hello friend" />
+					<Label
+						FontSize="Small"
+						Text="We're glad you're here. Please let us know who you are and we'll get you moving along." />
+				</StackLayout>
+
+				<Grid Grid.Row="1"
+					VerticalOptions="Center">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="60" />
+						<RowDefinition Height="60" />
+					</Grid.RowDefinitions>
+
+					<StackLayout Orientation="Horizontal"
+						Margin="20,0"
+						VerticalOptions="Center"
+						Spacing="20">
+						
+						<local:SvgImage
+							Source="email.svg"
+							Opacity=".6"
+							VerticalOptions="Center"
+							HorizontalOptions="Center" />
+
+						<Entry x:Name="emailEntry"
+							Placeholder="Email"
+							Text="{Binding Email}"
+							HorizontalOptions="FillAndExpand"
+							local:EntryExtend.MaxLength="50"
+							Keyboard="Email"
+							TextColor="#FFF"
+							AutomationId="emailEntry"
+							VerticalOptions="Center" />
+					</StackLayout>
+
+					<ContentView
+						Style="{StaticResource separator}" />						
+
+					<StackLayout Orientation="Horizontal"
+						Grid.Row="1"
+						Margin="20,0"
+						VerticalOptions="Center"
+						Spacing="20">
+						
+						<local:SvgImage
+							Source="alias.svg"
+							Margin="0,-4,0,0"
+							Opacity=".6"
+							VerticalOptions="Center"
+							HorizontalOptions="Center" />
+
+						<Entry Placeholder="First name"
+							Text="{Binding Alias}"
+							TextColor="#FFF"
+							AutomationId="firstNameEntry"
+							local:EntryExtend.MaxLength="20"
+							HorizontalOptions="FillAndExpand"
+							VerticalOptions="Center" />
+
+							<ci:CircleImage x:Name="avatar"
+								VerticalOptions="Center"
+								Margin="0,-8,10,0"
+								HorizontalOptions="End"
+								WidthRequest="40"
+								HeightRequest="40">
+								<ci:CircleImage.Source>
+									<UriImageSource CachingEnabled="true"
+									Uri="{Binding Avatar}" />
+								</ci:CircleImage.Source>
+							</ci:CircleImage>
+						
+					</StackLayout>
+					
+					<ContentView
+						Grid.Row="1"
+						Style="{StaticResource separator}" />						
+				</Grid>
+
+				<StackLayout Grid.Row="2">
+					<Grid
+						Grid.Row="3"
+						VerticalOptions="EndAndExpand"
+						Margin="0,10,0,0">
+						<Button
+							Clicked="ContinueClicked"
+							HorizontalOptions="FillAndExpand"
+							VerticalOptions="Center" />
+
+						<local:SvgImage
+							Source="checkmark.svg"
+							Margin="0,10,0,0"
+							HorizontalOptions="Center"
+							AutomationId="continueButton"
+							Clicked="ContinueClicked"
+							VerticalOptions="Center" />
+					</Grid>
+
+					<StackLayout Orientation="Horizontal"
+						HeightRequest="60"
+						VerticalOptions="Center"
+						HorizontalOptions="Center">
+
+						<Label FontSize="Small"
+							VerticalOptions="Center"
+							Opacity=".6"
+							Text="Hunt is brought to you by" />
+
+						<Button Text="Microsoft"
+							Clicked="MicrosoftClicked"
+							VerticalOptions="Center"
+							FontAttributes="Bold"
+							AutomationId="microsoftButton"
+							Style="{StaticResource textButton}" />
+					</StackLayout>
+					
+				</StackLayout>
+			</Grid>							
+		</ScrollView>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>

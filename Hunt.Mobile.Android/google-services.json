@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "342666306258",
+    "firebase_url": "https://hunt-d4e93.firebaseio.com",
+    "project_id": "hunt-d4e93",
+    "storage_bucket": "hunt-d4e93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342666306258:android:5440f37864d562f2",
+        "android_client_info": {
+          "package_name": "com.microsoft.hunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342666306258-k182gsvgu25bdds6iuhbs99qeqk8h1ve.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microsoft.hunt",
+            "certificate_hash": "642912fab88769825f31c3a7121dc9b1944c834f"
+          }
+        },
+        {
+          "client_id": "342666306258-t9kdurn35mgla4nlc2024si7odamc2up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaF1D_b8eC5eRUg_hpuq8XzeAV7YWnME4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342666306258-t9kdurn35mgla4nlc2024si7odamc2up.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

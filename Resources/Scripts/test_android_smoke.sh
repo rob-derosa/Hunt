@@ -1,0 +1,1 @@
+mobile-center test run uitest --app "Hunt-App/Hunt-Android" --devices "Hunt-App/android-smoke-test" --app-path ~/Desktop/com.microsoft.hunt.apk  --test-series "master" --locale "en_US" --build-dir ~/Projects/Hunt/Hunt.Mobile.UITest/bin/Debug/

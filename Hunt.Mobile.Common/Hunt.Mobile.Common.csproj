@@ -1,0 +1,191 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8031189E-353F-406B-89A8-863756F6C022}</ProjectGuid>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Hunt.Mobile.Common</RootNamespace>
+    <AssemblyName>Hunt.Mobile.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Pages\BaseContentPage.cs" />
+    <EmbeddedResource Include="Pages\CreateGamePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Include="Services\AzureService.cs" />
+    <Compile Include="Abstractions\EntryExtend.cs" />
+    <Compile Include="Pages\GameDetailsPage.xaml.cs">
+      <DependentUpon>GameDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\GameDetailsViewModel.cs" />
+    <Compile Include="Pages\RegistrationPage.xaml.cs">
+      <DependentUpon>RegistrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateGamePage.xaml.cs">
+      <DependentUpon>CreateGamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\CreateGameViewModel.cs" />
+    <Compile Include="Pages\DashboardPage.xaml.cs">
+      <DependentUpon>DashboardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ShareGameInvitePage.xaml.cs">
+      <DependentUpon>ShareGameInvitePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ShareGameInviteViewModel.cs" />
+    <Compile Include="Abstractions\IImageService.cs" />
+    <Compile Include="ViewModels\TeamDetailsViewModel.cs" />
+    <Compile Include="ViewModels\RegistrationViewModel.cs" />
+    <Compile Include="Pages\TeamListPage.xaml.cs">
+      <DependentUpon>TeamListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\BaseNotify.cs" />
+    <Compile Include="Utilities\Busy.cs" />
+    <Compile Include="Utilities\Converters.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\Settings.cs" />
+    <Compile Include="ViewModels\AddTreasureViewModel.cs" />
+    <Compile Include="Abstractions\ILogger.cs" />
+    <Compile Include="Services\StorageService.cs" />
+    <Compile Include="Keys.cs" />
+    <Compile Include="ViewModels\TreasureDetailsViewModel.cs" />
+    <Compile Include="ViewModels\TreasureViewModel.cs" />
+    <Compile Include="Abstractions\IHudProvider.cs" />
+    <Compile Include="Utilities\TaskRunner.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Controls\NavigationBar.xaml.cs">
+      <DependentUpon>NavigationBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RoundedRectangle.cs" />
+    <Compile Include="Controls\SvgImage.cs" />
+    <Compile Include="Pages\LoadingDataPage.xaml.cs">
+      <DependentUpon>LoadingDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="ViewModels\TeamListViewModel.cs" />
+    <Compile Include="Abstractions\HuntViewCell.cs" />
+    <Compile Include="Utilities\Mocker.cs" />
+    <Compile Include="Pages\TreasureDetailsPage.xaml.cs">
+      <DependentUpon>TreasureDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Abstractions\IDeviceController.cs" />
+    <EmbeddedResource Include="Resources\circle_filled.svg" />
+    <Compile Include="ViewModels\BaseGameViewModel.cs" />
+    <EmbeddedResource Include="Pages\AddTreasurePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Include="Pages\AddTreasurePage.xaml.cs">
+      <DependentUpon>AddTreasurePage.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Pages\AssignAttributesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Include="Pages\AssignAttributesPage.xaml.cs">
+      <DependentUpon>AssignAttributesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CircleProgress.cs" />
+    <EmbeddedResource Include="Pages\FullSizeImagePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Include="Pages\FullSizeImagePage.xaml.cs">
+      <DependentUpon>FullSizeImagePage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\GameDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\RegistrationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\DashboardPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\ShareGameInvitePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\vertical_dots.svg" />
+    <EmbeddedResource Include="Resources\qr_code_scan.svg" />
+    <EmbeddedResource Include="Resources\sleuth.svg" />
+    <EmbeddedResource Include="Resources\refresh_arrow.svg" />
+    <EmbeddedResource Include="Pages\TeamListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\chevron_right.svg" />
+    <EmbeddedResource Include="Controls\NavigationBar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\plus.svg" />
+    <EmbeddedResource Include="Resources\camera.svg" />
+    <EmbeddedResource Include="Resources\email.svg" />
+    <EmbeddedResource Include="Resources\alias.svg" />
+    <EmbeddedResource Include="Resources\back_arrow.svg" />
+    <EmbeddedResource Include="Resources\fab_add.svg" />
+    <EmbeddedResource Include="Resources\accessory_right.svg" />
+    <EmbeddedResource Include="Resources\logout.svg" />
+    <EmbeddedResource Include="Pages\LoadingDataPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\checkmark.svg" />
+    <EmbeddedResource Include="Resources\close_x.svg" />
+    <EmbeddedResource Include="Resources\share.svg" />
+    <EmbeddedResource Include="Resources\teams.svg" />
+    <EmbeddedResource Include="Resources\right_arrow.svg" />
+    <EmbeddedResource Include="Resources\timer.svg" />
+    <EmbeddedResource Include="Resources\complete_item.svg" />
+    <EmbeddedResource Include="Resources\incomplete_item.svg" />
+    <EmbeddedResource Include="Resources\treasures_acquired.svg" />
+    <EmbeddedResource Include="Resources\points_acquired.svg" />
+    <EmbeddedResource Include="Pages\TreasureDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Services\" />
+    <Folder Include="Abstractions\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Utilities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hunt.Common\Hunt.Common.csproj">
+      <Project>{47520611-9DED-4661-957E-ABDEB18B08EE}</Project>
+      <Name>Hunt.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\mock_game.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
+  <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.15.0\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.15.0\build\Microsoft.Azure.DocumentDB.targets')" />
+</Project>

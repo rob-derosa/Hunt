@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+	x:Class="Hunt.Mobile.Common.App">
+	<Application.Resources>
+		<ResourceDictionary>
+			
+			<!-- Colors -->
+			
+			<Color x:Key="topGradient">#101010</Color>
+			<Color x:Key="bottomGradient">#2C2C2C</Color>
+			<Color x:Key="hudBackgroundColor">#C000</Color>
+			<Color x:Key="toastBackgroundColor">#E000</Color>
+
+			<Color x:Key="accent">#FF2D63</Color> //Fucia
+			
+			<Color x:Key="fucia">#FF2D63</Color>
+			<Color x:Key="aqua">#35D3C2</Color>
+			<Color x:Key="lightPurple">#8788FF</Color>
+			<Color x:Key="purple">#BB72FF</Color>
+			<Color x:Key="darkPurple">#6362A5</Color>
+			<Color x:Key="magenta">#DB65CE</Color>
+			<Color x:Key="blue">#00BAFF</Color>
+			<Color x:Key="orange">#FFAB4D</Color>
+			<Color x:Key="gray">#8E8E92</Color>
+			<Color x:Key="lightGray">#BBB</Color>
+			<Color x:Key="backgroundPrimary">#393939</Color>
+
+			<!-- Button -->
+			
+			<Style x:Key="buttonStyle" TargetType="Button">
+				<Setter Property="Margin" Value="-6,0,-6,-4" />
+				<Setter Property="BorderRadius" Value="0" />
+				<Setter Property="BorderWidth" Value="0" />
+				<Setter Property="TextColor" Value="#FFF" />
+				<Setter Property="BackgroundColor" Value="{StaticResource fucia}" />
+				<Setter Property="HeightRequest" Value="70" />
+				<Setter Property="FontSize" Value="Medium" />
+				<Setter Property="FontFamily">
+					<OnPlatform x:TypeArguments="x:String">
+						<OnPlatform.iOS>Avenir-Light</OnPlatform.iOS>
+						<OnPlatform.Android>Avenir.ttf#Avenir-Light</OnPlatform.Android>
+					</OnPlatform>
+				</Setter>
+			</Style>
+			<Style TargetType="Button" BasedOn="{StaticResource buttonStyle}" />
+
+			<Style x:Key="textButton" TargetType="Button">
+				<Setter Property="FontSize" Value="Small" />
+				<Setter Property="BorderRadius" Value="0" />
+				<Setter Property="HeightRequest" Value="32" />
+				<Setter Property="TextColor" Value="#FFF" />
+				<Setter Property="BackgroundColor" Value="Transparent" />
+				<Setter Property="BorderWidth" Value="0" />
+				<Setter Property="FontFamily">
+					<OnPlatform x:TypeArguments="x:String">
+						<OnPlatform.iOS>Avenir-Light</OnPlatform.iOS>
+						<OnPlatform.Android>Avenir.ttf#Avenir-Light</OnPlatform.Android>
+					</OnPlatform>
+				</Setter>
+				<Setter Property="Margin">
+					<OnPlatform x:TypeArguments="Thickness">
+						<OnPlatform.iOS>0</OnPlatform.iOS>
+						<OnPlatform.Android>-10,0,0,0</OnPlatform.Android>
+					</OnPlatform>
+				</Setter>
+			</Style>
+
+			<!-- Entry -->
+
+			<Style x:Key="entryStyle" TargetType="Entry">
+				<Setter Property="FontSize" Value="Medium" />
+				<Setter Property="HeightRequest" Value="44" />
+				<Setter Property="TextColor" Value="#FFF" />
+				<Setter Property="PlaceholderColor" Value="#AFFF" />
+				<Setter Property="BackgroundColor" Value="Transparent" />
+				<Setter Property="FontFamily">
+					<OnPlatform x:TypeArguments="x:String">
+						<OnPlatform.iOS>Avenir-Light</OnPlatform.iOS>
+						<OnPlatform.Android>Avenir.ttf#Avenir-Light</OnPlatform.Android>
+					</OnPlatform>
+				</Setter>
+			</Style>
+			<Style TargetType="Entry" BasedOn="{StaticResource entryStyle}" />
+
+			
+			<!-- Label -->
+
+			<Style x:Key="labelStyle" TargetType="Label">
+				<Setter Property="TextColor" Value="#FFF" />
+				<Setter Property="FontSize" Value="Medium" />
+				<Setter Property="FontFamily">
+					<OnPlatform x:TypeArguments="x:String">
+						<OnPlatform.iOS>Avenir-Light</OnPlatform.iOS>
+						<OnPlatform.Android>Avenir.ttf#Avenir-Light</OnPlatform.Android>
+					</OnPlatform>
+				</Setter>
+			</Style>
+			<Style TargetType="Label" BasedOn="{StaticResource labelStyle}" />
+
+			<Style x:Key="title" TargetType="Label">
+				<Setter Property="FontSize" Value="18" />
+				<Setter Property="HorizontalOptions">
+					<Setter.Value>
+						<OnPlatform x:TypeArguments="LayoutOptions" iOS="Center" Android="Start" />
+					</Setter.Value>
+				</Setter>
+			</Style>
+			
+			<Style x:Key="sub" TargetType="Label">
+				<Setter Property="TextColor" Value="#AFFF" />
+			</Style>
+			
+			<Style x:Key="captionLabel" TargetType="Label">
+				<Setter Property="TextColor" Value="#FFF" />
+			</Style>
+
+			<Style x:Key="H1" TargetType="Label">
+				<Setter Property="FontSize" Value="42" />
+				<Setter Property="TextColor" Value="#FFF" />
+			</Style>
+
+			<Style x:Key="H2" TargetType="Label">
+				<Setter Property="FontSize" Value="30" />
+				<Setter Property="HorizontalOptions" Value="Center" />
+				<Setter Property="HorizontalTextAlignment" Value="Center" />
+				<Setter Property="VerticalOptions" Value="Center" />
+			</Style>
+
+			<!-- ActivityIndicator -->
+			
+			<Style x:Key="defaultActivity" TargetType="ActivityIndicator">
+				<Setter Property="Color" Value="#FFF" />
+				<Setter Property="Scale">
+					<Setter.Value>
+						<OnPlatform x:TypeArguments="x:Double" iOS="1.7" Android="1" />
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style TargetType="ActivityIndicator" BasedOn="{StaticResource defaultActivity}" />
+
+			<!-- Other -->
+			
+			<Style x:Key="separator" TargetType="ContentView">
+				<Setter Property="BackgroundColor" Value="#1FFF" />
+				<Setter Property="HeightRequest" Value="1" />
+				<Setter Property="HorizontalOptions" Value="FillAndExpand" />
+				<Setter Property="VerticalOptions" Value="End" />
+			</Style>
+
+			<Style x:Key="pullToRefresh" TargetType="pull:PullToRefreshLayout">
+				<Setter Property="HorizontalOptions" Value="FillAndExpand" />
+				<Setter Property="VerticalOptions" Value="FillAndExpand" />
+				<Setter Property="IsPullToRefreshEnabled" Value="true" />
+				<Setter Property="RefreshColor">
+					<Setter.Value>
+						<OnPlatform x:TypeArguments="Color">
+							<OnPlatform.iOS>#BFFF</OnPlatform.iOS>
+							<On Platform="Android" Value="{StaticResource accent}" />
+						</OnPlatform>
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style TargetType="pull:PullToRefreshLayout" BasedOn="{StaticResource pullToRefresh}" />
+
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

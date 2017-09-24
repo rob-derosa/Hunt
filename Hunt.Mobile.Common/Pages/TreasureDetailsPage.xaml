@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	xmlns:ci="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+	x:TypeArguments="local:TreasureDetailsViewModel"
+	x:Class="Hunt.Mobile.Common.TreasureDetailsPage">
+	
+	<local:BaseContentPage.RootContent>
+		<Grid RowSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				CanMoveBack="true"
+				Title="Treasure Info" />
+
+			<pull:PullToRefreshLayout
+				Grid.Row="1"
+				RefreshCommand="{Binding RefreshCommand}"
+				IsRefreshing="{Binding IsRefreshingGame}">
+
+				<ScrollView>
+					<Grid x:Name="contentGrid"
+						RowSpacing="0">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<!-- player band -->
+
+						<Grid
+							IsVisible="{Binding IsAcquired}"
+							BackgroundColor="{StaticResource aqua}"
+							HeightRequest="60"
+							VerticalOptions="Start"
+							HorizontalOptions="FillAndExpand">
+
+							<StackLayout Orientation="Horizontal"
+								Spacing="20"
+								VerticalOptions="Center"
+								HorizontalOptions="Center">
+								<Label
+									LineBreakMode="WordWrap"
+									VerticalOptions="Center"
+									VerticalTextAlignment="Center"
+									HorizontalOptions="End"
+									HorizontalTextAlignment="End"
+									Text="{Binding AcquiredBy}" />
+
+								<ci:CircleImage x:Name="avatar"
+									VerticalOptions="Center"
+									HorizontalOptions="End"
+									WidthRequest="40"
+									HeightRequest="40">
+									<ci:CircleImage.Source>
+										<UriImageSource CachingEnabled="true"
+											Uri="{Binding Player.Avatar}" />
+									</ci:CircleImage.Source>
+								</ci:CircleImage>
+							</StackLayout>
+
+							<ContentView
+								VerticalOptions="Start"
+								BackgroundColor="#6FFF"
+								Style="{StaticResource separator}" />
+							
+							<ContentView
+								BackgroundColor="#6FFF"
+								Style="{StaticResource separator}" />
+						</Grid>
+
+						<!-- hero image / instructions -->
+						
+						<Grid Grid.Row="1"
+							HeightRequest="240"
+							HorizontalOptions="FillAndExpand"
+							VerticalOptions="Start">
+
+
+							<Label Text="To acquire this treasure and earn the points, use the hint below to identify and photograph the correct answer. Then use this button to snap a picture of it to be analyzed."
+								IsVisible="{Binding IsAcquired,
+									Converter={x:Static local:InverseBoolConverter.Instance}}"
+								FontSize="Medium"
+								LineBreakMode="WordWrap"
+								VerticalOptions="Center"
+								HorizontalTextAlignment="Center"
+								Margin="40" />
+
+							<Image x:Name="heroImage"
+								Source="{Binding HeroImageSource}"
+								VerticalOptions="Fill"
+								HorizontalOptions="Fill"
+								AutomationId="heroImage"
+								Aspect="AspectFill" />
+						</Grid>
+
+						<!-- hint -->
+						
+						<Grid Grid.Row="2"
+							BackgroundColor="#1FFF"
+							HorizontalOptions="FillAndExpand"
+							VerticalOptions="FillAndExpand">
+							
+							<ContentView
+								VerticalOptions="Start"
+								Grid.Style="{StaticResource separator}" />
+							
+							<Label Text="{Binding Treasure.Hint}"
+								Margin="30,40,30,30"
+								HorizontalTextAlignment="Center"
+								HorizontalOptions="Center"
+								VerticalTextAlignment="Center"
+								LineBreakMode="WordWrap"
+								Style="{StaticResource H2}" />
+
+							<ContentView
+								Grid.Style="{StaticResource separator}" />
+						</Grid>
+
+						<!-- points -->
+
+						<Grid Grid.Row="2"
+							Margin="20,-28,20,0"
+							VerticalOptions="Start"
+							HorizontalOptions="Start"
+							HeightRequest="56"
+							WidthRequest="56">
+							<local:SvgImage
+								Source="circle_filled.svg"
+								Color="{StaticResource aqua}" />
+
+							<Label Text="{Binding Treasure.Points, StringFormat='{0}pts'}"
+								FontSize="Small"
+								VerticalOptions="Center"
+								HorizontalOptions="Center" />
+						</Grid>
+
+						<!-- camera button -->
+
+						<local:ImageButton
+							Grid.Row="2"
+							ImageSource="fab_camera.png"
+							IsVisible="{Binding CanAcquire}"
+							Clicked="TakePhotoClicked"
+							WidthRequest="65"
+							HeightRequest="65"
+							Margin="0,-28,20,0"
+							AutomationId="cameraButton"
+							VerticalOptions="Start"
+							HorizontalOptions="End" />
+
+						<!-- submit button -->
+						
+						<Button Grid.Row="3"
+							IsVisible="{Binding CanSubmit}"
+							Clicked="SubmitClicked"
+							AutomationId="submitButton"
+							VerticalOptions="End"
+							Text="Submit" />
+						
+					</Grid>
+				</ScrollView>
+			</pull:PullToRefreshLayout>
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>
