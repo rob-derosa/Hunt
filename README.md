@@ -3,6 +3,12 @@
 ### Overview
 Hunt is a virtual scavenger hunt app where players can join a game, select a team and solve hints to acquire treasure. The team with the most points wins.
 
+
+### Supported Platforms
+* iOS 10.0 and up
+* Android 5.0 and up
+
+
 ### Front-end Patterns
 * Each ContentPage is bound to a ViewModel, which is also used as the BindingContext.
 * All outbound requests are routed as tasks through TaskRunner.RunProtected to handle common failure scenarios
