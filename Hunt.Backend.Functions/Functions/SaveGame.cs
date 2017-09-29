@@ -129,7 +129,6 @@ namespace Hunt.Backend.Functions
 			{
 				using (var client = new QueueService(Keys.ServiceBus.EndGameBusName))
 				{
-					game.DurationInMinutes = 1;
 					client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
 				}
 			}
