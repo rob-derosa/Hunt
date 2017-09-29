@@ -1,2 +1,0 @@
-Alias: hunt adhoc key
-Password: HuntApp
