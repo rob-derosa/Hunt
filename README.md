@@ -101,7 +101,7 @@ Display http://aka.ms/hunt on a project and invite people to downoad the app. As
 Start the game and let the teams attempt to find the objects and acquire the treasure. Possible reward the winning team with some Azure credit.
 
 
-* Mock data
+#### Mock Data
   * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
     * User can choose to be the Coordinator or a Player
       * if Coordinator is chosen, the user can add additional treasure and manully start the game
@@ -109,7 +109,8 @@ Start the game and let the teams attempt to find the objects and acquire the tre
     * Games can be seeded with players that join teams - about half the game slots will fill with random players
     * Games can be seeded with pre-configured Treasure (3)
     * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
-* Azure Deployment
-  * To make it easy for new developers to stand up their own personal Hunt backend, ARM templates are used so that by clicking a button and selecting a few options (like subscription, resource group and region), developers can deploy their own pre-configured instance of all services needed by Hunt to function.
+
+#### Azure Deployment
+To make it easy for new developers to stand up their own personal Hunt backend, ARM templates are used so that by clicking a button and selecting a few options (like subscription, resource group and region), developers can deploy their own pre-configured instance of all services needed by Hunt to function.
 
 [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
