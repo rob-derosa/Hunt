@@ -16,6 +16,8 @@ Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/6
 ### Overview
 The purpose of Hunt is to facilitate a virtual scavenger hunt between multiple teams. Players on each team will have to solve a riddle or hint and photograph the object. If the photograph contains the correct object, the team will be awarded the full amount of points for that treasure.
 
+For example, if the hint is "What has a neck, no head yet still wears a cap?" The teams would need to determine that the answer is a bottle and photograph a bottle. The photograph will be analyzed for the tag `bottle` and if it exists, the team is awarded the points.
+
 The first team to acquire all the treasures will win the game. If no team acquires all the treasure, the team with the most points will win when the time runs out. Alternatively, the Coordinator of the game can end the game early, in which case the team with the most points will win.
 
 
