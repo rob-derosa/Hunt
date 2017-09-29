@@ -47,9 +47,12 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Most images/icons are SVG files embedded in the Common project assembly once and rendered at runtime via the custom SvgImage control. Fill color and vector scale can be specified per instance.
 * Animations are made possible with the Lottie Animation library from the folks at Airbnb. Animations are also vector and stored in a small .json file.
 * Almost all UI code is shared, include the custom HUD and Toast elements.
+* The Forms navigation stack is utlizied, however, every page has `SetHasNavigationBar` set to `false`. A custom `NavigationToolbar` is used instead to better control the UI.
+* Content for each page is declared in XAML under the `BaseContentPage.RootContent` node instead of the typical `BaseContentPage.Content` so HUD and Toast can appear at a greater Z-index.
 
 ### Back-end Patterns
 * Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers an update.
+* Version conflicts are raised if the associated document timestamp is out of order - it is up to the client to handle this exception and resolve the conflict.
 * All images are stored in blob storage and passed to the Vision APi via the blob URL.
 
 
@@ -83,12 +86,20 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * Vision API
     * Content Moderator API
   * Service Bus
-  * ARM Templates
+  * Deployment via ARM Templates
 
 
 ### Presentations and Hackathons
 
 Hunt was designed and is intended specifically for use with audiences at presentations, hackathons, community meetups, on-site meetings and speaking engagements.
+
+#### Interactive Option
+To add some fun to a presentation, one option is to engage the audience in a quick game of hunt.Prior to the presentation, plant 2 or 3 well-known objects in the room somewhere inconspicuous, like a Coke bottle and a sneaker. Begin the talk by asking the audience if they want to play a game.
+
+Display http://aka.ms/hunt on a project and invite people to downoad the app. As you give an overview of Hunt, project your phone's screen so everyone can see. Create a quick 10-15min game seeded with some players and treasures. Then share the game entry code and QR code so folks can join a team.
+
+Start the game and let the teams attempt to find the objects and acquire the treasure. Possible reward the winning team with some Azure credit.
+
 
 * Mock data
   * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
@@ -97,7 +108,7 @@ Hunt was designed and is intended specifically for use with audiences at present
       * if Player is chosed, the user is put on House Lannister and the game will be started automatically
     * Games can be seeded with players that join teams - about half the game slots will fill with random players
     * Games can be seeded with pre-configured Treasure (3)
-    * If both players and treasures are seeeded, the team the player joins can be seeded with 2 acquired treasure
+    * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
 * Azure Deployment
   * To make it easy for new developers to stand up their own personal Hunt backend, ARM templates are used so that by clicking a button and selecting a few options (like subscription, resource group and region), developers can deploy their own pre-configured instance of all services needed by Hunt to function.
 
