@@ -4,14 +4,9 @@
 Hunt is a virtual scavenger hunt app where players can join a game, select a team and solve hints to acquire treasure. The team with the most points wins.
 
 
-### Build Status
-
-[![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com)
-
-
 ### Supported Platforms
-* iOS 10.0 and up
-* Android 5.0 and up
+* [![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com) iOS 10.0 and up
+* [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) Android 5.0 and up
 
 
 ### Front-end Patterns
