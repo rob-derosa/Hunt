@@ -92,8 +92,7 @@ namespace Hunt.Backend.Functions
 								var http = new HttpClient();
 								var minutes = 2;
 								var url = $"https://huntapp.azurewebsites.net/api/SetEndGame?gameId={game.Id}&minutes={minutes}";
-								var content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
-								var resp = http.PostAsync(url, content).Result;
+								var resp = http.GetAsync(url).Result;
 							}
 
 							if (isWinningAcquisition)
@@ -123,7 +122,7 @@ namespace Hunt.Backend.Functions
 
 		static async Task SendTargetedNotifications(Game game, string action, Dictionary<string, string> args)
 		{
-			var push = new PushManager();
+			var push = new PushService();
 			string title = null;
 			string message = null;
 			List<Player> players = new List<Player>();
@@ -247,7 +246,7 @@ namespace Hunt.Backend.Functions
 		static void CreateAudiences(Game game, Analytic analytic)
 		{
 			//Configure the proper Push Audiences in Mobile Center so notifications can be sent to all in a game or team
-			var p = new PushManager();
+			var p = new PushService();
 			var success = p.CreateAudience(HuntAudience.GameId, game.Id).Result;
 
 			if (success)
