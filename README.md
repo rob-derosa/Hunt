@@ -39,13 +39,13 @@ The first team to acquire all the treasures will win the game. If no team acquir
       * acquriing treasure once the game has started
   * Treasure
     * There must be at least 2 treasures added to the game before it can be started
-    * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players sovle a riddle or puzzle and then take a phtotograph of the answer.
+    * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
     
 
 ### Front-end Patterns
-* Each ContentPage derives from BaseContentPage<T> where T is a BaseViewModel and serves as the BindingContext.
-* All outbound requests are routed as new tasks through TaskRunner.RunProtected to handle common failure scenarios such as device network connectivity changes, back-end server outages, etc.
-* Game document writes are further routed through SaveGameSafe proxy method to handle version conflicts resiliently with minimal code.
+* Each ContentPage derives from `BaseContentPage<T>` where `T` is of type `BaseViewModel` and serves as the `BindingContext`.
+* All outbound requests are routed as new tasks through `TaskRunner.RunProtected` to handle common failure scenarios such as device network connectivity changes, back-end server outages, etc.
+* Game document writes are further routed through `ViewModel.SaveGameSafe` proxy method to handle version conflicts resiliently with minimal code.
 * Most images/icons are SVG files embedded in the Common project assembly once and rendered at runtime via the custom SvgImage control. Fill color and vector scale can be specified per instance.
 * Animations are made possible with the Lottie Animation library from the folks at Airbnb. Animations are also vector and stored in a small .json file.
 * Almost all UI code is shared, include the custom HUD and Toast elements.
