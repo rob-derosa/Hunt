@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hunt.Backend.Functions
 {
-	public class PushManager
+	public class PushService
 	{
 		List<string> _platforms = new List<string> { Keys.MobileCenter.iOSUrl, Keys.MobileCenter.AndroidUrl };
 
