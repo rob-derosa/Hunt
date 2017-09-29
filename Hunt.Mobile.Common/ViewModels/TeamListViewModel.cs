@@ -33,7 +33,7 @@ namespace Hunt.Mobile.Common
 			using(var busy = new Busy(this, "Joining team"))
 			{
 				Team team = null;
-				Func<Game, Game> action = (game) =>
+				Func<Game, Game> gameUpdateLogic = (game) =>
 				{
 					game = game ?? Game;
 					var clone = game.Clone();
@@ -49,7 +49,7 @@ namespace Hunt.Mobile.Common
 					return null;
 				};
 
-				var savedGame = await SaveGameSafe(action, GameUpdateAction.JoinTeam,
+				var savedGame = await SaveGameSafe(gameUpdateLogic, GameUpdateAction.JoinTeam,
 					new Dictionary<string, string> { { "teamId", teamId } });
 
 				if(savedGame == null)

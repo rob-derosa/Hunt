@@ -162,18 +162,18 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		protected async Task<Game> SaveGameSafe(Func<Game, Game> applyChanges, string updateAction, IDictionary<string, string> args = null, Game refreshedGame = null)
+		protected async Task<Game> SaveGameSafe(Func<Game, Game> gameUpdateLogic, string updateAction, IDictionary<string, string> args = null, Game refreshedGame = null)
 		{
 			Game game = null;
 			try
 			{
-				game = applyChanges(refreshedGame);
+				game = gameUpdateLogic(refreshedGame);
 
 				if(game == null)
 					return null;
 
 				var task = new Task<Game>(() => App.Instance.DataService.SaveGame(game, updateAction, args).Result);
-				await task.RunProtected(NotifyMode.Throw);
+				await task.RunProtected();
 
 				if(!task.WasSuccessful())
 					return null;
@@ -188,7 +188,7 @@ namespace Hunt.Mobile.Common
 				var refreshed = await RefreshGame(game).ConfigureAwait(false);
 
 				if(refreshed != null)
-					return await SaveGameSafe(applyChanges, updateAction, args, refreshed);
+					return await SaveGameSafe(gameUpdateLogic, updateAction, args, refreshed);
 
 				return null;
 			}

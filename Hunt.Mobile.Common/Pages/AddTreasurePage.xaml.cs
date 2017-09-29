@@ -78,6 +78,7 @@ namespace Hunt.Mobile.Common
 				return;
 			}
 
+			ViewModel.SelectedAttributes.Clear();
 			var success = await ViewModel.AnalyzePhotoForAttributes();
 			if(success)
 			{

@@ -123,7 +123,10 @@ namespace Hunt.Mobile.Common
 			App.Instance.AppResumed -= OnAppResumed;
 			App.Instance.AppBackgrounded -= OnAppBackgrounded;
 			App.Instance.AppNotificationReceived -= OnAppNotificationReceived;
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			Dismiss();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 			base.OnDisappearing();
 		}
@@ -179,11 +182,6 @@ namespace Hunt.Mobile.Common
 		protected virtual void OnNotificationReceived(PushNotificationReceivedEventArgs args)
 		{
 			ViewModel?.OnNotificationReceived(args);
-
-			if(string.IsNullOrWhiteSpace(Title))
-				return;
-
-			Hud.Instance.ShowToast(args.Message);
 		}
 
 		#endregion
