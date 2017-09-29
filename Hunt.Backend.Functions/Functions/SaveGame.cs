@@ -36,6 +36,7 @@ namespace Hunt.Backend.Functions
 				var action = jobject["action"].ToString();
 				var arguments = jobject["arguments"].ToObject<Dictionary<string, string>>();
 				var game = jobject["game"].ToObject<Game>();
+				arguments = arguments ?? new Dictionary<string, string>(); 
 
 				//Need to validate this player is not already part of another ongoing game or the coordinator of this game
 				if (game.EntryCode == null)
@@ -64,10 +65,13 @@ namespace Hunt.Backend.Functions
 							if (action == GameUpdateAction.EndGame && existingGame.HasEnded)
 								return req.CreateResponse(HttpStatusCode.OK);
 
-                            if (action == GameUpdateAction.StartGame)
-                                game.StartDate = DateTime.UtcNow;
+							if (action == GameUpdateAction.StartGame)
+								game.StartDate = DateTime.UtcNow;
 
-                                bool isWinningAcquisition = false;
+							if (action == GameUpdateAction.EndGame)
+								game.EndDate = DateTime.UtcNow;
+
+							bool isWinningAcquisition = false;
 							if (action == GameUpdateAction.AcquireTreasure)
 							{
 								//Need to evaluate the game first before we save as there might be a winner
@@ -89,10 +93,7 @@ namespace Hunt.Backend.Functions
 
 							if (action == GameUpdateAction.StartGame)
 							{
-								var http = new HttpClient();
-								var minutes = 2;
-								var url = $"https://huntapp.azurewebsites.net/api/SetEndGame?gameId={game.Id}&minutes={minutes}";
-								var resp = http.GetAsync(url).Result;
+								SetEndGameTimer(game, analytic);
 							}
 
 							if (isWinningAcquisition)
@@ -119,6 +120,28 @@ namespace Hunt.Backend.Functions
 				}
 			}
 		}
+
+		#region Game Timer
+
+		static void SetEndGameTimer(Game game, Analytic analytic)
+		{
+			try
+			{
+				using (var client = new QueueService(Keys.ServiceBus.EndGameBusName))
+				{
+					game.DurationInMinutes = 1;
+					client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
+				}
+			}
+			catch (Exception e)
+			{
+				analytic.TrackException(e);
+			}
+		}
+
+		#endregion
+
+		#region Push Notifications
 
 		static async Task SendTargetedNotifications(Game game, string action, Dictionary<string, string> args)
 		{
@@ -216,24 +239,34 @@ namespace Hunt.Backend.Functions
 					break;
 			}
 
-			var devices = new string[0];
-			if (title != null && message != null && players.Count > 0)
-			{
-				devices = players.Where(pl => pl.InstallId != null).Select(pl => pl.InstallId).ToArray();
+			string playerInstallId = null;
+			if(args.ContainsKey("playerInstallId"))
+				playerInstallId = args["playerInstallId"];
 
-				if (devices.Length > 0)
-					await push.SendNotification(title, message, devices,
+			var devices = new List<string>();
+			if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(message) && players.Count > 0)
+			{
+				devices = players.Where(pl => pl.InstallId != null).Select(pl => pl.InstallId).ToList();
+
+				if(playerInstallId != null)
+					devices.Remove(playerInstallId);
+
+				if (devices.Count > 0)
+					await push.SendNotification(title, message, devices.ToArray(),
 						new Dictionary<string, string> { { "gameId", game.Id } });
 			}
 
 			if (silentNotifyAllPlayers)
 			{
 				var allPlayers = game.GetAllPlayers();
-				var allDevices = allPlayers.Where(pl => pl.InstallId != null && !devices.Contains(pl.InstallId)).Select(pl => pl.InstallId).ToArray();
+				var allDevices = allPlayers.Where(pl => pl.InstallId != null && !devices.Contains(pl.InstallId)).Select(pl => pl.InstallId).ToList();
 
-				if (allDevices.Length > 0)
+				if (playerInstallId != null)
+					allDevices.Remove(playerInstallId);
+
+				if (allDevices.Count> 0)
 				{
-					await push.SendNotification("", "", allDevices,
+					await push.SendNotification("", "", allDevices.ToArray(),
 						new Dictionary<string, string> { { "content-available", "1" }, { "gameId", game.Id } });
 				}
 			}
@@ -269,5 +302,7 @@ namespace Hunt.Backend.Functions
 				throw e;
 			}
 		}
+	
+		#endregion
 	}
 }
