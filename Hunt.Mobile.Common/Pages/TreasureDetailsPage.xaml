@@ -85,7 +85,7 @@
 							VerticalOptions="Start">
 
 
-							<Label Text="To acquire this treasure and earn the points, use the hint below to identify and photograph the correct answer. Then use this button to snap a picture of it to be analyzed."
+							<Label Text="To acquire this treasure and earn the points, use the hint below to identify and photograph the correct answer."
 								IsVisible="{Binding IsAcquired,
 									Converter={x:Static local:InverseBoolConverter.Instance}}"
 								FontSize="Medium"

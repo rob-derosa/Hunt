@@ -108,21 +108,6 @@
     <Reference Include="FastAndroidCamera">
       <HintPath>..\packages\FastAndroidCamera.2.0.0\lib\MonoAndroid403\FastAndroidCamera.dll</HintPath>
     </Reference>
-    <Reference Include="ZXing.Net.Mobile.Core">
-      <HintPath>..\packages\ZXing.Net.Mobile.2.2.9\lib\MonoAndroid403\ZXing.Net.Mobile.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="zxing.portable">
-      <HintPath>..\packages\ZXing.Net.Mobile.2.2.9\lib\MonoAndroid403\zxing.portable.dll</HintPath>
-    </Reference>
-    <Reference Include="ZXingNetMobile">
-      <HintPath>..\packages\ZXing.Net.Mobile.2.2.9\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
-    </Reference>
-    <Reference Include="ZXing.Net.Mobile.Forms.Android">
-      <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.2.9\lib\MonoAndroid403\ZXing.Net.Mobile.Forms.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="ZXing.Net.Mobile.Forms">
-      <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.2.9\lib\MonoAndroid403\ZXing.Net.Mobile.Forms.dll</HintPath>
-    </Reference>
     <Reference Include="SkiaSharp">
       <HintPath>..\packages\SkiaSharp.1.59.1\lib\MonoAndroid\SkiaSharp.dll</HintPath>
     </Reference>
@@ -283,20 +268,35 @@
     <Reference Include="SkiaSharp.Views.Forms">
       <HintPath>..\packages\SkiaSharp.Views.Forms.1.59.1.1\lib\MonoAndroid\SkiaSharp.Views.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Lottie">
-      <HintPath>..\packages\Com.Airbnb.Android.Lottie.2.2.0.0\lib\MonoAndroid40\Lottie.dll</HintPath>
-    </Reference>
-    <Reference Include="Lottie.Forms">
-      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.2\lib\MonoAndroid70\Lottie.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Lottie.Forms.Droid">
-      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.2\lib\MonoAndroid70\Lottie.Forms.Droid.dll</HintPath>
-    </Reference>
     <Reference Include="Refractored.XamForms.PullToRefresh">
       <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.dll</HintPath>
     </Reference>
     <Reference Include="Refractored.XamForms.PullToRefresh.Droid">
       <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie">
+      <HintPath>..\packages\Com.Airbnb.Android.Lottie.2.2.5.0\lib\MonoAndroid40\Lottie.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie.Forms">
+      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.4\lib\MonoAndroid70\Lottie.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie.Forms.Droid">
+      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.4\lib\MonoAndroid70\Lottie.Forms.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Core">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\ZXing.Net.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.portable">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\zxing.portable.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXingNetMobile">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Forms.Android">
+      <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.1.47\lib\MonoAndroid403\ZXing.Net.Mobile.Forms.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Forms">
+      <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.1.47\lib\MonoAndroid403\ZXing.Net.Mobile.Forms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

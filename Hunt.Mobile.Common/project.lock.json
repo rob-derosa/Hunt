@@ -14,7 +14,7 @@
           "lib/portable-net45+wp8+win8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/XFGloss.dll": {}
         }
       },
-      "Com.Airbnb.Xamarin.Forms.Lottie/2.3.2": {
+      "Com.Airbnb.Xamarin.Forms.Lottie/2.3.4": {
         "type": "package",
         "dependencies": {
           "Xamarin.Forms": "2.3.4.247"
@@ -848,12 +848,12 @@
         "readme.txt"
       ]
     },
-    "Com.Airbnb.Xamarin.Forms.Lottie/2.3.2": {
-      "sha512": "8BftZ9xuQ8Iy3iaHfHUxFuPJMeBraG4eULMNmcKVWoHBNyn8g9Jn7W7YeZXk9KDKxhdNM/cvQRBn0n6asYjHng==",
+    "Com.Airbnb.Xamarin.Forms.Lottie/2.3.4": {
+      "sha512": "z48qDY32vcWnZB2lixrDrXw645O+ScHGn3iXH37/VsHeD68XB1fWOFm555m41K81sLcApi9SDrYdOuFk9j6mQg==",
       "type": "package",
-      "path": "com.airbnb.xamarin.forms.lottie/2.3.2",
+      "path": "com.airbnb.xamarin.forms.lottie/2.3.4",
       "files": [
-        "com.airbnb.xamarin.forms.lottie.2.3.2.nupkg.sha512",
+        "com.airbnb.xamarin.forms.lottie.2.3.4.nupkg.sha512",
         "com.airbnb.xamarin.forms.lottie.nuspec",
         "lib/MonoAndroid70/Lottie.Forms.Droid.dll",
         "lib/MonoAndroid70/Lottie.Forms.Droid.pdb",
@@ -3931,7 +3931,7 @@
   "projectFileDependencyGroups": {
     "": [
       "Ansuria.XFGloss >= 1.0.6.59",
-      "Com.Airbnb.Xamarin.Forms.Lottie >= 2.3.2",
+      "Com.Airbnb.Xamarin.Forms.Lottie >= 2.3.4",
       "Microsoft.Azure.Mobile >= 0.15.0",
       "Microsoft.Azure.Mobile.Analytics >= 0.15.0",
       "Microsoft.Azure.Mobile.Crashes >= 0.15.0",
@@ -3959,16 +3959,16 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "/Users/rob/Projects/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
+      "projectUniqueName": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
       "projectName": "Hunt.Mobile.Common",
-      "projectPath": "/Users/rob/Projects/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
-      "projectJsonPath": "/Users/rob/Projects/Hunt/Hunt.Mobile.Common/project.json",
+      "projectPath": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
+      "projectJsonPath": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/project.json",
       "projectStyle": "ProjectJson",
       "frameworks": {
         "portable45-net45+win8+wpa81": {
           "projectReferences": {
-            "/Users/rob/Projects/Hunt/Hunt.Common/Hunt.Common.csproj": {
-              "projectPath": "/Users/rob/Projects/Hunt/Hunt.Common/Hunt.Common.csproj"
+            "/Users/rob/Projects/Github/Hunt/Hunt.Common/Hunt.Common.csproj": {
+              "projectPath": "/Users/rob/Projects/Github/Hunt/Hunt.Common/Hunt.Common.csproj"
             }
           }
         }
@@ -3976,7 +3976,7 @@
     },
     "dependencies": {
       "Ansuria.XFGloss": "1.0.6.59",
-      "Com.Airbnb.Xamarin.Forms.Lottie": "2.3.2",
+      "Com.Airbnb.Xamarin.Forms.Lottie": "2.3.4",
       "Microsoft.Azure.Mobile": "0.15.0",
       "Microsoft.Azure.Mobile.Analytics": "0.15.0",
       "Microsoft.Azure.Mobile.Crashes": "0.15.0",

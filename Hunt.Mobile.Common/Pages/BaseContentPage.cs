@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Lottie.Forms;
+using Microsoft.Azure.Mobile.Analytics;
 using Microsoft.Azure.Mobile.Push;
 using Xamarin.Forms;
 using XFGloss;
 
 namespace Hunt.Mobile.Common
 {
-	public class BaseContentPage<T> : ContentPage, IHudProvider where T : BaseViewModel, new()
+	public class BaseContentPage<T> : ContentPage, IHuntContentPage, IHudProvider where T : BaseViewModel, new()
 	{
 		#region Properties & Constructors
 
@@ -101,6 +102,8 @@ namespace Hunt.Mobile.Common
 
 			if(Hud.Instance == null)
 				Hud.Instance = this;
+
+			Analytics.TrackEvent($"{GetType().Name} loaded");
 		}
 
 		protected override void OnAppearing()
@@ -123,6 +126,11 @@ namespace Hunt.Mobile.Common
 			Dismiss();
 
 			base.OnDisappearing();
+		}
+
+		public virtual void OnBeforePoppedTo()
+		{
+			
 		}
 
 		protected override void OnChildAdded(Element child)
@@ -395,6 +403,11 @@ namespace Hunt.Mobile.Common
 		}
 
 		#endregion
+	}
+
+	public interface IHuntContentPage
+	{
+		void OnBeforePoppedTo();
 	}
 
 	public enum Orientation

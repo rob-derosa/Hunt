@@ -64,7 +64,10 @@ namespace Hunt.Backend.Functions
 							if (action == GameUpdateAction.EndGame && existingGame.HasEnded)
 								return req.CreateResponse(HttpStatusCode.OK);
 
-							bool isWinningAcquisition = false;
+                            if (action == GameUpdateAction.StartGame)
+                                game.StartDate = DateTime.UtcNow;
+
+                                bool isWinningAcquisition = false;
 							if (action == GameUpdateAction.AcquireTreasure)
 							{
 								//Need to evaluate the game first before we save as there might be a winner
@@ -101,12 +104,6 @@ namespace Hunt.Backend.Functions
 							{
 								SendTargetedNotifications(game, action, arguments);
 							}
-						}
-
-						if (action == GameUpdateAction.StartGame)
-						{
-							//Schedule timer function here and pass in GameID
-							//When the timer function fires, use the GameID to look up the game
 						}
 
 						savedGame = client.GetItemAsync<Game>(game.Id).Result; //Comment out at some point if not needed

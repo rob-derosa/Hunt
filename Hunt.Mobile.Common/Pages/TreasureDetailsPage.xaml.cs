@@ -82,8 +82,8 @@ namespace Hunt.Mobile.Common
 				var success = await ViewModel.AnalyzePhotoForAcquisition();
 				if(success)
 				{
-					await PlayAnimation();
 					ViewModel.OnTreasureAcquired?.Invoke(ViewModel.Game);
+					await PlayAnimation();
 				}
 				else
 				{

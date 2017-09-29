@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "Ansuria.XFGloss": "1.0.6.59",
-    "Com.Airbnb.Xamarin.Forms.Lottie": "2.3.2",
+    "Com.Airbnb.Xamarin.Forms.Lottie": "2.3.4",
     "Microsoft.Azure.Mobile": "0.15.0",
     "Microsoft.Azure.Mobile.Analytics": "0.15.0",
     "Microsoft.Azure.Mobile.Crashes": "0.15.0",

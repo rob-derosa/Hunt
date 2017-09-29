@@ -2,12 +2,15 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.Mobile.Push;
 using Xamarin.Forms;
+using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
 
 namespace Hunt.Mobile.Common
 {
 	public partial class DashboardPage : BaseContentPage<DashboardViewModel>
 	{
+		bool _isScanning;
+
 		public DashboardPage()
 		{
 			InitializeComponent();
@@ -20,6 +23,12 @@ namespace Hunt.Mobile.Common
 					await SubmitEntryCode();
 				}
 			};
+		}
+
+		public override void OnBeforePoppedTo()
+		{
+			ViewModel.NotifyPropertiesChanged();
+			base.OnBeforePoppedTo();
 		}
 
 		#region Event Handlers
@@ -57,15 +66,26 @@ namespace Hunt.Mobile.Common
 			Hud.Instance.ShowToast("This feature has not been implemented yet.");
 		}
 
+		async void ScanCodeClicked(object sender, EventArgs e)
+		{
+			await LaunchScanPage();
+		}
+
 		#endregion
 
 		#region Join Game
 
-		async void ScanCodeClicked(object sender, EventArgs e)
+		async Task LaunchScanPage()
 		{
+			if(_isScanning)
+				return;
+
+			_isScanning = true;
 			if(_scanPage == null)
 			{
-				_scanPage = new ZXingScannerPage();
+				var overlay = new ZXingDefaultOverlay { ShowFlashButton = false };
+				overlay.BindingContext = overlay;
+				_scanPage = new ZXingScannerPage(null, overlay);
 				_scanPage.OnScanResult += HandleScanResult;
 			}
 
@@ -73,7 +93,7 @@ namespace Hunt.Mobile.Common
 			{
 				Text = "Cancel",
 				IsDestructive = true,
-				Command = new Command(() => { Navigation.PopModalAsync(); }),
+				Command = new Command(() => { _isScanning = false; Navigation.PopModalAsync(); }),
 			};
 
 			var nav = _scanPage.ToNav();
@@ -89,6 +109,7 @@ namespace Hunt.Mobile.Common
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				ViewModel.EntryCode = result.Text;
+				_isScanning = false;
 				Navigation.PopModalAsync();
 			});
 		}

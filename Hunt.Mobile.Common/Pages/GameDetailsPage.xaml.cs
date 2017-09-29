@@ -142,7 +142,7 @@ namespace Hunt.Mobile.Common
 
 				if(ViewModel.Game.HasEnded)
 				{
-					await Navigation.PopAsync(true);
+					await Navigation.PopAsyncAndNotify();
 					await Task.Delay(500);
 
 					if(ViewModel.Game.WinnningTeamId == ViewModel.Game.GetTeam().Id)

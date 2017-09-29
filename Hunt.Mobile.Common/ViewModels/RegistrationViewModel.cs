@@ -1,6 +1,7 @@
 using System;
 using Hunt.Common;
 using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
 
 namespace Hunt.Mobile.Common
 {
@@ -54,6 +55,8 @@ namespace Hunt.Mobile.Common
 				InstallId = MobileCenter.GetInstallIdAsync().Result.ToString(),
 			};
 
+			var args = new KVP { { "email", player.Email }, { "firstName", player.Alias }, { "avatar", player.Avatar } };
+			Analytics.TrackEvent("Player registered", args);
 			App.Instance.SetPlayer(player);
 		}
 

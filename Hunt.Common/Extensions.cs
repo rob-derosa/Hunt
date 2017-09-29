@@ -16,7 +16,7 @@ namespace Hunt.Common
 		{
 			if(o == null)
 				return null;
-			
+
 			return JsonConvert.SerializeObject(o);
 		}
 
@@ -24,7 +24,7 @@ namespace Hunt.Common
 		{
 			if(string.IsNullOrWhiteSpace(json))
 				return default(T);
-			
+
 			return JsonConvert.DeserializeObject<T>(json);
 		}
 
@@ -62,12 +62,12 @@ namespace Hunt.Common
 
 		public static Player GetPlayer(this Game game, string id)
 		{
-			if (game.Coordinator?.Id.Equals(id, StringComparison.OrdinalIgnoreCase) == true)
+			if(game.Coordinator?.Id.Equals(id, StringComparison.OrdinalIgnoreCase) == true)
 				return game.Coordinator;
 
-			foreach (var team in game.Teams)
-				foreach (var player in team.Players)
-					if (player.Id.Equals(id, StringComparison.OrdinalIgnoreCase) == true)
+			foreach(var team in game.Teams)
+				foreach(var player in team.Players)
+					if(player.Id.Equals(id, StringComparison.OrdinalIgnoreCase) == true)
 						return player;
 
 			return null;
@@ -75,7 +75,7 @@ namespace Hunt.Common
 
 		public static Team GetTeam(this Game game, Player player)
 		{
-			if (game == null || player == null)
+			if(game == null || player == null)
 				return null;
 
 			return game.Teams.SingleOrDefault(t => t.Players.Exists(p => p.Id == player.Id));
@@ -83,10 +83,14 @@ namespace Hunt.Common
 
 		public static bool IsCoordinator(this Game game, Player player)
 		{
-			if (game == null || player == null || player.Id == null)
+			if(game == null || player == null || player.Id == null)
 				return false;
 
 			return game.Coordinator.Id.Equals(player.Id, StringComparison.CurrentCultureIgnoreCase);
 		}
+	}
+
+	public class KVP : Dictionary<string, string>
+	{
 	}
 }

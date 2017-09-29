@@ -138,9 +138,9 @@ namespace Hunt.Backend.Functions.Test
         [TestMethod]
         public async Task SetEndGame()
         {
-            var result = await SendPostRequest(string.Format("SetEndGame?minutes=1&gameId={0}", _gameId), string.Empty);
+            var result = await SendGetRequest(string.Format("SetEndGame?minutes=1&gameId={0}", _gameId));
 
-            Debug.Assert(result.StatusCode == HttpStatusCode.OK);
+            Debug.Assert(result == HttpStatusCode.OK);
         }
 
         [TestMethod]

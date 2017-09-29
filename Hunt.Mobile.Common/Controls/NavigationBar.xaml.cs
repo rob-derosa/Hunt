@@ -122,8 +122,14 @@ namespace Hunt.Mobile.Common
 
 		async void OnBackClicked(object sender, EventArgs e)
 		{
-			try { await Navigation.PopAsync(); }
-			catch(Exception){}
+			try
+			{
+				await Navigation.PopAsyncAndNotify();
+			}
+			catch(Exception ex)
+			{
+				Logger.Instance.WriteLine(ex);
+			}
 		}
 
 		void OnNextClicked(object sender, EventArgs e)

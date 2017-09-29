@@ -41,6 +41,7 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
 				<Grid
@@ -67,6 +68,8 @@
 						BackgroundColor="#3FFF"
 						Style="{StaticResource separator}" />
 				</Grid>
+
+				<!-- end game bar -->
 				
 				<Grid
 					IsVisible="{Binding Game.HasEnded}"
@@ -74,21 +77,14 @@
 					HeightRequest="40"
 					VerticalOptions="Start"
 					HorizontalOptions="FillAndExpand">
-					
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
 
 					<Label Text="{Binding EndGameResult}"
-						Grid.Column="1"
 						Margin="0,0,10,0"
 						LineBreakMode="TailTruncation"
 						VerticalOptions="Center"
 						HorizontalOptions="Center" />
 
 					<ContentView
-						Grid.ColumnSpan="2"
 						BackgroundColor="#3FFF"
 						Style="{StaticResource separator}" />
 				</Grid>
@@ -115,6 +111,7 @@
 
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition />
+									<ColumnDefinition Width="Auto" />
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								
@@ -127,7 +124,7 @@
 
 								<Label Text="{Binding EndGameMessage}"
 									Style="{StaticResource H2}"									
-									Grid.ColumnSpan="2"
+									Grid.ColumnSpan="3"
 									Margin="0,20"
 									IsVisible="{Binding Game.HasEnded}"
 									HorizontalOptions="Center"
@@ -136,7 +133,7 @@
 								<StackLayout
 									IsVisible="{Binding Game.HasEnded,
 										Converter={x:Static local:InverseBoolConverter.Instance}}"
-									Grid.ColumnSpan="2"
+									Grid.ColumnSpan="3"
 									Spacing="10"
 									Margin="0,20,0,0"
 									VerticalOptions="Start"
@@ -168,9 +165,9 @@
 
 								<Grid
 									Grid.Row="1"
-									HorizontalOptions="Start"
+									HorizontalOptions="Center"
 									VerticalOptions="End"
-									Margin="24,-24,24,24">
+									Margin="0,0,24,24">
 
 									<local:CircleProgress
 										WidthRequest="100"
@@ -196,10 +193,10 @@
 								
 								<Grid
 									Grid.Row="1"
-									Grid.Column="1"
-									HorizontalOptions="End"
+									Grid.Column="2"
+									HorizontalOptions="Center"
 									VerticalOptions="End"
-									Margin="24,2,24,24">
+									Margin="24,0,0,24">
 
 									<local:CircleProgress
 										WidthRequest="100"
@@ -226,7 +223,7 @@
 								<!-- teams button -->
 								
 								<local:SvgImage
-									Grid.ColumnSpan="2"
+									Grid.Column="1"
 									Grid.Row="1"
 									Margin="0,0,0,62"
 									Clicked="ViewTeamsClicked"
@@ -321,33 +318,31 @@
 
 				<!-- button bar -->
 
-				<Button Grid.Row="1"
+				<local:ImageButton
+					Grid.Row="1"
+					IsVisible="{Binding CanAddTreasure}"
+					ImageSource="fab_add.png"
+					VerticalOptions="End"
+					HorizontalOptions="End"
+					WidthRequest="60"
+					HeightRequest="60"
+					Margin="0,0,20,20"
+					Clicked="AddTreasureClicked"
+					AutomationId="addTreasureButton" />
+
+				<Button Grid.Row="2"
 					Clicked="EndGameClicked"
 					IsVisible="{Binding CanEndGame}"
 					VerticalOptions="End"
 					AutomationId="endGameButton"
 					Text="End game now" />
 
-				<StackLayout Grid.Row="1"
-					Spacing="0"
+				<Button
+					Grid.Row="2"
+					Clicked="StartGameClicked"
 					IsVisible="{Binding CanStartGame}"
-					VerticalOptions="End">
-
-					<local:ImageButton
-						ImageSource="fab_add.png"
-						VerticalOptions="Start"
-						HorizontalOptions="End"
-						WidthRequest="60"
-						HeightRequest="60"
-						Margin="0,0,20,20"
-						Clicked="AddTreasureClicked"
-						AutomationId="addTreasureButton" />
-
-					<Button
-						Clicked="StartGameClicked"
-						AutomationId="startGameButton"
-						Text="Start game now" />
-				</StackLayout>
+					AutomationId="startGameButton"
+					Text="Start game now" />
 			</Grid>
 		</Grid>
 	</local:BaseContentPage.RootContent>

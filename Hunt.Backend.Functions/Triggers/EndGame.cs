@@ -44,7 +44,7 @@ namespace Hunt.Backend.Triggers
 
 						var json = JsonConvert.SerializeObject(payload);
 						var content = new StringContent(json);
-						var response = http.PostAsync(url, content).Result;
+						var response = http.GetAsync(url).Result;
 					}
 				}
 				catch (Exception e)

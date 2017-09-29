@@ -96,6 +96,22 @@ namespace Hunt.Mobile.Common
 
 		#endregion
 
+		async public static Task PopAsyncAndNotify(this INavigation nav)
+		{
+			if(nav.NavigationStack.Count >= 2)
+			{
+				var prevPage = nav.NavigationStack[nav.NavigationStack.Count - 2];
+
+				if(prevPage is IHuntContentPage)
+				{
+					var bcp = prevPage as IHuntContentPage;
+					bcp.OnBeforePoppedTo();
+				}
+			}
+
+			await nav.PopAsync();
+		}
+
 		#region Page
 
 		public static void RemoveSecondToLastPage(this INavigation page)
@@ -110,7 +126,7 @@ namespace Hunt.Mobile.Common
 				page.RemoveSecondToLastPage();
 			}
 
-			await page.PopAsync(true);
+			await page.PopAsyncAndNotify();
 		}
 
 		async public static Task SignOutPlayer(this Page page)

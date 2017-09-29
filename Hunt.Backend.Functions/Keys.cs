@@ -36,8 +36,8 @@ namespace Hunt.Backend.Functions
         //Vision
         public static class Vision
 		{
-			public const string Url = "https://westeurope.api.cognitive.microsoft.com/vision/v1.0";
-			public const string ServiceKey = "183a86f557c2407ea52fdf1894335e29";
+			public const string Url = "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0";
+			public const string ServiceKey = "bbf18bfedf604d558ee44eb974bb5958";
 		}
 
 		public static class Cosmos
@@ -48,8 +48,8 @@ namespace Hunt.Backend.Functions
 
         public static class ContentModerator
         {
-            public static string Url = @"https://westeurope.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessText/Screen/?language=eng&autocorrect=true&PII=true";
-            public static string Key = "31262fb7c53b435a9d702dc43d53731b";
+            public static string Url = @"https://southcentralus.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessText/Screen/?language=eng&autocorrect=true&PII=true";
+            public static string Key = "0484d9eaf67a40b5ac5bb40d9f368ec5";
         }
     }
 }

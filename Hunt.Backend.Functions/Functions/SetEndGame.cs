@@ -17,9 +17,9 @@ namespace Hunt.Backend.Functions
 	{
 		[FunctionName(nameof(SetEndGame))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(SetEndGame))]
-			HttpRequestMessage req, TraceWriter log)
-		{
+        public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(SetEndGame))]
+            HttpRequestMessage req, TraceWriter log)
+        {
 			using (var analytic = new Analytic(new RequestTelemetry
 			{
 				Name = nameof(SetEndGame)
