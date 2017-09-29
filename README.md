@@ -37,9 +37,9 @@ The first team to acquire all the treasures will win the game. If no team acquir
       * joining games via 6 character entry code or scanning the QR code
       * choosing a team
       * acquriing treasure once the game has started
-  * Treasure
-    * There must be at least 2 treasures added to the game before it can be started
-    * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
+* Treasure
+  * There must be at least 2 treasures added to the game before it can be started
+  * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
     
 
 ### Front-end Patterns
@@ -104,13 +104,13 @@ Start the game and let the teams attempt to find the objects and acquire the tre
 
 
 #### Mock Data
-  * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
-    * User can choose to be the Coordinator or a Player
-      * if Coordinator is chosen, the user can add additional treasure and manully start the game
-      * if Player is chosed, the user is put on House Lannister and the game will be started automatically
-    * Games can be seeded with players that join teams - about half the game slots will fill with random players
-    * Games can be seeded with pre-configured Treasure (3)
-    * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
+* When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
+  * User can choose to be the Coordinator or a Player
+  * if Coordinator is chosen, the user can add additional treasure and manully start the game
+  * if Player is chosen, the user is put on House Lannister and the game will be started automatically
+  * Games can be seeded with players that join teams - about half the game slots will fill with random players
+  * Games can be seeded with pre-configured Treasure (3)
+  * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
 
 #### Azure Deployment
 To make it easy for new developers to stand up their own personal Hunt backend, ARM templates are used so that by clicking a button and selecting a few options (like subscription, resource group and region), developers can deploy their own pre-configured instance of all services needed by Hunt to function.
