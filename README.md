@@ -24,7 +24,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 ### Rules
   
 * Roles
-  * User can be involved in only one game at a time as either the Coordinator or a Player
+  * Users can be involved in only one game at a time as either the Coordinator or a Player
     * Coordinators are responsible for
       * creating the game by configuring:
         * the amount of teams
@@ -32,13 +32,16 @@ The first team to acquire all the treasures will win the game. If no team acquir
         * the amount of time the game lasts (from 5 - 180min)
       * adding treasure to the game
       * starting the game
-      * ending the game early, if needed
+      * ending the game early, if necessary
     * Players are responsible for
-      * joining games via 6 character entry code or scanning the QR code
+      * joining games via a 6-char entry code or scanning the QR code
       * choosing a team
       * acquriing treasure once the game has started
 * Treasure
-  * There must be at least 2 treasures added to the game before it can be started
+  * A treasure consists of a hint and a tagged photograph supplied by the Coordinator.
+  * There must be at least 2 treasures added to the game before it can be started.
+  * Photos taken by the Coordinator are analyzed by Vision API and a set of associated tags is presented, of which up to 2 can be selected.
+  * If teams solve the hint and take a photo of a similar object with any matching tags, the treasure is acquired.
   * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
     
 
@@ -46,15 +49,15 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Each ContentPage derives from `BaseContentPage<T>` where `T` is of type `BaseViewModel` and serves as the `BindingContext`.
 * All outbound requests are routed as new tasks through `TaskRunner.RunProtected` to handle common failure scenarios such as device network connectivity changes, back-end server outages, etc.
 * Game document writes are further routed through `ViewModel.SaveGameSafe` proxy method to handle version conflicts resiliently with minimal code.
-* Most images/icons are SVG files embedded in the Common project assembly once and rendered at runtime via the custom SvgImage control. Fill color and vector scale can be specified per instance.
+* Most images/icons are SVG files embedded in the `Hunt.Mobile.Common` project assembly once and rendered at runtime via the custom` SvgImage` control. Fill color and vector scale can be specified per instance.
 * Animations are made possible with the Lottie Animation library from the folks at Airbnb. Animations are also vector and stored in a small .json file.
 * Almost all UI code is shared, include the custom HUD and Toast elements.
 * The Forms navigation stack is utlizied, however, every page has `SetHasNavigationBar` set to `false`. A custom `NavigationToolbar` is used instead to better control the UI.
 * Content for each page is declared in XAML under the `BaseContentPage.RootContent` node instead of the typical `BaseContentPage.Content` so HUD and Toast can appear at a greater Z-index.
 
 ### Back-end Patterns
-* Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers an update.
-* Version conflicts are raised if the associated document timestamp is out of order - it is up to the client to handle this exception and resolve the conflict.
+* Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers a game refresh.
+* Version conflicts are raised if the associated document timestamp is out of order - it is up to the client to handle this exception and resolve the conflict. See `ViewModel.SaveGameSafe`.
 * All images are stored in blob storage and passed to the Vision APi via the blob URL.
 
 
@@ -96,20 +99,20 @@ The first team to acquire all the treasures will win the game. If no team acquir
 Hunt was designed and is intended specifically for use with audiences at presentations, hackathons, community meetups, on-site meetings and speaking engagements.
 
 #### Interactive Option
-To add some fun to a presentation, one option is to engage the audience in a quick game of hunt.Prior to the presentation, plant 2 or 3 well-known objects in the room somewhere inconspicuous, like a Coke bottle and a sneaker. Begin the talk by asking the audience if they want to play a game.
+To add some fun to a presentation, one option is to engage the audience in a quick game of hunt. Prior to the presentation, plant 2 or 3 well-known objects in the room somewhere inconspicuous, like a Coke bottle and a sneaker. Begin the talk by asking the audience if they want to play a game.
 
-Display http://aka.ms/hunt on a project and invite people to downoad the app. As you give an overview of Hunt, project your phone's screen so everyone can see. Create a quick 10-15min game seeded with some players and treasures. Then share the game entry code and QR code so folks can join a team.
+Display http://aka.ms/hunt on a projector and invite people to downoad the app. As you give an overview of Hunt, project your phone's screen so everyone can see. Create a quick 10-15min game seeded with some players and treasures. Then share the game entry code and QR code so participants can join a team.
 
-Start the game and let the teams attempt to find the objects and acquire the treasure. Possible reward the winning team with some Azure credit.
-
+Start the game and let the teams attempt to find the objects and acquire the treasure. Consider rewarding the winning team with free Azure credit.
 
 #### Mock Data
+* If you do not have your own Gravatar account, you can use one of a dozen Game of Thrones characters by entering their _firstname@hbo.com_ (i.e. _arya@hbo.com_)
 * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
   * User can choose to be the Coordinator or a Player
   * if Coordinator is chosen, the user can add additional treasure and manully start the game
   * if Player is chosen, the user is put on House Lannister and the game will be started automatically
   * Games can be seeded with players that join teams - about half the game slots will fill with random players
-  * Games can be seeded with pre-configured Treasure (3)
+  * Games can be seeded with 3 pre-configured treasures
   * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
 
 #### Azure Deployment
