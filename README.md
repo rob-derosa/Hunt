@@ -25,7 +25,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
   
 * Roles
   * User can be involved in only one game at a time as either the Coordinator or a Player
-    * Coordintors are responsible for
+    * Coordinators are responsible for
       * creating the game by configuring:
         * the amount of teams
         * the amount of players per teams
