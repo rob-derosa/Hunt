@@ -91,7 +91,13 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * Vision API
     * Content Moderator API
   * Service Bus
+  * Unit tested
   * Deployment via ARM Templates
+  
+* #### Planning and Build
+  * VSTS Work item tracking
+  * VSTS Code repository
+  * VSTS Build for backend + unit testing
 
 
 ### Presentations and Hackathons
@@ -107,10 +113,11 @@ Start the game and let the teams attempt to find the objects and acquire the tre
 
 #### Mock Data
 * If you do not have your own Gravatar account, you can use one of a dozen Game of Thrones characters by entering their _firstname@hbo.com_ (i.e. _arya@hbo.com_)
+  * supported accounts: ned, sansa, arya, jon, joffrey, cersei, jamie, theon, yara 
 * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
   * User can choose to be the Coordinator or a Player
-  * if Coordinator is chosen, the user can add additional treasure and manully start the game
-  * if Player is chosen, the user is put on House Lannister and the game will be started automatically
+  * if coordinator is chosen, the user can add additional treasure and manully start the game
+  * if player is chosen, the user is put on House Stark and the game will be started automatically
   * Games can be seeded with players that join teams - about half the game slots will fill with random players
   * Games can be seeded with 3 pre-configured treasures
   * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
