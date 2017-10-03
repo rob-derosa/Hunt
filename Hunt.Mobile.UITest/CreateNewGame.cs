@@ -25,7 +25,9 @@ namespace Hunt.Mobile.UITest
 
 			app.Tap("isCoordinatorSwitch");
 
-			app.ScrollDownTo("continueButton", "createGameScrollView");
+			var strat = TestEnvironment.Platform == TestPlatform.TestCloudAndroid ? ScrollStrategy.Gesture : ScrollStrategy.Auto;
+			app.ScrollDownTo("continueButton", "createGameScrollView", strat);
+
 			app.Screenshot("Then I can configure and save");
 			app.Tap("continueButton");
 			app.Screenshot("And the game should save");

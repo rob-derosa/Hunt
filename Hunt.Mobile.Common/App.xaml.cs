@@ -63,12 +63,12 @@ namespace Hunt.Mobile.Common
 				//Instance.CurrentGame.StartDate = DateTime.Now;
 
 				//Has game ended
-				//Instance.CurrentGame.EndDate = DateTime.Now;
-				//Instance.CurrentGame.StartDate = DateTime.Now;
-				//Instance.CurrentGame.WinnningTeamId = Instance.CurrentGame.Teams[1].Id;
+				Instance.CurrentGame.EndDate = DateTime.Now;
+				Instance.CurrentGame.StartDate = DateTime.Now;
+				Instance.CurrentGame.WinnningTeamId = Instance.CurrentGame.Teams[1].Id;
 
 				//Are you a player
-				//Player = Instance.CurrentGame.Teams[1].Players[0];
+				Player = Instance.CurrentGame.Teams[1].Players[0];
 
 				//Are you the coordinator
 				Player = Instance.CurrentGame.Coordinator.Clone(); //Jon

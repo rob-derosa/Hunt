@@ -10,8 +10,8 @@
 		<ScrollView>
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height=".5*" />
-					<RowDefinition Height=".5*" />
+					<RowDefinition />
+					<RowDefinition />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 

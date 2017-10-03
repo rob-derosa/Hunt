@@ -107,12 +107,12 @@ namespace Hunt.Mobile.Common
 
 				if(mockAcquiredTreasure && mockPlayers)
 				{
-					var shoesAt = new AcquiredTreasure
+					var bottleAt = new AcquiredTreasure
 					{
-						TreasureId = shoes.Id,
-						ImageSource = shoes.ImageSource,
+						TreasureId = bottle.Id,
+						ImageSource = bottle.ImageSource,
 						ClaimedTimeStamp = DateTime.Now.AddMinutes(20),
-						ClaimedPoints = shoes.Points / 3,
+						ClaimedPoints = bottle.Points / 3,
 						PlayerId = game.Teams[1].Players[1].Id,
 					};
 
@@ -125,7 +125,7 @@ namespace Hunt.Mobile.Common
 						PlayerId = game.Teams[1].Players[0].Id,
 					};
 
-					game.Teams[1].AcquiredTreasure.Add(shoesAt);
+					game.Teams[1].AcquiredTreasure.Add(bottleAt);
 					game.Teams[1].AcquiredTreasure.Add(dogAt);
 				}
 			}

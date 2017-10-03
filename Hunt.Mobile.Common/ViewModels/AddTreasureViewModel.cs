@@ -82,7 +82,7 @@ namespace Hunt.Mobile.Common
 
 				_treasureImageUrl = url;
 				AvailableAttributes = availableAttributes;
-				return true;
+				return AvailableAttributes.Length > 0;
 			}
 		}
 
