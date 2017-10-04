@@ -12,13 +12,16 @@ iOS 10.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/e282
 Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) | deploy
 
 
-
 ### Overview
-The purpose of Hunt is to facilitate a virtual scavenger hunt between multiple teams. Players on each team will have to solve a riddle or hint and photograph the object. If the photograph contains the correct object, the team will be awarded the full amount of points for that treasure.
+The purpose of Hunt is to facilitate a virtual scavenger hunt between multiple teams. Players on each team will need to solve a riddle/hint and photograph the answer/object. If the photograph contains the correct object, the team will be awarded the full amount of points for that treasure.
 
 For example, if the hint is "What has a neck, no head yet still wears a cap?" The teams would need to determine that the answer is a bottle and photograph a bottle. The photograph will be analyzed for the tag `bottle` and if it exists, the team is awarded the points.
 
 The first team to acquire all the treasures will win the game. If no team acquires all the treasure, the team with the most points will win when the time runs out. Alternatively, the Coordinator of the game can end the game early, in which case the team with the most points will win.
+
+
+### Screenshots
+
 
 
 ### Rules
@@ -58,7 +61,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 ### Back-end Patterns
 * Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers a game refresh.
 * Version conflicts are raised if the associated document timestamp is out of order - it is up to the client to handle this exception and resolve the conflict. See `ViewModel.SaveGameSafe`.
-* All images are stored in blob storage and passed to the Vision APi via the blob URL.
+* All images are stored in blob storage and passed to the Vision API via the blob URL.
 
 
 ### Technologies Utilized
@@ -72,26 +75,26 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * Crashes
     * Distribution
   * 3rd Party SDKs
-    * SkiaSharp
-    * Lottie
-    * PullToRefreshPage
-    * ImageCircle
-    * CrossMedia
-    * CrossConnectivity
-    * ZXing
-    * XFGloss
+    * SkiaSharp (vector and SVG render kit)
+    * Lottie (animations)
+    * PullToRefreshPage (pull to refresh on non-listview pages)
+    * ImageCircle (better than a square)
+    * CrossMedia (capturing camera photos)
+    * CrossConnectivity (determining device network connectivity)
+    * ZXing (QR code generation/scanning)
+    * XFGloss (styled switches and sliders, background gradient)
     
 * #### Back-end
-  * C# Functions
-  * Cosmos / Document DB
+  * Functions (C#)
+  * Cosmos: Document DB
   * Blob Storage
   * Application Insights
-  * Mobile Center Push via REST
+  * Push notifications: Mobile Center Push REST API
   * Cognitive Services
     * Vision API
     * Content Moderator API
-  * Service Bus
-  * Unit tested
+  * Service Bus (timed brokered message to end games)
+  * Unit tested on commit
   * Deployment via ARM Templates
   
 * #### Planning and Build
@@ -109,11 +112,11 @@ To add some fun to a presentation, one option is to engage the audience in a qui
 
 Display http://aka.ms/hunt on a projector and invite people to downoad the app. As you give an overview of Hunt, project your phone's screen so everyone can see. Create a quick 10-15min game seeded with some players and treasures. Then share the game entry code and QR code so participants can join a team.
 
-Start the game and let the teams attempt to find the objects and acquire the treasure. Consider rewarding the winning team with free Azure credit.
+Start the game and let the teams attempt to find the objects and acquire the treasure. Consider rewarding the winning team with free Azure credit.].
 
 #### Mock Data
 * If you do not have your own Gravatar account, you can use one of a dozen Game of Thrones characters by entering their _firstname@hbo.com_ (i.e. _arya@hbo.com_)
-  * supported accounts: ned, sansa, arya, jon, joffrey, cersei, jamie, theon, yara 
+  * supported accounts: ned, sansa, arya, jon, joffrey, cersei, jamie, theon, yara, euron, etc
 * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
   * User can choose to be the Coordinator or a Player
   * if coordinator is chosen, the user can add additional treasure and manully start the game
