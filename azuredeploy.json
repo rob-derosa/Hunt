@@ -2,62 +2,14 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": { 
-		"directory" : {
-          "type": "string",
-          "metadata": {
-            "description": "The project directory."
-          }
-        },
-		"subscription" : {
-          "type": "string",
-          "metadata": {
-            "description": "Azure subscription."
-          }
-        },
-		"resourceGroup" : {
-          "type": "string",
-          "metadata": {
-            "description": "Azure resource group - new or current group."
-          }
-        },
-		"resourceGroupName" : {
-          "type": "string",
-          "metadata": {
-            "description": "Azure resource group name."
-          }
-        },
-		"siteName" : {
-          "type": "string",
-          "metadata": {
-            "description": "The name of the site endpoint."
-          }
-        },
-		"sku" : {
-          "type": "string",
-          "metadata": {
-            "description": "The pricing tier."
-          }
-        },
-		"visionApiName": {
-			"defaultValue": "[concat(parameters('siteName'),'-vision')]",
-            "type": "String"
-        },
-		"contentModeratorApiName": {
-			"defaultValue": "[concat(parameters('siteName'),'-contentmoderator')]",
-            "type": "String"
-        },
-		"documentDbName": {
-			"defaultValue": "[concat(parameters('siteName'),'-dbstorage')]",
-            "type": "String"
-        },
-		"alertFailures": {
-			"defaultValue": "[concat(parameters('siteName'),'-alertFailures')]",
-            "type": "String"
-        },
-		"componentsAppName": {
-			"defaultValue": "[concat(parameters('siteName'),'-components')]",
-            "type": "String"
-        }
+		"siteName": {
+	        "type": "string",
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
+	    },
+	    "hostingPlanName": {
+	        "type": "string",
+	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	    }
 	},
     "resources": [
         {
