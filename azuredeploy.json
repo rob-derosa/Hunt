@@ -39,23 +39,23 @@
           }
         },
 		"visionApiName": {
-            "defaultValue": "[concat(parameters('siteName'),'-vision')]",
+            "value": "[concat(parameters('siteName'),'-vision')]",
             "type": "String"
         },
 		"contentModeratorApiName": {
-            "defaultValue": "[concat(parameters('siteName'),'-contentmoderator')]",
+            "value": "[concat(parameters('siteName'),'-contentmoderator')]",
             "type": "String"
         },
 		"documentDbName": {
-			"defaultValue": "[concat(parameters('siteName'),'-dbstorage')]",
+			"value": "[concat(parameters('siteName'),'-dbstorage')]",
             "type": "String"
         },
 		"alertFailures": {
-            "defaultValue": "[concat(parameters('siteName'),'-alertFailures')]",
+            "value": "[concat(parameters('siteName'),'-alertFailures')]",
             "type": "String"
         },
 		"componentsAppName": {
-			"defaultValue": "[[concat(parameters('siteName'),'-components')]",
+			"value": "[[concat(parameters('siteName'),'-components')]",
             "type": "String"
         }
 	},
