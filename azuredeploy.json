@@ -2,34 +2,34 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": { 
-		"siteName": {
+	    "siteName": {
 	        "type": "string",
-	        "defaultValue": "[concat(parameters('site'),'-plan')]"
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
 	    },
-		"hostingPlanName": {
+	    "hostingPlanName": {
 	        "type": "string",
-	        "defaultValue": "[concat(parameters('site'),'-plan')]"
+	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
 	    },
 		"visionApiName": {
-			"defaultValue": "[concat(parameters('site'),'-vision')]",
-            "type": "String"
-        },
+	        "type": "string",
+	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	    },
 		"contentModeratorApiName": {
-			"defaultValue": "[concat(parameters('site'),'-contentmoderator')]",
-            "type": "String"
-        },
+	        "type": "string",
+	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	    },
 		"documentDbName": {
-			"defaultValue": "[concat(parameters('site'),'-dbstorage')]",
-            "type": "String"
-        },
+	        "type": "string",
+	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	    },
 		"alertFailures": {
-			"defaultValue": "[concat(parameters('site'),'-alertFailures')]",
-            "type": "String"
-        },
+	        "type": "string",
+	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	    },
 		"componentsAppName": {
-			"defaultValue": "[concat(parameters('site'),'-components')]",
-            "type": "String"
-        }
+	        "type": "string",
+	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	    }
 	},
     "resources": [
         {
