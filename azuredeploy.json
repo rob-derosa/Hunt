@@ -1,15 +1,36 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": { 
-	    "siteName": {
-	        "type": "string",
-	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
-	    }
-	},
+    "parameters": {
+        "siteName": {
+            "type": "string",
+            "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
+        },
+        "sku": {
+            "type": "string",
+            "allowedValues": [
+                "Free",
+                "Shared",
+                "Basic",
+                "Standard",
+                "Premium"
+            ],
+            "defaultValue": "Free"
+        },
+        "storageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_ZRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Premium_LRS"
+            ]
+        }
+    },
     "resources": [
         {
-            "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourcegroups/huntappresourcegroup/providers/Microsoft.Cdn/profiles/huntapp'.",
             "type": "Microsoft.Cdn/profiles",
             "sku": {
                 "name": "Standard_Verizon"
@@ -17,44 +38,39 @@
             "name": "[concat(parameters('siteName'), '-cdn')]",
             "apiVersion": "2016-04-02",
             "location": "[resourceGroup().location]",
-            "tags": {},
-            "scale": null,
             "properties": {
                 "provisioningState": "Succeeded",
                 "resourceState": "Active"
-            },
-            "dependsOn": []
+            }
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/Microsoft.CognitiveServices/accounts/huntappvision'.",
             "type": "Microsoft.CognitiveServices/accounts",
             "sku": {
                 "name": "F0"
             },
-            "kind": "ComputerVision",
             "name": "[concat(parameters('siteName'), '-vision')]",
             "apiVersion": "2016-02-01-preview",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-            "properties": {},
-            "dependsOn": []
+            "location": "[resourceGroup().location]"
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/Microsoft.CognitiveServices/accounts/huntappcontentmoderator'.",
             "type": "Microsoft.CognitiveServices/accounts",
             "sku": {
                 "name": "F0"
             },
-            "kind": "ContentModerator",
             "name": "[concat(parameters('siteName'), '-content-moderator')]",
             "apiVersion": "2016-02-01-preview",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-            "properties": {},
-            "dependsOn": []
+            "location": "[resourceGroup().location]"
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/Microsoft.DocumentDB/databaseAccounts/huntapp'.",
+            "name": "[concat(parameters('siteName'), 'storage')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "properties": {
+                "accountType": "[parameters('storageAccountType')]"
+            }
+        },
+        {
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "kind": "GlobalDocumentDB",
             "name": "[concat(parameters('siteName'), '-documentDb')]",
@@ -72,45 +88,56 @@
                     "maxStalenessPrefix": 100
                 },
                 "name": "[concat(parameters('siteName'), '-database')]"
-            },
-            "dependsOn": []
+            }
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/microsoft.insights/alertrules/Failure Anomalies - huntapp'.",
-            "type": "microsoft.insights/alertrules",
-			"name": "[concat(parameters('siteName'), '-appfailures')]",
-            "apiVersion": "2014-04-01",
+            "type": "Microsoft.NotificationHubs/namespaces",
+            "kind": "NotificationHub",
+            "name": "[concat(parameters('siteName'), '-notification-namespace')]",
+            "apiVersion": "2014-09-01",
             "location": "[resourceGroup().location]",
-            "tags": {
-                "hidden-link:/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourcegroups/huntappresourcegroup/providers/microsoft.insights/components/huntapp": "Resource"
-            },
-            "scale": null,
             "properties": {
-                "name": "[concat(parameters('siteName'), '-appfailures')]",
-                "description": "",
-                "isEnabled": true,
-                "condition": {
-                    "odata.type": "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
-                    "dataSource": {
-                        "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-                        "resourceUri": "[resourceId('microsoft.insights/components', 'test')]",
-                        "metricNamespace": null,
-                        "metricName": "advanced::A3108E3D-5E26-44CF-B232-783F5E20EF10::ewAiAEgAeQBwAGUAcgBpAG8AbgBBAHAAcABsAGkAYwBhAHQAaQBvAG4AUwBpAGQAIgA6AG4AdQBsAGwALAAiAEgAeQBwAGUAcgBpAG8AbgBTAHUAYgBqAGUAYwB0AFMAaQBkACIAOgBuAHUAbABsACwAIgBIAHkAcABlAHIAaQBvAG4ATwBiAHMAZQByAHYAZQByAFMAaQBkACIAOgBuAHUAbABsACwAIgBDAHUAcwB0AG8AbQBlAHIAQQBjAGMAbwB1AG4AdABJAGQAIgA6ACIAMAAwADAAMAAwADAAMAAwAC0AMAAwADAAMAAtADAAMAAwADAALQAwADAAMAAwAC0AMAAwADAAMAAwADAAMAAwADAAMAAwADAAIgAsACIAQQBwAHAAbABpAGMAYQB0AGkAbwBuAE4AYQBtAGUAIgA6AG4AdQBsAGwALAAiAEEAcABwAGwAaQBjAGEAdABpAG8AbgBJAGQAIgA6AG4AdQBsAGwALAAiAFAAcgBvAGYAaQBsAGUASQBkACIAOgAwACwAIgBXAGkAbgBkAG8AdwBTAGkAegBlAEkAbgBNAGkAbgB1AHQAZQBzACIAOgA2ADAALAAiAE0AZQB0AHIAaQBjAE4AYQBtAGUAIgA6ACIAIgAsACIAVABoAHIAZQBzAGgAbwBsAGQAIgA6ADIALgAwACwAIgBBAGwAZQByAHQAVABlAG0AcABsAGEAdABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAE4AYQBtAGUAIgA6ACIAIgAsACIAUgB1AGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AIgA6ACIAIgAsACIAUgBlAHMAbwB1AHIAYwBlAEkAZAAiADoAbgB1AGwAbAAsACIAUwB1AGIAcwBjAHIAaQBwAHQAaQBvAG4ASQBkACIAOgBuAHUAbABsACwAIgBBAGcAZwByAGUAZwBhAHQAZQBGAHUAbgBjAHQAaQBvAG4AIgA6ACIAIgAsACIAQwBvAG0AcABhAHIAaQBzAG8AbgBPAHAAZQByAGEAdABvAHIAIgA6ACIAewBcACIAQgBhAHMAZQBsAGkAbgBlAFQAaQBtAGUAcwBwAGEAbgBcACIAOgBcACIAMAAwADoANAAwADoAMAAwAFwAIgAsAFwAIgBJAG4AcwBpAGcAaAB0AHMAUwBlAHIAdgBpAGMAZQBMAGEAZwBcACIAOgBcACIAMAAwADoAMAAwADoAMAAwAFwAIgAsAFwAIgBCAHUAZgBmAGUAcgBUAGkAbQBlAFwAIgA6AFwAIgAwADAAOgAwADEAOgAwADAAXAAiACwAXAAiAEIAbABvAGIAUwB0AG8AcgBhAGcAZQBMAG8AZwBnAGkAbgBnAEUAbgBhAGIAbABlAGQAXAAiADoAZgBhAGwAcwBlACwAXAAiAFUAcwBlAHIAUwB1AHAAcAByAGUAcwBzAGkAbwBuAHMAXAAiADoAbgB1AGwAbAAsAFwAIgBQAHIAbwBmAGkAbABlAEkAZABcACIAOgAwACwAXAAiAEUAbQBhAGkAbABUAHkAcABlAFwAIgA6ADAALABcACIAUgBkAGQARgBhAGkAbAB1AHIAZQBzAFMAcABpAGsAZQBUAGgAcgBlAHMAaABvAGwAZABcACIAOgAzAC4AMAAsAFwAIgBSAGEAdwBQAHIAbwBhAGMAdABpAHYAZQBSAHUAbABlAEMAbwBuAGYAaQBnAFwAIgA6AG4AdQBsAGwAfQAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8AQwB1AHMAdABvAG0AIgA6AGYAYQBsAHMAZQAsACIAQwB1AHMAdABvAG0ARQBtAGEAaQBsAHMARQBuAGMAbwBkAGUAZAAiADoAIgAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8ATwB3AG4AZQByAHMAIgA6AGYAYQBsAHMAZQB9AA=="
+                "namespaceType": "NotificationHub"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "kind": "functionapp",
+            "name": "[concat(parameters('siteName'), '-functions')]",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "name": "[concat(parameters('siteName'), '-functions')]",
+                "perSiteScaling": false,
+                "reserved": false,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "name": "[parameters('siteName')]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('siteName'),'.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
                     },
-                    "operator": "GreaterThan",
-                    "threshold": 2,
-                    "windowSize": "PT1H"
-                },
-                "action": {
-                    "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleEmailAction",
-                    "sendToServiceOwners": true,
-                    "customEmails": []
-                }
-            },
-            "dependsOn": [
-                "[resourceId('microsoft.insights/components', [concat(parameters('siteName'), '-components')])]"
-            ]
+                    {
+                        "name": "[concat(parameters('siteName'),'.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[concat(parameters('siteName'), '-functions')]",
+                "containerSize": 1536,
+                "dailyMemoryTimeQuota": 0
+            }
         }
-	],
-    "outputs": {  }
+    ]
 }
