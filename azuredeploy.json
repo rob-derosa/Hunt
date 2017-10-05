@@ -32,12 +32,6 @@
             "description": "The name of the site endpoint."
           }
         },
-		"siteLocation" : {
-          "type": "string",
-          "metadata": {
-            "description": "The location/region of the app site."
-          }
-        },
 		"sku" : {
           "type": "string",
           "metadata": {
@@ -53,15 +47,15 @@
             "type": "String"
         },
 		"documentDbName": {
-            "defaultValue": "huntappstorage-demo",
+			"defaultValue": "[concat(uniqueString(resourceGroup().id),'-hunt-storage-')]",
             "type": "String"
         },
 		"alertFailures": {
-            "defaultValue": "huntappfailures-demo",
+            "defaultValue": "[concat(uniqueString(resourceGroup().id),'-hunt-appfailures')]",
             "type": "String"
         },
 		"componentsAppName": {
-            "defaultValue": "huntapp",
+			"defaultValue": "[concat(uniqueString(resourceGroup().id),'-hunt-components')]",
             "type": "String"
         }
 	},
@@ -74,7 +68,7 @@
             },
             "name": "[parameters('siteName')]",
             "apiVersion": "2016-04-02",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -92,7 +86,7 @@
             "kind": "ComputerVision",
             "name": "[parameters('visionApiName')]",
             "apiVersion": "2016-02-01-preview",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {},
             "dependsOn": []
@@ -106,7 +100,7 @@
             "kind": "ContentModerator",
             "name": "[parameters('contentModeratorApiName')]",
             "apiVersion": "2016-02-01-preview",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {},
             "dependsOn": []
@@ -117,7 +111,7 @@
             "kind": "GlobalDocumentDB",
             "name": "[parameters('documentDbName')]",
             "apiVersion": "2015-04-08",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "defaultExperience": "DocumentDB"
             },
@@ -138,7 +132,7 @@
             "type": "microsoft.insights/alertrules",
             "name": "[parameters('huntappfailures')]",
             "apiVersion": "2014-04-01",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "hidden-link:/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourcegroups/huntappresourcegroup/providers/microsoft.insights/components/huntapp": "Resource"
             },
@@ -175,7 +169,7 @@
             "kind": "other",
             "name": "[parameters('components_huntapp_name')]",
             "apiVersion": "2014-04-01",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -301,7 +295,7 @@
             "type": "Microsoft.Cdn/profiles/endpoints",
             "name": "[concat(parameters('siteName'), '/', parameters('endpoints_huntapp_name'))]",
             "apiVersion": "2016-04-02",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
