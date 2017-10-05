@@ -108,14 +108,14 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('microsoft.insights/components', [concat(parameters('siteName'), '-components'])]"
+                "[resourceId('microsoft.insights/components', [concat(parameters('siteName'), '-components')])]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/microsoft.insights/components/huntapp'.",
             "type": "microsoft.insights/components",
             "kind": "other",
-            "name": "[concat(parameters('siteName'), '-components']",
+            "name": "[concat(parameters('siteName'), '-components')]",
             "apiVersion": "2014-04-01",
             "location": "[resourceGroup().location]",
             "tags": {},
@@ -178,7 +178,7 @@
                 "capacity": 0
             },
             "kind": "functionapp",
-            "name": "[concat(parameters('siteName'), '-serverfarm']",
+            "name": "[concat(parameters('siteName'), '-serverfarm')]",
             "apiVersion": "2016-09-01",
             "location": "West Central US",
             "scale": null,
