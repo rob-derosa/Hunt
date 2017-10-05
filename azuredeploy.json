@@ -39,23 +39,23 @@
           }
         },
 		"visionApiName": {
-            "defaultValue": "huntappvision-demo",
+            "defaultValue": "[concat(parameters('siteName'),'-vision')]",
             "type": "String"
         },
 		"contentModeratorApiName": {
-            "defaultValue": "huntappcontentmoderator-demo",
+            "defaultValue": "[concat(parameters('siteName'),'-contentmoderator')]",
             "type": "String"
         },
 		"documentDbName": {
-			"defaultValue": "[concat(uniqueString(resourceGroup().id),'-hunt-storage-')]",
+			"defaultValue": "[concat(parameters('siteName'),'-dbstorage')]",
             "type": "String"
         },
 		"alertFailures": {
-            "defaultValue": "[concat(uniqueString(resourceGroup().id),'-hunt-appfailures')]",
+            "defaultValue": "[concat(parameters('siteName'),'-alertFailures')]",
             "type": "String"
         },
 		"componentsAppName": {
-			"defaultValue": "[concat(uniqueString(resourceGroup().id),'-hunt-components')]",
+			"defaultValue": "[[concat(parameters('siteName'),'-components')]",
             "type": "String"
         }
 	},
