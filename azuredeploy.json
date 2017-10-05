@@ -32,7 +32,7 @@
                 "name": "F0"
             },
             "kind": "ComputerVision",
-            "name": "[concat(parameters('siteName'), '-vision']",
+            "name": "[concat(parameters('siteName'), '-vision')]",
             "apiVersion": "2016-02-01-preview",
             "location": "[resourceGroup().location]",
             "scale": null,
@@ -46,7 +46,7 @@
                 "name": "F0"
             },
             "kind": "ContentModerator",
-            "name": "[concat(parameters('siteName'), '-content-moderator']",
+            "name": "[concat(parameters('siteName'), '-content-moderator')]",
             "apiVersion": "2016-02-01-preview",
             "location": "[resourceGroup().location]",
             "scale": null,
@@ -57,7 +57,7 @@
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/Microsoft.DocumentDB/databaseAccounts/huntapp'.",
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "kind": "GlobalDocumentDB",
-            "name": "[concat(parameters('siteName'), '-documentDb']",
+            "name": "[concat(parameters('siteName'), '-documentDb')]",
             "apiVersion": "2015-04-08",
             "location": "[resourceGroup().location]",
             "tags": {
@@ -71,7 +71,7 @@
                     "maxIntervalInSeconds": 5,
                     "maxStalenessPrefix": 100
                 },
-                "name": "[concat(parameters('siteName'), '-database']"
+                "name": "[concat(parameters('siteName'), '-database')]"
             },
             "dependsOn": []
         },
@@ -93,7 +93,7 @@
                     "odata.type": "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
                     "dataSource": {
                         "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-                        "resourceUri": "[resourceId('microsoft.insights/components', [concat(parameters('siteName'), '-components'])]",
+                        "resourceUri": "[resourceId('microsoft.insights/components', [concat(parameters('siteName'), '-components')])]",
                         "metricNamespace": null,
                         "metricName": "advanced::A3108E3D-5E26-44CF-B232-783F5E20EF10::ewAiAEgAeQBwAGUAcgBpAG8AbgBBAHAAcABsAGkAYwBhAHQAaQBvAG4AUwBpAGQAIgA6AG4AdQBsAGwALAAiAEgAeQBwAGUAcgBpAG8AbgBTAHUAYgBqAGUAYwB0AFMAaQBkACIAOgBuAHUAbABsACwAIgBIAHkAcABlAHIAaQBvAG4ATwBiAHMAZQByAHYAZQByAFMAaQBkACIAOgBuAHUAbABsACwAIgBDAHUAcwB0AG8AbQBlAHIAQQBjAGMAbwB1AG4AdABJAGQAIgA6ACIAMAAwADAAMAAwADAAMAAwAC0AMAAwADAAMAAtADAAMAAwADAALQAwADAAMAAwAC0AMAAwADAAMAAwADAAMAAwADAAMAAwADAAIgAsACIAQQBwAHAAbABpAGMAYQB0AGkAbwBuAE4AYQBtAGUAIgA6AG4AdQBsAGwALAAiAEEAcABwAGwAaQBjAGEAdABpAG8AbgBJAGQAIgA6AG4AdQBsAGwALAAiAFAAcgBvAGYAaQBsAGUASQBkACIAOgAwACwAIgBXAGkAbgBkAG8AdwBTAGkAegBlAEkAbgBNAGkAbgB1AHQAZQBzACIAOgA2ADAALAAiAE0AZQB0AHIAaQBjAE4AYQBtAGUAIgA6ACIAIgAsACIAVABoAHIAZQBzAGgAbwBsAGQAIgA6ADIALgAwACwAIgBBAGwAZQByAHQAVABlAG0AcABsAGEAdABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAE4AYQBtAGUAIgA6ACIAIgAsACIAUgB1AGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AIgA6ACIAIgAsACIAUgBlAHMAbwB1AHIAYwBlAEkAZAAiADoAbgB1AGwAbAAsACIAUwB1AGIAcwBjAHIAaQBwAHQAaQBvAG4ASQBkACIAOgBuAHUAbABsACwAIgBBAGcAZwByAGUAZwBhAHQAZQBGAHUAbgBjAHQAaQBvAG4AIgA6ACIAIgAsACIAQwBvAG0AcABhAHIAaQBzAG8AbgBPAHAAZQByAGEAdABvAHIAIgA6ACIAewBcACIAQgBhAHMAZQBsAGkAbgBlAFQAaQBtAGUAcwBwAGEAbgBcACIAOgBcACIAMAAwADoANAAwADoAMAAwAFwAIgAsAFwAIgBJAG4AcwBpAGcAaAB0AHMAUwBlAHIAdgBpAGMAZQBMAGEAZwBcACIAOgBcACIAMAAwADoAMAAwADoAMAAwAFwAIgAsAFwAIgBCAHUAZgBmAGUAcgBUAGkAbQBlAFwAIgA6AFwAIgAwADAAOgAwADEAOgAwADAAXAAiACwAXAAiAEIAbABvAGIAUwB0AG8AcgBhAGcAZQBMAG8AZwBnAGkAbgBnAEUAbgBhAGIAbABlAGQAXAAiADoAZgBhAGwAcwBlACwAXAAiAFUAcwBlAHIAUwB1AHAAcAByAGUAcwBzAGkAbwBuAHMAXAAiADoAbgB1AGwAbAAsAFwAIgBQAHIAbwBmAGkAbABlAEkAZABcACIAOgAwACwAXAAiAEUAbQBhAGkAbABUAHkAcABlAFwAIgA6ADAALABcACIAUgBkAGQARgBhAGkAbAB1AHIAZQBzAFMAcABpAGsAZQBUAGgAcgBlAHMAaABvAGwAZABcACIAOgAzAC4AMAAsAFwAIgBSAGEAdwBQAHIAbwBhAGMAdABpAHYAZQBSAHUAbABlAEMAbwBuAGYAaQBnAFwAIgA6AG4AdQBsAGwAfQAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8AQwB1AHMAdABvAG0AIgA6AGYAYQBsAHMAZQAsACIAQwB1AHMAdABvAG0ARQBtAGEAaQBsAHMARQBuAGMAbwBkAGUAZAAiADoAIgAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8ATwB3AG4AZQByAHMAIgA6AGYAYQBsAHMAZQB9AA=="
                     },
@@ -121,7 +121,7 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "ApplicationId": "[concat(parameters('siteName'), '-components']"
+                "ApplicationId": "[concat(parameters('siteName'), '-components')]"
             },
             "dependsOn": []
         },
@@ -132,7 +132,7 @@
                 "name": "Free"
             },
             "kind": "NotificationHub",
-            "name": "[concat(parameters('siteName'), '-notification-namespace']",
+            "name": "[concat(parameters('siteName'), '-notification-namespace')]",
             "apiVersion": "2014-09-01",
             "location": "South Central US",
             "tags": {},
@@ -150,7 +150,7 @@
                 "tier": "Standard"
             },
             "kind": "Storage",
-            "name": "[concat(parameters('siteName'), '-storage']",
+            "name": "[concat(parameters('siteName'), '-storage')]",
             "apiVersion": "2016-01-01",
             "location": "westcentralus",
             "tags": {},
@@ -183,7 +183,7 @@
             "location": "West Central US",
             "scale": null,
             "properties": {
-                "name": "[concat(parameters('siteName'), '-serverfarm']",
+                "name": "[concat(parameters('siteName'), '-serverfarm')]",
                 "workerTierName": null,
                 "adminSiteName": null,
                 "hostingEnvironmentProfile": null,
@@ -222,7 +222,7 @@
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [concat(parameters('siteName'), '-serverfarm'])]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [concat(parameters('siteName'), '-serverfarm')])]",
                 "reserved": false,
                 "siteConfig": null,
                 "scmSiteAlsoStopped": false,
@@ -235,28 +235,28 @@
                 "cloningInfo": null
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', [concat(parameters('siteName'), '-serverfarm'])]"
+                "[resourceId('Microsoft.Web/serverfarms', [concat(parameters('siteName'), '-serverfarm')])]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourcegroups/huntappresourcegroup/providers/Microsoft.Cdn/profiles/huntapp/endpoints/huntapp'.",
             "type": "Microsoft.Cdn/profiles/endpoints",
-            "name": "[concat(parameters('siteName'), '/', [concat(parameters('siteName'), '.cdn.endpoint'])]",
+            "name": "[concat(parameters('siteName'), '/', [concat(parameters('siteName'), '.cdn.endpoint')])]",
             "apiVersion": "2016-04-02",
             "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
-                "originHostHeader": "[concat([concat(parameters('siteName'), '.cdn.endpoint'],'storage.blob.core.windows.net')]",
+                "originHostHeader": "[concat([concat(parameters('siteName'), '.cdn.endpoint')],'storage.blob.core.windows.net')]",
                 "isHttpAllowed": true,
                 "isHttpsAllowed": true,
                 "queryStringCachingBehavior": "UseQueryString",
                 "originPath": null,
                 "origins": [
                     {
-                        "name": "[concat([concat(parameters('siteName'), '.cdn.endpoint'],'storage-blob-core-windows-net')]",
+                        "name": "[concat([concat(parameters('siteName'), '.cdn.endpoint')],'storage-blob-core-windows-net')]",
                         "properties": {
-                            "hostName": "[concat([concat(parameters('siteName'), '.cdn.endpoint'],'storage.blob.core.windows.net')]",
+                            "hostName": "[concat([concat(parameters('siteName'), '.cdn.endpoint')],'storage.blob.core.windows.net')]",
                             "httpPort": 80,
                             "httpsPort": 443
                         }
@@ -281,7 +281,7 @@
         {
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourcegroups/huntappresourcegroup/providers/Microsoft.Cdn/profiles/huntapp/endpoints/huntapp/origins/huntappstorage-blob-core-windows-net'.",
             "type": "Microsoft.Cdn/profiles/endpoints/origins",
-            "name": "[concat(parameters('siteName'), '/', [concat(parameters('siteName'), '.cdn.endpoint'], '/', [concat(parameters('siteName'), '.storage'])]",
+            "name": "[concat(parameters('siteName'), '/', [concat(parameters('siteName'), '.cdn.endpoint'], '/', [concat(parameters('siteName'), '.storage')])]",
             "apiVersion": "2016-04-02",
             "scale": null,
             "properties": {
@@ -291,13 +291,13 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/profiles', parameters('siteName'))]",
-                "[resourceId('Microsoft.Cdn/profiles/endpoints', parameters('siteName'), [concat(parameters('siteName'), '.cdn.endpoint'])]"
+                "[resourceId('Microsoft.Cdn/profiles/endpoints', parameters('siteName'), [concat(parameters('siteName'), '.cdn.endpoint')])]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourcegroups/huntappresourcegroup/providers/Microsoft.NotificationHubs/namespaces/huntappnotificationnamespace/notificationHubs/huntappnotificationhub'.",
             "type": "Microsoft.NotificationHubs/namespaces/notificationHubs",
-            "name": "[concat([concat(parameters('siteName'), '-notification-namespace'], '/', [concat(parameters('siteName'), '-notificationhub'])]",
+            "name": "[concat([concat(parameters('siteName'), '-notification-namespace'], '/', [concat(parameters('siteName'), '-notificationhub')])]",
             "apiVersion": "2014-09-01",
             "location": "South Central US",
             "scale": null,
@@ -305,13 +305,13 @@
                 "authorizationRules": []
             },
             "dependsOn": [
-                "[resourceId('Microsoft.NotificationHubs/namespaces', [concat(parameters('siteName'), '-notification-namespace'])]"
+                "[resourceId('Microsoft.NotificationHubs/namespaces', [concat(parameters('siteName'), '-notification-namespace')])]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/Microsoft.Web/sites/huntapp/config/web'.",
             "type": "Microsoft.Web/sites/config",
-            "name": "[concat(parameters('siteName'), '-config']",
+            "name": "[concat(parameters('siteName'), '-config')]",
             "apiVersion": "2016-08-01",
             "location": "West Central US",
             "scale": null,
@@ -428,7 +428,7 @@
         {
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/Microsoft.Web/sites/huntapp/hostNameBindings/huntapp.azurewebsites.net'.",
             "type": "Microsoft.Web/sites/hostNameBindings",
-            "name": "[concat(parameters('siteName'), '/', [concat(parameters('siteName'), '-bindings'])]",
+            "name": "[concat(parameters('siteName'), '/', [concat(parameters('siteName'), '-bindings')])]",
             "apiVersion": "2016-08-01",
             "location": "West Central US",
             "scale": null,
