@@ -14,7 +14,7 @@
             "sku": {
                 "name": "Standard_Verizon"
             },
-            "name": "[concat(parameters('siteName'), '-cdn']",
+            "name": "[concat(parameters('siteName'), '-cdn'])",
             "apiVersion": "2016-04-02",
             "location": "[resourceGroup().location]",
             "tags": {},
