@@ -6,14 +6,8 @@
 	        "type": "string",
 	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
 	    },
-	    "hostingPlanName": {
-	        "type": "string",
-	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
-	    },
-		"visionApiName": {
-	        "type": "string",
-	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
-	    },
+	    "hostingPlanName": "[concat('siteName', '-hosting']",
+		"visionApiName": "[concat('siteName', '-vision']",
 		"contentModeratorApiName": {
 	        "type": "string",
 	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
