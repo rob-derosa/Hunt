@@ -6,23 +6,29 @@
 	        "type": "string",
 	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
 	    },
-	    "hostingPlanName": "[concat('siteName', '-hosting']",
-		"visionApiName": "[concat('siteName', '-vision']",
+	    "hostingPlanName": {
+	        "type": "string",
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
+	    },
+		"visionApiName": {
+	        "type": "string",
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
+	    },
 		"contentModeratorApiName": {
 	        "type": "string",
-	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
 	    },
 		"documentDbName": {
 	        "type": "string",
-	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
 	    },
 		"alertFailures": {
 	        "type": "string",
-	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
 	    },
 		"componentsAppName": {
 	        "type": "string",
-	        "defaultValue": "[concat(parameters('siteName'),'-plan')]"
+	        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
 	    }
 	},
     "resources": [
