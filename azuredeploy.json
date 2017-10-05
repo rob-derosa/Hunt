@@ -78,7 +78,7 @@
         {
             "comments": "Generalized from resource: '/subscriptions/bc1b70ab-d65f-4c57-9f64-33b21d29b91c/resourceGroups/huntappresourcegroup/providers/microsoft.insights/alertrules/Failure Anomalies - huntapp'.",
             "type": "microsoft.insights/alertrules",
-			"name": "[concat(parameters('siteName'), '-appfailures']",
+			"name": "[concat(parameters('siteName'), '-appfailures')]",
             "apiVersion": "2014-04-01",
             "location": "[resourceGroup().location]",
             "tags": {
@@ -86,7 +86,7 @@
             },
             "scale": null,
             "properties": {
-                "name": "[concat(parameters('siteName'), '-appfailures']",
+                "name": "[concat(parameters('siteName'), '-appfailures')]",
                 "description": "",
                 "isEnabled": true,
                 "condition": {
