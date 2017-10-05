@@ -46,7 +46,7 @@ namespace Hunt.Backend.Functions
 				}
 
 				Game savedGame = null;
-
+				bool isEndOfgame = false;
 				try
 				{
 					using (var client = new CosmosDataService())
@@ -69,7 +69,7 @@ namespace Hunt.Backend.Functions
 								game.StartDate = DateTime.UtcNow;
 
 							if (action == GameUpdateAction.EndGame)
-								game.EndDate = DateTime.UtcNow;
+								isEndOfgame = true;
 
 							bool isWinningAcquisition = false;
 							if (action == GameUpdateAction.AcquireTreasure)
@@ -79,16 +79,20 @@ namespace Hunt.Backend.Functions
 								isWinningAcquisition = game.EvaluateGameForWinner(teamId);
 
 								if (isWinningAcquisition)
-								{
-									game.EndDate = DateTime.UtcNow;
-									var teams = game.Teams.OrderByDescending(t => t.TotalPoints).ToArray();
-
-									if (teams[0].TotalPoints == teams[1].TotalPoints)
-										game.WinnningTeamId = null; //Draw
-									else
-										game.WinnningTeamId = teams[0].Id;
-								}
+									isEndOfgame = true;
 							}
+
+							if(isEndOfgame)
+							{
+								game.EndDate = DateTime.UtcNow;
+								var teams = game.Teams.OrderByDescending(t => t.TotalPoints).ToArray();
+
+								if (teams[0].TotalPoints == teams[1].TotalPoints)
+									game.WinnningTeamId = null; //Draw
+								else
+									game.WinnningTeamId = teams[0].Id;
+							}
+
 							client.UpdateItemAsync(game).Wait();
 
 							if (action == GameUpdateAction.StartGame)
@@ -96,7 +100,7 @@ namespace Hunt.Backend.Functions
 								SetEndGameTimer(game, analytic);
 							}
 
-							if (isWinningAcquisition)
+							if(isEndOfgame)
 							{
 								SendTargetedNotifications(game, GameUpdateAction.EndGame, arguments);
 							}

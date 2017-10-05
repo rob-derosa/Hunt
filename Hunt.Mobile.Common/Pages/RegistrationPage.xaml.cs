@@ -27,7 +27,7 @@ namespace Hunt.Mobile.Common
 				{
 					if(split[1].ToLower() == "hbo.com") //GoT character
 					{
-						var url = $"https://huntappstorage.blob.core.windows.net/images/avatars/{split[0].ToLower()}.jpg";
+						var url = $"https://huntapp.azureedge.net/images/avatars/{split[0].ToLower()}.jpg";
 						ViewModel.Avatar = url;
 						ViewModel.Alias = split[0].ToTitleCase();
 						return;

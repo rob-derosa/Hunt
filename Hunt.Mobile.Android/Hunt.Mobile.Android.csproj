@@ -218,12 +218,6 @@
     <Reference Include="SkiaSharp.Views.Forms">
       <HintPath>..\packages\SkiaSharp.Views.Forms.1.59.1.1\lib\MonoAndroid\SkiaSharp.Views.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Refractored.XamForms.PullToRefresh">
-      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.dll</HintPath>
-    </Reference>
-    <Reference Include="Refractored.XamForms.PullToRefresh.Droid">
-      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.Droid.dll</HintPath>
-    </Reference>
     <Reference Include="Lottie">
       <HintPath>..\packages\Com.Airbnb.Android.Lottie.2.2.5.0\lib\MonoAndroid40\Lottie.dll</HintPath>
     </Reference>
@@ -298,6 +292,12 @@
     </Reference>
     <Reference Include="Microsoft.Azure.Mobile.Push">
       <HintPath>..\packages\Microsoft.Azure.Mobile.Push.0.15.2\lib\MonoAndroid403\Microsoft.Azure.Mobile.Push.dll</HintPath>
+    </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.2.0.0.13\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.dll</HintPath>
+    </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh.Droid">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.2.0.0.13\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.Droid.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

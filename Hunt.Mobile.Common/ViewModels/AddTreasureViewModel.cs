@@ -69,6 +69,10 @@ namespace Hunt.Mobile.Common
 			{
 				var url = await App.Instance.StorageService.SaveImage(Photo, Game.Id);
 
+				if(url == null)
+					return false;
+				
+				url = url.ToUrlCDN();
 				Hud.Instance.HudMessage = "Analyzing photo";
 				var task = new Task<string[]>(() => App.Instance.DataService.AnalyseImage(new [] { url }).Result);
 				await task.RunProtected();
@@ -104,7 +108,7 @@ namespace Hunt.Mobile.Common
 			{
 				ImageSource = _treasureImageUrl,
 				IsRequired = true,
-				Points = SelectedAttributes.Count * Keys.Constants.PointsPerAttribute,
+				Points = Keys.Constants.PointsPerAttribute / SelectedAttributes.Count,
 				Hint = Hint,
 			};
 

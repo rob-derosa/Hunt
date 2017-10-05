@@ -13,7 +13,7 @@ namespace Hunt.Mobile.Common
 			{
 				Alias = "Ned",
 				Email = "ned@hbo.com",
-				Avatar = $"https://huntappstorage.blob.core.windows.net/images/avatars/ned.jpg",
+				Avatar = $"https://huntapp.azureedge.net/images/avatars/ned.jpg",
 			};
 
 			var teams = new List<string[]>
@@ -57,7 +57,7 @@ namespace Hunt.Mobile.Common
 						{
 							Alias = p,
 							Email = $"{p.ToLower()}@hbo.com",
-							Avatar = $"https://huntappstorage.blob.core.windows.net/images/avatars/{p.ToLower()}.jpg",
+							Avatar = $"https://huntapp.azureedge.net/images/avatars/{p.ToLower()}.jpg",
 						};
 						team.Players.Add(player);
 					}
@@ -71,8 +71,8 @@ namespace Hunt.Mobile.Common
 				var dog = new Treasure
 				{
 					Hint = "Not a cat",
-					ImageSource = "https://huntappstorage.blob.core.windows.net/images/treasures/dog.jpg",
-					Points = 75,
+					ImageSource = "https://huntapp.azureedge.net/images/treasures/dog.jpg",
+					Points = 100,
 				};
 
 				dog.Attributes.Add(new Attribute("dog"));
@@ -82,8 +82,8 @@ namespace Hunt.Mobile.Common
 				var shoes = new Treasure
 				{
 					Hint = "What has a soul, a tongue and eyes but isn't alive?",
-					ImageSource = "https://huntappstorage.blob.core.windows.net/images/treasures/shoes.jpg",
-					Points = 75,
+					ImageSource = "https://huntapp.azureedge.net/images/treasures/shoes.jpg",
+					Points = 100,
 				};
 
 				shoes.Attributes.Add(new Attribute("shoes"));
@@ -93,12 +93,12 @@ namespace Hunt.Mobile.Common
 				var bottle = new Treasure
 				{
 					Hint = "What has a neck, no head, yet still wears a cap?",
-					ImageSource = "https://huntappstorage.blob.core.windows.net/images/treasures/wine_bottle.jpg",
+					ImageSource = "https://huntapp.azureedge.net/images/treasures/wine_bottle.jpg",
 					Points = 50,
 				};
 
 				bottle.Attributes.Add(new Attribute("bottle"));
-				//bottle.Attributes.Add(new Attribute("beverage"));
+				bottle.Attributes.Add(new Attribute("beverage"));
 				//bottle.Attributes.Add(new Attribute("table"));
 
 				game.Treasures.Add(bottle);
@@ -112,7 +112,7 @@ namespace Hunt.Mobile.Common
 						TreasureId = bottle.Id,
 						ImageSource = bottle.ImageSource,
 						ClaimedTimeStamp = DateTime.Now.AddMinutes(20),
-						ClaimedPoints = bottle.Points / 3,
+						ClaimedPoints = bottle.Points,
 						PlayerId = game.Teams[1].Players[1].Id,
 					};
 
@@ -125,7 +125,7 @@ namespace Hunt.Mobile.Common
 						PlayerId = game.Teams[1].Players[0].Id,
 					};
 
-					game.Teams[1].AcquiredTreasure.Add(bottleAt);
+					//game.Teams[1].AcquiredTreasure.Add(bottleAt);
 					game.Teams[1].AcquiredTreasure.Add(dogAt);
 				}
 			}
