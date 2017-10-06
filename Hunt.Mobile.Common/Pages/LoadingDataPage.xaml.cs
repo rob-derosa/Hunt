@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Lottie.Forms;
 using Plugin.Connectivity;
@@ -49,6 +50,11 @@ namespace Hunt.Mobile.Common
 			{
 				StopAnimation();
 			}
+		}
+
+		async void RetryClicked(object sender, EventArgs e)
+		{
+			await CheckForOngoingGame();
 		}
 
 		async Task CheckForOngoingGame()

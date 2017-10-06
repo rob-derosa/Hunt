@@ -36,6 +36,14 @@ namespace Hunt.Mobile.Common
 			set { SetValue(CanCloseProperty, value); }
 		}
 
+		public static int YOffset
+		{
+			get
+			{
+				return Device.RuntimePlatform == Device.Android ? 60 : 80;
+			}
+		}
+
 		View _leftToolbar;
 		public View LeftToolbar
 		{

@@ -199,15 +199,18 @@ namespace Hunt.Mobile.Common
 			view.Content = animation;
 			view.Opacity = 0;
 
-			var grid = Content as Grid;
-			grid.Children.Add(view);
+			var layout = Content as AbsoluteLayout;
+
+			AbsoluteLayout.SetLayoutFlags(view, AbsoluteLayoutFlags.All);
+			AbsoluteLayout.SetLayoutBounds(view, new Rectangle(0, 0, 1, 1));
+			layout.Children.Add(view);
 
 			await view.FadeTo(1, 250);
 			animation.Play();
 
 			await Task.Delay(3000);
 			await view.FadeTo(0, 300);
-			grid.Children.Remove(view);
+			layout.Children.Remove(view);
 		}
 
 		async void StartGameClicked(object sender, EventArgs e)

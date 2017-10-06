@@ -1,27 +1,28 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "siteName": {
             "type": "string",
             "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
         },
-        "cdnEndPoint": {
+        "location": {
             "type": "string",
-            "defaultValue": "[concat('site', uniqueString(resourceGroup().id), '-endpoint')]"
+            "defaultValue": "[resourceGroup().location]"
         },
-        "sku": {
+        "CDNSku": {
             "type": "string",
+            "metadata": {
+                "description": "CDN SKU names"
+            },
+            "defaultValue": "Standard_Akamai",
             "allowedValues": [
-                "Free",
-                "Shared",
-                "Basic",
-                "Standard",
-                "Premium"
-            ],
-            "defaultValue": "Free"
+                "Standard_Akamai",
+                "Standard_Verizon",
+                "Premium_Verizon"
+            ]
         },
-        "storageAccountType": {
+        "HuntAppStorageType": {
             "type": "string",
             "defaultValue": "Standard_LRS",
             "allowedValues": [
@@ -31,240 +32,281 @@
                 "Standard_RAGRS",
                 "Premium_LRS"
             ]
+        },
+        "HuntAppSKU": {
+            "type": "string",
+            "allowedValues": [
+                "Free",
+                "Shared",
+                "Basic",
+                "Standard"
+            ],
+            "defaultValue": "Free"
+        },
+        "SKUCognitive": {
+            "type": "string",
+            "metadata": {
+                "description": "SKU for Computer Vision API"
+            },
+            "defaultValue": "F0",
+            "allowedValues": [
+                "F0",
+                "S1"
+            ]
+        },
+        "cognitiveServicesLocation": {
+            "metadata": {
+                "description": "The location for the Computer Vision API"
+            },
+            "type": "string",
+            "minLength": 1,
+            "allowedValues": [
+                "westeurope",
+                "eastus2",
+                "southeastasia",
+                "centralus",
+                "westus"
+            ],
+            "defaultValue": "westeurope"
         }
     },
     "variables": {
-        "hubVersion": "[providers('Microsoft.NotificationHubs', 'namespaces').apiVersions[0]]",
-        "notificationHubNamespace": "[concat('hubv2', uniqueString(resourceGroup().id))]",
-        "notificationHubName": "notificationhub"
+        "hubName": "hunthub",
+        "huntAppStorageName": "[concat('huntstorage', uniqueString(resourceGroup().id))]",
+        "databaseAccountName": "[concat('huntdbaccount', uniqueString(resourceGroup().id))]",
+        "cdnProfileName": "[concat(parameters('siteName'), '-cdn')]",
+        "cdnEndPointName": "[concat(parameters('siteName'), '-cdnendpoint')]",
+        "namespaceName": "[concat(parameters('siteName'), 'namespace')]",
+        "visionApiAccountName": "[concat(parameters('siteName'), 'vision')]",
+        "contentModeratorAccountName": "[concat(parameters('siteName'), 'contentmoderator')]",
+        "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('visionApiAccountName'))]",
+        "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('contentModeratorAccountName'))]",
+        "alertfailuresName": "[concat(parameters('siteName'), 'alertfailures')]",
+		"serviceBusName": "[concat(parameters('siteName'), 'bus')]",
+		"endGameQueueName": "endgame"
     },
     "resources": [
         {
+            "name": "[variables('cdnProfileName')]",
             "type": "Microsoft.Cdn/profiles",
-            "sku": {
-                "name": "Standard_Verizon"
-            },
-            "name": "[concat(parameters('siteName'), '-cdn')]",
+            "location": "[parameters('location')]",
             "apiVersion": "2016-04-02",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "provisioningState": "Succeeded",
-                "resourceState": "Active"
-            }
-        },
-        {
-            "type": "Microsoft.Cdn/profiles/endpoints",
-            "name": "[concat(parameters('siteName'), '/', parameters('cdnEndPoint'))]",
-            "apiVersion": "2016-04-02",
-            "location": "SouthCentralUs",
-            "tags": {},
-            "scale": null,
-            "properties": {
-                "originHostHeader": "[concat(parameters('siteName'),'storage.blob.core.windows.net')]",
-                "isHttpAllowed": true,
-                "isHttpsAllowed": true,
-                "queryStringCachingBehavior": "UseQueryString",
-                "originPath": null,
-                "origins": [
-                    {
-                        "name": "[concat(parameters('siteName'),'storage-blob-core-windows-net')]",
-                        "properties": {
-                            "hostName": "[concat(parameters('siteName'),'storage.blob.core.windows.net')]",
-                            "httpPort": 80,
-                            "httpsPort": 443
-                        }
-                    }
-                ],
-                "contentTypesToCompress": [
-                    "text/plain",
-                    "text/html",
-                    "text/css",
-                    "text/javascript",
-                    "application/x-javascript",
-                    "application/javascript",
-                    "application/json",
-                    "application/xml"
-                ],
-                "isCompressionEnabled": true
-            }
-        },
-        {
-            "type": "Microsoft.CognitiveServices/accounts",
             "sku": {
-                "name": "F0"
-            },
-            "name": "[concat(parameters('siteName'), '-vision')]",
-            "apiVersion": "2016-02-01-preview",
-            "location": "[resourceGroup().location]"
-        },
-        {
-            "type": "Microsoft.CognitiveServices/accounts",
-            "sku": {
-                "name": "F0"
-            },
-            "name": "[concat(parameters('siteName'), '-content-moderator')]",
-            "apiVersion": "2016-02-01-preview",
-            "location": "[resourceGroup().location]"
-        },
-        {
-            "name": "[concat(parameters('siteName'), 'storage')]",
-            "type": "Microsoft.Storage/storageAccounts",
-            "location": "[resourceGroup().location]",
-            "apiVersion": "2015-06-15",
-            "properties": {
-                "accountType": "[parameters('storageAccountType')]"
-            }
-        },
-        {
-            "type": "Microsoft.DocumentDB/databaseAccounts",
-            "kind": "GlobalDocumentDB",
-            "name": "[concat(parameters('siteName'), '-documentDb')]",
-            "apiVersion": "2015-04-08",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "defaultExperience": "DocumentDB"
-            },
-            "scale": null,
-            "properties": {
-                "databaseAccountOfferType": "Standard",
-                "consistencyPolicy": {
-                    "defaultConsistencyLevel": "Session",
-                    "maxIntervalInSeconds": 5,
-                    "maxStalenessPrefix": 100
-                },
-                "name": "[concat(parameters('siteName'), '-database')]"
-            }
-        },
-        {
-            "type": "Microsoft.NotificationHubs/namespaces/notificationHubs",
-            "name": "[variables('NotificationHubNamespace')]",
-            "apiVersion": "[variables('hubVersion')]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "namespaceType": "NotificationHub"
+                "name": "[parameters('CDNSku')]"
             },
             "resources": [
                 {
-                    "type": "Microsoft.NotificationHubs/namespaces",
-                    "name": "[concat(variables('NotificationHubNamespace'),'/',variables('NotificationHubName'))]",
-                    "apiVersion": "[variables('hubVersion')]",
-                    "location": "[resourceGroup().location]",
-                    "properties": {
-                        "GcmCredential": {
-                            "properties": {
-                                "googleApiKey": "[parameters('Gcm.GoogleApiKey')]",
-                                "gcmEndpoint": "https://android.googleapis.com/gcm/send"
-                            }
-                        }
-                    },
+                    "apiVersion": "2016-04-02",
                     "dependsOn": [
-                        "[concat('Microsoft.NotificationHubs/namespaces/', variables('NotificationHubNamespace'))]"
+                        "[resourceId('Microsoft.Cdn/profiles', variables('cdnProfileName'))]"
+                    ],
+                    "location": "[parameters('location')]",
+                    "name": "[variables('cdnEndPointName')]",
+                    "type": "endpoints",
+                    "properties": {
+                        "originHostHeader": "[concat('siteName', '.azurewebsites.com')]",
+                        "isHttpAllowed": true,
+                        "isHttpsAllowed": true,
+                        "queryStringCachingBehavior": "IgnoreQueryString",
+                        "contentTypesToCompress": [
+                            "text/plain",
+                            "text/html",
+                            "text/css",
+                            "application/x-javascript",
+                            "text/javascript"
+                        ],
+                        "isCompressionEnabled": true,
+                        "origins": [
+                            {
+                                "name": "origin1",
+                                "properties": {
+                                    "hostName": "[concat('siteName', '.azurewebsites.com')]"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "[variables('huntAppStorageName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[parameters('location')]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "HuntStorage"
+            },
+            "properties": {
+                "accountType": "[parameters('HuntAppStorageType')]"
+            }
+        },
+        {
+            "apiVersion": "2015-04-08",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "kind": "MongoDB",
+            "name": "[variables('databaseAccountName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "databaseAccountOfferType": "Standard",
+                "name": "[variables('databaseAccountName')]"
+            }
+        },
+        {
+            "name": "[parameters('siteName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "apiVersion": "2014-06-01",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "HuntApp"
+            },
+            "properties": {
+                "name": "[parameters('siteName')]",
+                "sku": "[parameters('HuntAppSKU')]",
+                "workerSize": "0",
+                "numberOfWorkers": 1
+            }
+        },
+        {
+            "apiVersion": "2014-09-01",
+            "name": "[variables('namespaceName')]",
+            "type": "Microsoft.NotificationHubs/namespaces",
+            "location": "[parameters('location')]",
+            "kind": "NotificationHub",
+            "resources": [
+                {
+                    "name": "[concat(variables('namespaceName'), '/', variables('hubName'))]",
+                    "apiVersion": "2014-09-01",
+                    "type": "Microsoft.NotificationHubs/namespaces/notificationHubs",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[variables('namespaceName')]"
                     ]
                 }
             ]
         },
         {
-            "type": "Microsoft.Web/serverfarms",
-            "name": "[concat(parameters('siteName'), '-functions')]",
-            "apiVersion": "2016-09-01",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "name": "[concat(parameters('siteName'), '-functions')]",
-                "perSiteScaling": false,
-                "reserved": false,
-                "targetWorkerCount": 0,
-                "targetWorkerSizeId": 0
-            }
+          "type": "Microsoft.CognitiveServices/accounts",
+          "sku": {
+            "name": "[parameters('SKUCognitive')]"
+          },
+          "kind": "ComputerVision",
+          "name": "[variables('visionApiAccountName')]",
+          "apiVersion": "2016-02-01-preview",
+          "location": "[parameters('cognitiveServicesLocation')]",
+          "scale": null,
+          "properties": {},
+          "dependsOn": []
         },
         {
-            "type": "Microsoft.Web/sites",
-            "kind": "functionapp",
+            "type": "Microsoft.CognitiveServices/accounts",
+            "sku": {
+            "name": "[parameters('SKUCognitive')]"
+            },
+            "kind": "ContentModerator",
+            "name": "[variables('contentModeratorAccountName')]",
+            "apiVersion": "2016-02-01-preview",
+            "location": "[parameters('cognitiveServicesLocation')]",
+            "scale": null,
+            "properties": {},
+            "dependsOn": []
+        },
+		{
+	      "apiVersion": "2015-08-01",
+	      "name": "[variables('serviceBusName')]",
+	      "type": "Microsoft.ServiceBus/namespaces",
+	      "location": "[parameters('location')]",
+	      "properties": {},
+	      "resources": [
+	        {
+	          "apiVersion": "2015-08-01",
+	          "name": "[variables('endGameQueueName')]",
+	          "type": "Queues",
+	          "dependsOn": [
+	            "[concat('Microsoft.ServiceBus/namespaces/', variables('serviceBusName'))]"
+	          ],
+	          "properties": {},
+	          "resources": []
+	        }
+	      ]
+	    },
+        {
+            "type": "microsoft.insights/alertrules",
             "name": "[parameters('siteName')]",
-            "apiVersion": "2016-08-01",
-            "location": "[resourceGroup().location]",
+            "apiVersion": "2014-04-01",
+            "location": "South Central US",
+            "scale": null,
             "properties": {
-                "enabled": true,
-                "hostNameSslStates": [
-                    {
-                        "name": "[concat(parameters('siteName'),'.azurewebsites.net')]",
-                        "sslState": "Disabled",
-                        "hostType": "Standard"
+                "name": "[variables('alertfailuresName')]",
+                "description": "",
+                "isEnabled": true,
+                "condition": {
+                    "odata.type": "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
+                    "dataSource": {
+                        "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
+                        "resourceUri": "[resourceId('microsoft.insights/components', parameters('siteName'))]",
+                        "metricNamespace": null,
+                        "metricName": "advanced::A3108E3D-5E26-44CF-B232-783F5E20EF10::ewAiAEgAeQBwAGUAcgBpAG8AbgBBAHAAcABsAGkAYwBhAHQAaQBvAG4AUwBpAGQAIgA6AG4AdQBsAGwALAAiAEgAeQBwAGUAcgBpAG8AbgBTAHUAYgBqAGUAYwB0AFMAaQBkACIAOgBuAHUAbABsACwAIgBIAHkAcABlAHIAaQBvAG4ATwBiAHMAZQByAHYAZQByAFMAaQBkACIAOgBuAHUAbABsACwAIgBDAHUAcwB0AG8AbQBlAHIAQQBjAGMAbwB1AG4AdABJAGQAIgA6ACIAMAAwADAAMAAwADAAMAAwAC0AMAAwADAAMAAtADAAMAAwADAALQAwADAAMAAwAC0AMAAwADAAMAAwADAAMAAwADAAMAAwADAAIgAsACIAQQBwAHAAbABpAGMAYQB0AGkAbwBuAE4AYQBtAGUAIgA6AG4AdQBsAGwALAAiAEEAcABwAGwAaQBjAGEAdABpAG8AbgBJAGQAIgA6AG4AdQBsAGwALAAiAFAAcgBvAGYAaQBsAGUASQBkACIAOgAwACwAIgBXAGkAbgBkAG8AdwBTAGkAegBlAEkAbgBNAGkAbgB1AHQAZQBzACIAOgA2ADAALAAiAE0AZQB0AHIAaQBjAE4AYQBtAGUAIgA6ACIAIgAsACIAVABoAHIAZQBzAGgAbwBsAGQAIgA6ADIALgAwACwAIgBBAGwAZQByAHQAVABlAG0AcABsAGEAdABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAE4AYQBtAGUAIgA6ACIAIgAsACIAUgB1AGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AIgA6ACIAIgAsACIAUgBlAHMAbwB1AHIAYwBlAEkAZAAiADoAbgB1AGwAbAAsACIAUwB1AGIAcwBjAHIAaQBwAHQAaQBvAG4ASQBkACIAOgBuAHUAbABsACwAIgBBAGcAZwByAGUAZwBhAHQAZQBGAHUAbgBjAHQAaQBvAG4AIgA6ACIAIgAsACIAQwBvAG0AcABhAHIAaQBzAG8AbgBPAHAAZQByAGEAdABvAHIAIgA6ACIAewBcACIAQgBhAHMAZQBsAGkAbgBlAFQAaQBtAGUAcwBwAGEAbgBcACIAOgBcACIAMAAwADoANAAwADoAMAAwAFwAIgAsAFwAIgBJAG4AcwBpAGcAaAB0AHMAUwBlAHIAdgBpAGMAZQBMAGEAZwBcACIAOgBcACIAMAAwADoAMAAwADoAMAAwAFwAIgAsAFwAIgBCAHUAZgBmAGUAcgBUAGkAbQBlAFwAIgA6AFwAIgAwADAAOgAwADEAOgAwADAAXAAiACwAXAAiAEIAbABvAGIAUwB0AG8AcgBhAGcAZQBMAG8AZwBnAGkAbgBnAEUAbgBhAGIAbABlAGQAXAAiADoAZgBhAGwAcwBlACwAXAAiAFUAcwBlAHIAUwB1AHAAcAByAGUAcwBzAGkAbwBuAHMAXAAiADoAbgB1AGwAbAAsAFwAIgBQAHIAbwBmAGkAbABlAEkAZABcACIAOgAwACwAXAAiAEUAbQBhAGkAbABUAHkAcABlAFwAIgA6ADAALABcACIAUgBkAGQARgBhAGkAbAB1AHIAZQBzAFMAcABpAGsAZQBUAGgAcgBlAHMAaABvAGwAZABcACIAOgAzAC4AMAAsAFwAIgBSAGEAdwBQAHIAbwBhAGMAdABpAHYAZQBSAHUAbABlAEMAbwBuAGYAaQBnAFwAIgA6AG4AdQBsAGwAfQAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8AQwB1AHMAdABvAG0AIgA6AGYAYQBsAHMAZQAsACIAQwB1AHMAdABvAG0ARQBtAGEAaQBsAHMARQBuAGMAbwBkAGUAZAAiADoAIgAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8ATwB3AG4AZQByAHMAIgA6AGYAYQBsAHMAZQB9AA=="
                     },
-                    {
-                        "name": "[concat(parameters('siteName'),'.scm.azurewebsites.net')]",
-                        "sslState": "Disabled",
-                        "hostType": "Repository"
-                    }
-                ],
-                "serverFarmId": "[concat(parameters('siteName'), '-functions')]",
-                "containerSize": 1536,
-                "dailyMemoryTimeQuota": 0
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/config",
-            "name": "[concat(parameters('siteName'), '-config')]",
-            "apiVersion": "2016-08-01",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "numberOfWorkers": 1,
-                "defaultDocuments": [
-                    "Default.htm",
-                    "Default.html",
-                    "Default.asp",
-                    "index.htm",
-                    "index.html",
-                    "iisstart.htm",
-                    "default.aspx",
-                    "index.php",
-                    "hostingstart.html"
-                ],
-                "netFrameworkVersion": "v4.0",
-                "phpVersion": "5.6",
-                "requestTracingEnabled": false,
-                "remoteDebuggingEnabled": false,
-                "remoteDebuggingVersion": "VS2017",
-                "httpLoggingEnabled": false,
-                "logsDirectorySizeLimit": 35,
-                "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$huntapp",
-                "scmType": "None",
-                "use32BitWorkerProcess": true,
-                "webSocketsEnabled": false,
-                "alwaysOn": false,
-                "managedPipelineMode": "Integrated",
-                "virtualApplications": [
-                    {
-                        "virtualPath": "/",
-                        "physicalPath": "site\\wwwroot",
-                        "preloadEnabled": false
-                    }
-                ],
-                "winAuthAdminState": 0,
-                "winAuthTenantState": 0,
-                "customAppPoolIdentityAdminState": false,
-                "customAppPoolIdentityTenantState": false,
-                "loadBalancing": "LeastRequests",
-                "autoHealEnabled": false,
-                "siteAuthEnabled": false,
-                "cors": {
-                    "allowedOrigins": [
-                        "https://functions.azure.com",
-                        "https://functions-staging.azure.com",
-                        "https://functions-next.azure.com"
-                    ]
+                    "operator": "GreaterThan",
+                    "threshold": 2,
+                    "windowSize": "PT1H"
+                },
+                "action": {
+                    "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleEmailAction",
+                    "sendToServiceOwners": true,
+                    "customEmails": []
                 }
-            }
+            },
+            "dependsOn": [
+                "[resourceId('microsoft.insights/components', parameters('siteName'))]"
+            ]
         },
         {
-            "type": "Microsoft.Web/sites/hostNameBindings",
-            "name": "[concat(parameters('siteName'), '/', '-bindings')]",
-            "apiVersion": "2016-08-01",
-            "location": "[resourceGroup().location]",
+            "type": "microsoft.insights/components",
+            "name": "[parameters('siteName')]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
             "properties": {
-                "siteName": "[parameters('siteName')]",
-                "hostNameType": "Verified"
-            }
+                "ApplicationId": "[parameters('siteName')]"
+            },
+            "dependsOn": []
         }
-    ]
+    ],
+    "outputs": {
+      "cognitivevisionkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview')]"
+      },
+      "cognitivevisionkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivevisionkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key2]"
+      },
+      "endpointvision": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicesvisionid'),'2016-02-01-preview').endpoint]"
+      },
+      "cognitivecontentmoderatorkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview')]"
+      },
+      "cognitivecontentmoderatorkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivecontentmoderatorkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key2]"
+      },
+      "endpointcontentmoderator": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').endpoint]"
+      }
+    }
 }

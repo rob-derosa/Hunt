@@ -8,8 +8,15 @@ namespace Hunt.Mobile.Common
 		public static class Constants
 		{
 			public static string SourceCodeUrl = "http://github.com/rob-derosa/hunt";
+			public static string BlobBaseUrl = "https://huntappstorage.blob.core.windows.net";
+			public static string CdnBaseUrl = "https://huntapp.azureedge.net";
+
+			public static string CdnImagesBaseUrl = $"{CdnBaseUrl}/images";
+			public static string BlobAssetsBaseUrl = $"{BlobBaseUrl}/assets";
+			public static string BlobImagesBaseUrl = $"{BlobBaseUrl}/images";
+			public static string DefaultAvatarUrl = $"{BlobAssetsBaseUrl}/avatars/jon.jpg";
+
 			public static string NoConnectionMessage = "You don't seem to be connected to the internet right now.";
-			public static string DefaultAvatar = "https://huntapp.azureedge.net/images/avatars/jon.jpg";
 			public static int PointsPerAttribute = 100;
 		}
 

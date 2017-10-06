@@ -134,15 +134,6 @@ namespace Hunt.Backend.Functions.Test
             Debug.Assert(result == HttpStatusCode.OK);
         }
 
-
-        [TestMethod]
-        public async Task SetEndGame()
-        {
-            var result = await SendGetRequest(string.Format("SetEndGame?minutes=1&gameId={0}", _gameId));
-
-            Debug.Assert(result == HttpStatusCode.OK);
-        }
-
         [TestMethod]
         public async Task EndGame()
         {

@@ -20,6 +20,13 @@ namespace Hunt.Mobile.Common
 			set { SetPropertyChanged(ref _entryCode, value); }
 		}
 
+		bool _isUnableToConnect;
+		public bool IsUnableToConnect
+		{
+			get { return _isUnableToConnect; }
+			set { SetPropertyChanged(ref _isUnableToConnect, value); }
+		}
+
 		#endregion
 
 		async public Task<Game> GetGameByEntryCode()
@@ -86,12 +93,16 @@ namespace Hunt.Mobile.Common
 				{
 					IsRefreshingGame = true;
 					NotifyPropertiesChanged();
+					IsUnableToConnect = false;
 
 					var task = new Task<Game>(() => App.Instance.DataService.GetOngoingGame(App.Instance.Player.Email).Result);
 					await task.RunProtected().ConfigureAwait(false);
 
 					if(!task.WasSuccessful())
+					{
+						IsUnableToConnect = true;
 						return false;
+					}
 
 					var game = task.Result;
 					if(game != null)

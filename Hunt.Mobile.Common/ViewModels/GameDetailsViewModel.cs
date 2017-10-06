@@ -13,7 +13,7 @@ namespace Hunt.Mobile.Common
 		public bool CanAddTreasure => Game.IsCoordinator() && Game.IsPrepping;
 		public bool CanShareGame => !Game.HasEnded;
 		public bool CanLeaveGame => (Game.IsCoordinator() || Game.GetTeam() != null && !Game.HasEnded);
-		public bool CanStartGame => Game.IsPrepping && Game.IsCoordinator() && Game.Treasures.Count() > 1 && Game.HasMinimumPlayers();
+		public bool CanStartGame => Game.IsPrepping && Game.IsCoordinator() && Game.Treasures.Count() >= 1 && Game.HasMinimumPlayers();
 		public bool CanEndGame => Game.IsCoordinator() && Game.IsRunning;
 		public int PlayerCount => Game == null ? 0 : Game.Teams.Sum(t => t.Players.Count);
 

@@ -8,8 +8,8 @@ Hunt is a virtual scavenger hunt app where players can join a game, select a tea
 
 Platform | Build | Deploy
 --- | --- | ---
-iOS 10.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com) | deploy
-Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) | deploy
+iOS 10.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com) | [latest build](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt/distribution_groups/public)
+Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) | [latest build](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt-android/distribution_groups/public)
 
 
 ### Overview
@@ -21,7 +21,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 
 
 ### Screenshots
-
+<img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/login_page_completed.jpg" alt="Registration page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/loading.jpg" alt="Loading profile" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/dashboard.jpg" alt="Dashboard page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/add_treasure_complete.jpg" alt="Coordinator adding new treasure" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/coordinator_game_not_started.jpg" alt="Coordinator view of pre-game" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/share_game.jpg" alt="Share game invite" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/teams.jpg" alt="Teams list" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/player_game_started.jpg" alt="Player view of started game" Width="210" />
 
 
 ### Rules
