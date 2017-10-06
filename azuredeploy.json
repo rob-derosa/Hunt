@@ -42,6 +42,32 @@
                 "Standard"
             ],
             "defaultValue": "Free"
+        },
+        "SKUCognitive": {
+            "type": "string",
+            "metadata": {
+                "description": "SKU for Computer Vision API"
+            },
+            "defaultValue": "F0",
+            "allowedValues": [
+                "F0",
+                "S1"
+            ]
+        },
+        "cognitiveServicesLocation": {
+            "metadata": {
+                "description": "The location for the Computer Vision API"
+            },
+            "type": "string",
+            "minLength": 1,
+            "allowedValues": [
+                "westeurope",
+                "eastus2",
+                "southeastasia",
+                "centralus",
+                "westus"
+            ],
+            "defaultValue": "westeurope"
         }
     },
     "variables": {
@@ -50,7 +76,9 @@
         "databaseAccountName": "[concat('huntdbaccount', uniqueString(resourceGroup().id))]",
         "cdnProfileName": "[concat(parameters('siteName'), '-cdn')]",
         "cdnEndPointName": "[concat(parameters('siteName'), '-cdnendpoint')]",
-        "namespaceName": "[concat(parameters('siteName'), 'namespace')]"
+        "namespaceName": "[concat(parameters('siteName'), 'namespace')]",
+        "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', parameters('siteName'))]",
+        "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', parameters('siteName'))]"
     },
     "resources": [
         {
@@ -152,6 +180,66 @@
                     ]
                 }
             ]
+        },
+        {
+          "type": "Microsoft.CognitiveServices/accounts",
+          "sku": {
+            "name": "[parameters('SKUCognitive')]"
+          },
+          "kind": "ComputerVision",
+          "name": "[concat(parameters('siteName'), 'vision')]",
+          "apiVersion": "2016-02-01-preview",
+          "location": "[parameters('cognitiveServicesLocation')]",
+          "scale": null,
+          "properties": {},
+          "dependsOn": []
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "sku": {
+            "name": "[parameters('SKUCognitive')]"
+            },
+            "kind": "ContentModerator",
+            "name": "[concat(parameters('siteName'), 'contentmoderator')]",
+            "apiVersion": "2016-02-01-preview",
+            "location": "[parameters('cognitiveServicesLocation')]",
+            "scale": null,
+            "properties": {},
+            "dependsOn": []
         }
-    ]
+    ],
+    "outputs": {
+      "cognitivevisionkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview')]"
+      },
+      "cognitivevisionkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivevisionkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key2]"
+      },
+      "endpointvision": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicesvisionid'),'2016-02-01-preview').endpoint]"
+      },
+      "cognitivecontentmoderatorkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview')]"
+      },
+      "cognitivecontentmoderatorkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivecontentmoderatorkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key2]"
+      },
+      "endpointcontentmoderator": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').endpoint]"
+      }
+    }
 }
