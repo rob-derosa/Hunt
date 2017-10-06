@@ -4011,6 +4011,7 @@
       "Microsoft.Azure.Mobile.Analytics": "0.16.0",
       "Microsoft.Azure.Mobile.Crashes": "0.16.0",
       "Microsoft.Azure.Mobile.Distribute": "0.16.0",
+      "Microsoft.Azure.Mobile.Push": "0.16.0",
       "Newtonsoft.Json": "10.0.3",
       "PCLCrypto": "2.0.147",
       "Plugin.MediaManager": "0.4.4",
@@ -4024,11 +4025,7 @@
       "Xam.Plugins.Forms.ImageCircle": "1.8.1",
       "Xam.Plugins.Settings": "3.0.1",
       "Xamarin.Forms": "2.4.0.282",
-      "ZXing.Net.Mobile.Forms": "2.2.9",
-      "Microsoft.Azure.Mobile.Push": {
-        "target": "Package",
-        "version": "[0.16.0, )"
-      }
+      "ZXing.Net.Mobile.Forms": "2.2.9"
     },
     "frameworks": {
       "portable45-net45+win8+wpa81": {}

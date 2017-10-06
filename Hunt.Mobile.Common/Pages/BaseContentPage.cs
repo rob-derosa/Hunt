@@ -12,7 +12,7 @@ namespace Hunt.Mobile.Common
 	{
 		#region Properties & Constructors
 
-		Grid _rootGrid; //Root container for all controls on page, including HUD
+		AbsoluteLayout _rootLayout; //Root container for all controls on page, including HUD
 		Grid _hudRoot; //Root container for all HUD related controls
 		Label _hudLabel; //Text displayed to user when HUD is showing
 		ContentView _hudView; //Holds a view, such as an animation or checkmark image
@@ -193,7 +193,7 @@ namespace Hunt.Mobile.Common
 			if(_contentView == null)
 				return;
 
-			_rootGrid = new Grid();
+			_rootLayout = new AbsoluteLayout();
 			_hudRoot = new Grid();
 
 			var bg = new ContentView
@@ -240,16 +240,15 @@ namespace Hunt.Mobile.Common
 			_hudRoot.Children.Add(bg);
 			_hudRoot.BackgroundColor = (Color)Application.Current.Resources["hudBackgroundColor"];
 			_hudRoot.IsVisible = false;
-			var topMargin = Device.RuntimePlatform == Device.iOS ? 20 : 10;
 
 			_toastRoot = new Grid
 			{
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.Start,
-				HeightRequest = 100 + topMargin,
-				Margin = new Thickness(-10, 0),
+				Margin = new Thickness(0),
 				BackgroundColor = (Color)Application.Current.Resources["toastBackgroundColor"],
 				IsVisible = false,
+				HeightRequest = 0,
 			};
 
 			var separatorBottom = new ContentView { Style = (Style)Application.Current.Resources["separator"] };
@@ -261,10 +260,10 @@ namespace Hunt.Mobile.Common
 				FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
 				TextColor = Color.White,
 				HorizontalTextAlignment = TextAlignment.Center,
-				LineBreakMode = LineBreakMode.WordWrap,
+				LineBreakMode = LineBreakMode.TailTruncation,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
-				Margin = new Thickness(40, topMargin, 40, 10),
+				Margin = new Thickness(20,10),
 			};
 
 			_toastRoot.Children.Add(separatorTop);
@@ -273,22 +272,34 @@ namespace Hunt.Mobile.Common
 
 			if(IsDesignMode)
 			{
-				_rootGrid.Children.Add(new Label
+				var label = new Label
 				{
 					Text = $"DESIGN MODE",
 					FontSize = 10,
 					LineBreakMode = LineBreakMode.WordWrap,
 					Margin = new Thickness(20),
-					HorizontalOptions = LayoutOptions.Center,
-					VerticalOptions = LayoutOptions.Start,
-				});
+				};
+
+				AbsoluteLayout.SetLayoutFlags(label, AbsoluteLayoutFlags.PositionProportional);
+				AbsoluteLayout.SetLayoutBounds(label, new Rectangle(.5, 0, -1, -1));
+				_rootLayout.Children.Add(label);
 			}
 
-			_rootGrid.Children.Add(_contentView);
-			_rootGrid.Children.Add(_toastRoot);
-			_rootGrid.Children.Add(_hudRoot);
+			AbsoluteLayout.SetLayoutFlags(_contentView, AbsoluteLayoutFlags.All);
+			AbsoluteLayout.SetLayoutBounds(_contentView, new Rectangle(0,0,1,1));
 
-			Content = _rootGrid;
+			AbsoluteLayout.SetLayoutFlags(_hudRoot, AbsoluteLayoutFlags.All);
+			AbsoluteLayout.SetLayoutBounds(_hudRoot, new Rectangle(0, 0, 1, 1));
+
+			AbsoluteLayout.SetLayoutFlags(_toastRoot, AbsoluteLayoutFlags.All);
+			AbsoluteLayout.SetLayoutBounds(_toastRoot, new Rectangle(0, 0, 1, 1));
+
+			_toastRoot.Margin = new Thickness(0, NavigationBar.YOffset, 0, 0);
+			_rootLayout.Children.Add(_contentView);
+			_rootLayout.Children.Add(_toastRoot);
+			_rootLayout.Children.Add(_hudRoot);
+
+			Content = _rootLayout;
 		}
 
 		public void Show(string message, View view = null)
@@ -324,7 +335,8 @@ namespace Hunt.Mobile.Common
 			});
 		}
 
-		async public void ShowToast(string message, NoticationType type, int timeout = 3000)
+		double? _toastHeight;
+		async public void ShowToast(string message, NoticationType type, int timeout = 3500)
 		{
 			if(_toastRoot == null || _toastRoot.IsVisible)
 				return;
@@ -332,16 +344,18 @@ namespace Hunt.Mobile.Common
 			if(_hudRoot != null && _hudRoot.IsVisible)
 				await Dismiss();
 
+			if(_toastHeight == null)
+				_toastHeight = 40;
+
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				_toastLabel.Text = message;
-				_toastRoot.Opacity = 0;
 				_toastRoot.IsVisible = true;
 			});
-			                               
-			await _toastRoot.FadeTo(1, 300).ConfigureAwait(false);
+
+			await _toastRoot.LayoutTo(new Rectangle(0, _toastRoot.Y, _toastRoot.Width, _toastHeight.Value), 350);
 			await Task.Delay(timeout).ConfigureAwait(false);
-			await _toastRoot.FadeTo(0, 500);
+			await _toastRoot.LayoutTo(new Rectangle(0, _toastRoot.Y, _toastRoot.Width, 0), 350);
 
 			Device.BeginInvokeOnMainThread(() =>
 			{

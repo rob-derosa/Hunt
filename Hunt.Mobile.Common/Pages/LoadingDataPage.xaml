@@ -3,33 +3,33 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:Hunt.Mobile.Common"
 	xmlns:circle="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
-	x:TypeArguments="local:DashboardViewModel"
 	xmlns:lot="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+	x:TypeArguments="local:DashboardViewModel"
 	x:Class="Hunt.Mobile.Common.LoadingDataPage">
 
 	<local:BaseContentPage.RootContent>
 		<ScrollView>
 			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				
 				<StackLayout
-					Margin="0,80,0,0"
-					VerticalOptions="Start"
-					Spacing="20"
+					VerticalOptions="Center"
 					HorizontalOptions="Center">
 
 					<Label Text="One moment, please..."
 						Margin="40,0"
 						AutomationId="loadingMessage"
 						Style="{StaticResource H1}" />
+
 					<Label
 						Margin="40,0"
 						FontSize="Small"
 						Text="We're getting things ready just for you." />
 
-					<Grid
-						x:Name="contentHolder"
-						HorizontalOptions="FillAndExpand"
-						VerticalOptions="FillAndExpand">
-
+					<Grid x:Name="contentHolder">
 						<circle:CircleImage
 							Margin="52"
 							VerticalOptions="Center"
@@ -44,6 +44,12 @@
 						</circle:CircleImage>
 					</Grid>
 				</StackLayout>
+
+				<Button
+					IsVisible="{Binding IsUnableToConnect}"
+					Grid.Row="1"
+					Text="Retry"
+					Clicked="RetryClicked" />
 			</Grid>
 		</ScrollView>	
 	</local:BaseContentPage.RootContent>

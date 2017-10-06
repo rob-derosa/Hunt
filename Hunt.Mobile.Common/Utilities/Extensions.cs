@@ -175,7 +175,10 @@ namespace Hunt.Mobile.Common
 					_index = 0;
 				
 				var color = Color.FromHex(_allColors[_index]);
-				view.BackgroundColor = color.MultiplyAlpha(.1);
+				//view.BackgroundColor = color.MultiplyAlpha(.1);
+
+				if(view.BackgroundColor == Color.Default)
+					view.BackgroundColor = Color.FromHex("#11FFFFFF");
 
 				var layout = view as ILayoutController;
 				if(layout == null)
