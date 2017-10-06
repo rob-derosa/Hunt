@@ -15,6 +15,11 @@ namespace Hunt.Mobile.Common
 	{
 		#region Generic
 
+		public static string ToUrlCDN(this string url)
+		{
+			return url.Replace(Keys.Constants.BlobBaseUrl, Keys.Constants.CdnBaseUrl);
+		}
+
 		public static void Notify(this Exception e)
 		{
 			Logger.Instance.WriteLine(e.Message);

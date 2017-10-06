@@ -13,7 +13,7 @@ namespace Hunt.Mobile.Common
 			{
 				Alias = "Ned",
 				Email = "ned@hbo.com",
-				Avatar = $"https://huntapp.azureedge.net/images/avatars/ned.jpg",
+				Avatar = $"{Keys.Constants.BlobAssetsBaseUrl}/avatars/ned.jpg",
 			};
 
 			var teams = new List<string[]>
@@ -57,7 +57,7 @@ namespace Hunt.Mobile.Common
 						{
 							Alias = p,
 							Email = $"{p.ToLower()}@hbo.com",
-							Avatar = $"https://huntapp.azureedge.net/images/avatars/{p.ToLower()}.jpg",
+							Avatar = $"{Keys.Constants.BlobAssetsBaseUrl}/avatars/{p.ToLower()}.jpg",
 						};
 						team.Players.Add(player);
 					}
@@ -71,7 +71,7 @@ namespace Hunt.Mobile.Common
 				var dog = new Treasure
 				{
 					Hint = "Not a cat",
-					ImageSource = "https://huntapp.azureedge.net/images/treasures/dog.jpg",
+					ImageSource = $"{Keys.Constants.BlobAssetsBaseUrl}/treasures/dog.jpg",
 					Points = 100,
 				};
 
@@ -82,7 +82,7 @@ namespace Hunt.Mobile.Common
 				var shoes = new Treasure
 				{
 					Hint = "What has a soul, a tongue and eyes but isn't alive?",
-					ImageSource = "https://huntapp.azureedge.net/images/treasures/shoes.jpg",
+					ImageSource = $"{Keys.Constants.BlobAssetsBaseUrl}/treasures/shoes.jpg",
 					Points = 100,
 				};
 
@@ -93,7 +93,7 @@ namespace Hunt.Mobile.Common
 				var bottle = new Treasure
 				{
 					Hint = "What has a neck, no head, yet still wears a cap?",
-					ImageSource = "https://huntapp.azureedge.net/images/treasures/wine_bottle.jpg",
+					ImageSource = $"{Keys.Constants.BlobAssetsBaseUrl}/treasures/wine_bottle.jpg",
 					Points = 50,
 				};
 
