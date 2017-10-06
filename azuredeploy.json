@@ -42,6 +42,32 @@
                 "Standard"
             ],
             "defaultValue": "Free"
+        },
+        "SKUCognitive": {
+            "type": "string",
+            "metadata": {
+                "description": "SKU for Computer Vision API"
+            },
+            "defaultValue": "F0",
+            "allowedValues": [
+                "F0",
+                "S1"
+            ]
+        },
+        "cognitiveServicesLocation": {
+            "metadata": {
+                "description": "The location for the Computer Vision API"
+            },
+            "type": "string",
+            "minLength": 1,
+            "allowedValues": [
+                "westeurope",
+                "eastus2",
+                "southeastasia",
+                "centralus",
+                "westus"
+            ],
+            "defaultValue": "westeurope"
         }
     },
     "variables": {
@@ -50,7 +76,14 @@
         "databaseAccountName": "[concat('huntdbaccount', uniqueString(resourceGroup().id))]",
         "cdnProfileName": "[concat(parameters('siteName'), '-cdn')]",
         "cdnEndPointName": "[concat(parameters('siteName'), '-cdnendpoint')]",
-        "namespaceName": "[concat(parameters('siteName'), 'namespace')]"
+        "namespaceName": "[concat(parameters('siteName'), 'namespace')]",
+        "visionApiAccountName": "[concat(parameters('siteName'), 'vision')]",
+        "contentModeratorAccountName": "[concat(parameters('siteName'), 'contentmoderator')]",
+        "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('visionApiAccountName'))]",
+        "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('contentModeratorAccountName'))]",
+        "alertfailuresName": "[concat(parameters('siteName'), 'alertfailures')]",
+		"serviceBusName": "[concat(parameters('siteName'), 'bus')]",
+		"endGameQueueName": "endgame"
     },
     "resources": [
         {
@@ -152,6 +185,128 @@
                     ]
                 }
             ]
+        },
+        {
+          "type": "Microsoft.CognitiveServices/accounts",
+          "sku": {
+            "name": "[parameters('SKUCognitive')]"
+          },
+          "kind": "ComputerVision",
+          "name": "[variables('visionApiAccountName')]",
+          "apiVersion": "2016-02-01-preview",
+          "location": "[parameters('cognitiveServicesLocation')]",
+          "scale": null,
+          "properties": {},
+          "dependsOn": []
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "sku": {
+            "name": "[parameters('SKUCognitive')]"
+            },
+            "kind": "ContentModerator",
+            "name": "[variables('contentModeratorAccountName')]",
+            "apiVersion": "2016-02-01-preview",
+            "location": "[parameters('cognitiveServicesLocation')]",
+            "scale": null,
+            "properties": {},
+            "dependsOn": []
+        },
+		{
+	      "apiVersion": "2015-08-01",
+	      "name": "[variables('serviceBusName')]",
+	      "type": "Microsoft.ServiceBus/namespaces",
+	      "location": "[parameters('location')]",
+	      "properties": {},
+	      "resources": [
+	        {
+	          "apiVersion": "2015-08-01",
+	          "name": "[variables('endGameQueueName')]",
+	          "type": "Queues",
+	          "dependsOn": [
+	            "[concat('Microsoft.ServiceBus/namespaces/', variables('serviceBusName'))]"
+	          ],
+	          "properties": {},
+	          "resources": []
+	        }
+	      ]
+	    },
+        {
+            "type": "microsoft.insights/alertrules",
+            "name": "[parameters('siteName')]",
+            "apiVersion": "2014-04-01",
+            "location": "South Central US",
+            "scale": null,
+            "properties": {
+                "name": "[variables('alertfailuresName')]",
+                "description": "",
+                "isEnabled": true,
+                "condition": {
+                    "odata.type": "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
+                    "dataSource": {
+                        "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
+                        "resourceUri": "[resourceId('microsoft.insights/components', parameters('siteName'))]",
+                        "metricNamespace": null,
+                        "metricName": "advanced::A3108E3D-5E26-44CF-B232-783F5E20EF10::ewAiAEgAeQBwAGUAcgBpAG8AbgBBAHAAcABsAGkAYwBhAHQAaQBvAG4AUwBpAGQAIgA6AG4AdQBsAGwALAAiAEgAeQBwAGUAcgBpAG8AbgBTAHUAYgBqAGUAYwB0AFMAaQBkACIAOgBuAHUAbABsACwAIgBIAHkAcABlAHIAaQBvAG4ATwBiAHMAZQByAHYAZQByAFMAaQBkACIAOgBuAHUAbABsACwAIgBDAHUAcwB0AG8AbQBlAHIAQQBjAGMAbwB1AG4AdABJAGQAIgA6ACIAMAAwADAAMAAwADAAMAAwAC0AMAAwADAAMAAtADAAMAAwADAALQAwADAAMAAwAC0AMAAwADAAMAAwADAAMAAwADAAMAAwADAAIgAsACIAQQBwAHAAbABpAGMAYQB0AGkAbwBuAE4AYQBtAGUAIgA6AG4AdQBsAGwALAAiAEEAcABwAGwAaQBjAGEAdABpAG8AbgBJAGQAIgA6AG4AdQBsAGwALAAiAFAAcgBvAGYAaQBsAGUASQBkACIAOgAwACwAIgBXAGkAbgBkAG8AdwBTAGkAegBlAEkAbgBNAGkAbgB1AHQAZQBzACIAOgA2ADAALAAiAE0AZQB0AHIAaQBjAE4AYQBtAGUAIgA6ACIAIgAsACIAVABoAHIAZQBzAGgAbwBsAGQAIgA6ADIALgAwACwAIgBBAGwAZQByAHQAVABlAG0AcABsAGEAdABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAE4AYQBtAGUAIgA6ACIAIgAsACIAUgB1AGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AIgA6ACIAIgAsACIAUgBlAHMAbwB1AHIAYwBlAEkAZAAiADoAbgB1AGwAbAAsACIAUwB1AGIAcwBjAHIAaQBwAHQAaQBvAG4ASQBkACIAOgBuAHUAbABsACwAIgBBAGcAZwByAGUAZwBhAHQAZQBGAHUAbgBjAHQAaQBvAG4AIgA6ACIAIgAsACIAQwBvAG0AcABhAHIAaQBzAG8AbgBPAHAAZQByAGEAdABvAHIAIgA6ACIAewBcACIAQgBhAHMAZQBsAGkAbgBlAFQAaQBtAGUAcwBwAGEAbgBcACIAOgBcACIAMAAwADoANAAwADoAMAAwAFwAIgAsAFwAIgBJAG4AcwBpAGcAaAB0AHMAUwBlAHIAdgBpAGMAZQBMAGEAZwBcACIAOgBcACIAMAAwADoAMAAwADoAMAAwAFwAIgAsAFwAIgBCAHUAZgBmAGUAcgBUAGkAbQBlAFwAIgA6AFwAIgAwADAAOgAwADEAOgAwADAAXAAiACwAXAAiAEIAbABvAGIAUwB0AG8AcgBhAGcAZQBMAG8AZwBnAGkAbgBnAEUAbgBhAGIAbABlAGQAXAAiADoAZgBhAGwAcwBlACwAXAAiAFUAcwBlAHIAUwB1AHAAcAByAGUAcwBzAGkAbwBuAHMAXAAiADoAbgB1AGwAbAAsAFwAIgBQAHIAbwBmAGkAbABlAEkAZABcACIAOgAwACwAXAAiAEUAbQBhAGkAbABUAHkAcABlAFwAIgA6ADAALABcACIAUgBkAGQARgBhAGkAbAB1AHIAZQBzAFMAcABpAGsAZQBUAGgAcgBlAHMAaABvAGwAZABcACIAOgAzAC4AMAAsAFwAIgBSAGEAdwBQAHIAbwBhAGMAdABpAHYAZQBSAHUAbABlAEMAbwBuAGYAaQBnAFwAIgA6AG4AdQBsAGwAfQAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8AQwB1AHMAdABvAG0AIgA6AGYAYQBsAHMAZQAsACIAQwB1AHMAdABvAG0ARQBtAGEAaQBsAHMARQBuAGMAbwBkAGUAZAAiADoAIgAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8ATwB3AG4AZQByAHMAIgA6AGYAYQBsAHMAZQB9AA=="
+                    },
+                    "operator": "GreaterThan",
+                    "threshold": 2,
+                    "windowSize": "PT1H"
+                },
+                "action": {
+                    "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleEmailAction",
+                    "sendToServiceOwners": true,
+                    "customEmails": []
+                }
+            },
+            "dependsOn": [
+                "[resourceId('microsoft.insights/components', parameters('siteName'))]"
+            ]
+        },
+        {
+            "type": "microsoft.insights/components",
+            "name": "[parameters('siteName')]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "ApplicationId": "[parameters('siteName')]"
+            },
+            "dependsOn": []
         }
-    ]
+    ],
+    "outputs": {
+      "cognitivevisionkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview')]"
+      },
+      "cognitivevisionkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivevisionkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key2]"
+      },
+      "endpointvision": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicesvisionid'),'2016-02-01-preview').endpoint]"
+      },
+      "cognitivecontentmoderatorkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview')]"
+      },
+      "cognitivecontentmoderatorkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivecontentmoderatorkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key2]"
+      },
+      "endpointcontentmoderator": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').endpoint]"
+      }
+    }
 }

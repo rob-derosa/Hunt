@@ -14,7 +14,7 @@ namespace Hunt.Backend.Functions
         //ServiceBus
         public static class ServiceBus
         {
-            public const string Url = @"Endpoint=sb://huntapp.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=KGkiZqcbFsaOsvSfDTuertGHyNkxjYBPP7Hv2JOG/6o=";
+            public const string Url = @"Endpoint=sb://huntappbus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=kk9LBTWE3lOYtTXI/ituYOiGlS+4qDE0JAMYKzBHXPo=";
 
             //Queues
             public const string ImageBusName = "imageprocess";
