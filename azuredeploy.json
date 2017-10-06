@@ -6,6 +6,10 @@
             "type": "string",
             "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
         },
+        "cdnEndPoint": {
+            "type": "string",
+            "defaultValue": "[concat('site', uniqueString(resourceGroup().id), '-endpoint')]"
+        },
         "sku": {
             "type": "string",
             "allowedValues": [
@@ -29,6 +33,11 @@
             ]
         }
     },
+    "variables": {
+        "hubVersion": "[providers('Microsoft.NotificationHubs', 'namespaces').apiVersions[0]]",
+        "notificationHubNamespace": "[concat('hubv2', uniqueString(resourceGroup().id))]",
+        "notificationHubName": "notificationhub"
+    },
     "resources": [
         {
             "type": "Microsoft.Cdn/profiles",
@@ -41,6 +50,42 @@
             "properties": {
                 "provisioningState": "Succeeded",
                 "resourceState": "Active"
+            }
+        },
+        {
+            "type": "Microsoft.Cdn/profiles/endpoints",
+            "name": "[concat(parameters('siteName'), '/', parameters('cdnEndPoint'))]",
+            "apiVersion": "2016-04-02",
+            "location": "SouthCentralUs",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "originHostHeader": "[concat(parameters('siteName'),'storage.blob.core.windows.net')]",
+                "isHttpAllowed": true,
+                "isHttpsAllowed": true,
+                "queryStringCachingBehavior": "UseQueryString",
+                "originPath": null,
+                "origins": [
+                    {
+                        "name": "[concat(parameters('siteName'),'storage-blob-core-windows-net')]",
+                        "properties": {
+                            "hostName": "[concat(parameters('siteName'),'storage.blob.core.windows.net')]",
+                            "httpPort": 80,
+                            "httpsPort": 443
+                        }
+                    }
+                ],
+                "contentTypesToCompress": [
+                    "text/plain",
+                    "text/html",
+                    "text/css",
+                    "text/javascript",
+                    "application/x-javascript",
+                    "application/javascript",
+                    "application/json",
+                    "application/xml"
+                ],
+                "isCompressionEnabled": true
             }
         },
         {
@@ -91,18 +136,35 @@
             }
         },
         {
-            "type": "Microsoft.NotificationHubs/namespaces",
-            "kind": "NotificationHub",
-            "name": "[concat(parameters('siteName'), '-notification-namespace')]",
-            "apiVersion": "2014-09-01",
+            "type": "Microsoft.NotificationHubs/namespaces/notificationHubs",
+            "name": "[variables('NotificationHubNamespace')]",
+            "apiVersion": "[variables('hubVersion')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "namespaceType": "NotificationHub"
-            }
+            },
+            "resources": [
+                {
+                    "type": "Microsoft.NotificationHubs/namespaces",
+                    "name": "[concat(variables('NotificationHubNamespace'),'/',variables('NotificationHubName'))]",
+                    "apiVersion": "[variables('hubVersion')]",
+                    "location": "[resourceGroup().location]",
+                    "properties": {
+                        "GcmCredential": {
+                            "properties": {
+                                "googleApiKey": "[parameters('Gcm.GoogleApiKey')]",
+                                "gcmEndpoint": "https://android.googleapis.com/gcm/send"
+                            }
+                        }
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.NotificationHubs/namespaces/', variables('NotificationHubNamespace'))]"
+                    ]
+                }
+            ]
         },
         {
             "type": "Microsoft.Web/serverfarms",
-            "kind": "functionapp",
             "name": "[concat(parameters('siteName'), '-functions')]",
             "apiVersion": "2016-09-01",
             "location": "[resourceGroup().location]",
@@ -137,6 +199,71 @@
                 "serverFarmId": "[concat(parameters('siteName'), '-functions')]",
                 "containerSize": 1536,
                 "dailyMemoryTimeQuota": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "name": "[concat(parameters('siteName'), '-config')]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2017",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$huntapp",
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "winAuthAdminState": 0,
+                "winAuthTenantState": 0,
+                "customAppPoolIdentityAdminState": false,
+                "customAppPoolIdentityTenantState": false,
+                "loadBalancing": "LeastRequests",
+                "autoHealEnabled": false,
+                "siteAuthEnabled": false,
+                "cors": {
+                    "allowedOrigins": [
+                        "https://functions.azure.com",
+                        "https://functions-staging.azure.com",
+                        "https://functions-next.azure.com"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "name": "[concat(parameters('siteName'), '/', '-bindings')]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "siteName": "[parameters('siteName')]",
+                "hostNameType": "Verified"
             }
         }
     ]
