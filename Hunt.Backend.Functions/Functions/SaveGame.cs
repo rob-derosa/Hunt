@@ -54,7 +54,6 @@ namespace Hunt.Backend.Functions
 						if (!game.IsPersisted)
 						{
 							client.InsertItemAsync(game).Wait();
-							SendTargetedNotifications(game, action, arguments);
 						}
 						else
 						{
@@ -119,19 +118,18 @@ namespace Hunt.Backend.Functions
 				{
 					// track exceptions that occur
 					analytic.TrackException(e);
-
 					return req.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message, e);
 				}
 			}
 		}
-
+		
 		#region Game Timer
 
 		static void SetEndGameTimer(Game game, Analytic analytic)
 		{
 			try
 			{
-				using (var client = new QueueService(Keys.ServiceBus.EndGameBusName))
+				using(var client = new QueueService(Keys.ServiceBus.EndGameBusName))
 				{
 					client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
 				}
