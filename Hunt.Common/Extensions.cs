@@ -20,6 +20,13 @@ namespace Hunt.Common
 			return JsonConvert.SerializeObject(o);
 		}
 
+		public static string ToUrlCDN(this string url)
+		{
+			var origin = "https://huntappstorage.blob.core.windows.net";
+			var cdn = "https://huntapp.azureedge.net";
+			return url.Replace(origin, cdn);
+		}
+
 		public static T ToObject<T>(this string json)
 		{
 			if(string.IsNullOrWhiteSpace(json))

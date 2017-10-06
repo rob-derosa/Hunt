@@ -5,7 +5,7 @@
 	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
 	x:TypeArguments="local:GameDetailsViewModel"
 	xmlns:lot="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
-	x:Class="Hunt.Mobile.Common.GameDetailsPage">
+ 	x:Class="Hunt.Mobile.Common.GameDetailsPage">
 
 	<local:BaseContentPage.RootContent>
 		<Grid RowSpacing="0">

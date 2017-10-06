@@ -13,7 +13,6 @@ namespace Hunt.Mobile.Common
 	{
 		bool _isWaitingForLandscape;
 
-
 		public TreasureDetailsPage()
 		{
 			if(IsDesignMode)
@@ -36,14 +35,14 @@ namespace Hunt.Mobile.Common
 
 		async void TakePhotoClicked(object sender, EventArgs e)
 		{
-#if !DEBUG
-			if(Orientation != Orientation.Landscape)
-			{
-				_isWaitingForLandscape = true;
-				Hud.Instance.Show("Please take all photos in landscape mode.\n\nThank you, kindly.");
-			}
-			else
-#endif
+//#if !DEBUG
+//			if(Orientation != Orientation.Landscape)
+//			{
+//				_isWaitingForLandscape = true;
+//				Hud.Instance.Show("Please take all photos in landscape mode.\n\nThank you, kindly.");
+//			}
+//			else
+//#endif
 			{
 				DisplayCameraView();
 			}
@@ -82,40 +81,39 @@ namespace Hunt.Mobile.Common
 				var success = await ViewModel.AnalyzePhotoForAcquisition();
 				if(success)
 				{
-					ViewModel.OnTreasureAcquired?.Invoke(ViewModel.Game);
 					await PlayAnimation();
+					ViewModel.OnTreasureAcquired?.Invoke(ViewModel.Game);
 				}
+				//else
+				//{
+				//	var matchCount = ViewModel.GetMatchCount();
+				//	if(matchCount > 0)
+				//	{
+				//		var points = ViewModel.GetMatchCount() * Keys.Constants.PointsPerAttribute;
+				//		var totalPoints = ViewModel.Treasure.Attributes.Count * Keys.Constants.PointsPerAttribute;
+				//		var title = $"You got {matchCount} out of {ViewModel.Treasure.Attributes.Count} matching tags";
+				//		var msg = $"Would you like to take the {points}pts or retry for all {totalPoints}pts?";
+
+				//		var response = await DisplayAlert(title, msg, "Take the Points", "Retry");
+
+				//		if(!response)
+				//		{
+				//			ViewModel.Reset();
+				//			return;
+				//		}
+
+				//		success = await ViewModel.AquireTreasureAndSaveGame();
+				//		if(success)
+				//		{
+				//			await PlayAnimation();
+				//			ViewModel.OnTreasureAcquired?.Invoke(ViewModel.Game);
+				//		}
+				//	}
 				else
 				{
-					var matchCount = ViewModel.GetMatchCount();
-					if(matchCount > 0)
-					{
-						var points = ViewModel.GetMatchCount() * Keys.Constants.PointsPerAttribute;
-						var totalPoints = ViewModel.Treasure.Attributes.Count * Keys.Constants.PointsPerAttribute;
-						var title = $"You got {matchCount} out of {ViewModel.Treasure.Attributes.Count} matching tags";
-						var msg = $"Would you like to take the {points}pts or retry for all {totalPoints}pts?";
-
-						var response = await DisplayAlert(title, msg, "Take the Points", "Retry");
-
-						if(!response)
-						{
-							ViewModel.Reset();
-							return;
-						}
-
-						success = await ViewModel.AquireTreasureAndSaveGame(ViewModel.GetMatchCount());
-						if(success)
-						{
-							await PlayAnimation();
-							ViewModel.OnTreasureAcquired?.Invoke(ViewModel.Game);
-						}
-					}
-					else
-					{
-						ViewModel.Reset();
-						Hud.Instance.ShowToast("You didn't get any matching tags. Please try again.");
-						return;
-					}
+					ViewModel.Reset();
+					Hud.Instance.ShowToast("You didn't get any matching tags. Please try again.");
+					return;
 				}
 			}
 			catch(Exception ex)

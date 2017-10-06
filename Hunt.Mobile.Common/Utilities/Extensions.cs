@@ -63,7 +63,7 @@ namespace Hunt.Mobile.Common
 			if(split.Length == 2)
 			{
 				if(split[1].ToLower() == "hbo.com")
-					return $"https://huntappstorage.blob.core.windows.net/images/avatars/{split[0].ToLower()}.jpg";
+					return $"https://huntapp.azureedge.net/images/avatars/{split[0].ToLower()}.jpg";
 			}
 
 			var hashStr = email.GenerateHash();
@@ -350,6 +350,9 @@ namespace Hunt.Mobile.Common
 
 		public static AcquiredTreasure GetAcquiredTreasure(this Game game, Treasure treasure)
 		{
+			if(game == null)
+				return null;
+			
 			if(game.HasEnded)
 			{
 				//Return the winning team's acquired treasure

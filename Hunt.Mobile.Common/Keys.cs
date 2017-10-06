@@ -7,10 +7,10 @@ namespace Hunt.Mobile.Common
 		//Constant values
 		public static class Constants
 		{
-			public static string SourceCodeUrl = "http://github.com/xamarin/hunt";
+			public static string SourceCodeUrl = "http://github.com/rob-derosa/hunt";
 			public static string NoConnectionMessage = "You don't seem to be connected to the internet right now.";
-			public static string DefaultAvatar = "https://huntappstorage.blob.core.windows.net/images/avatars/jon.jpg";
-			public static int PointsPerAttribute = 25;
+			public static string DefaultAvatar = "https://huntapp.azureedge.net/images/avatars/jon.jpg";
+			public static int PointsPerAttribute = 100;
 		}
 
 		//Mobile Center

@@ -1,1 +1,1 @@
-mobile-center test run uitest --app "Hunt-App/Hunt" --devices "Hunt-App/ios-smoke-test" --app-path ~/Desktop/com.microsoft.hunt.ipa  --test-series "master" --locale "en_US" --build-dir ~/Projects/Hunt/Hunt.Mobile.UITest/bin/Debug/
+mobile-center test run uitest --app "Hunt-App/Hunt" --devices "Hunt-App/ios-smoke-test" --app-path ~/Desktop/com.microsoft.hunt.ipa  --test-series "master" --locale "en_US" --build-dir ../Hunt.Mobile.UITest/bin/Debug/

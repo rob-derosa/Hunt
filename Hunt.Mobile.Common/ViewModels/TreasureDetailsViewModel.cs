@@ -182,6 +182,7 @@ namespace Hunt.Mobile.Common
 				if(url == null)
 					throw new Exception("There was an issue uploading the image. Please try again.");
 
+				url = url.ToUrlCDN();
 				Hud.Instance.HudMessage = "Analyzing photo";
 				var task = new Task<string[]>(() => App.Instance.DataService.AnalyseImage(new string[] { url }).Result);
 				await task.RunProtected();
@@ -194,12 +195,11 @@ namespace Hunt.Mobile.Common
 					Logger.Instance.WriteLine(a);
 
 				_treasureImageUrl = url;
-				var success = Treasure.Attributes.Count == GetMatchCount();
+				var success = GetMatchCount() >= 1;
 
 				if(success)
 				{
-					
-					await AquireTreasureAndSaveGame(Treasure.Attributes.Count);
+					await AquireTreasureAndSaveGame();
 				}
 
 				NotifyPropertiesChanged();
@@ -207,7 +207,7 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		async public Task<bool> AquireTreasureAndSaveGame(int claimedAttributes)
+		async public Task<bool> AquireTreasureAndSaveGame()
 		{
 			var acquiredTreasure = new AcquiredTreasure
 			{
@@ -215,7 +215,7 @@ namespace Hunt.Mobile.Common
 				PlayerId = App.Instance.Player.Id,
 				ImageSource = _treasureImageUrl,
 				ClaimedTimeStamp = DateTime.UtcNow,
-				ClaimedPoints = claimedAttributes * Keys.Constants.PointsPerAttribute,
+				ClaimedPoints = Treasure.Points,
 			};
 
 			Func<Game, Game> action = (refreshedGame) =>

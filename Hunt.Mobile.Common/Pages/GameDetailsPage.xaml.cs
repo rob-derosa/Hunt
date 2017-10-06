@@ -139,10 +139,10 @@ namespace Hunt.Mobile.Common
 			page.ViewModel.OnTreasureAcquired = async(game) =>
 			{
 				ViewModel.SetGame(game);
+				await Navigation.PopAsyncAndNotify();
 
 				if(ViewModel.Game.HasEnded)
 				{
-					await Navigation.PopAsyncAndNotify();
 					await Task.Delay(500);
 
 					if(ViewModel.Game.WinnningTeamId == ViewModel.Game.GetTeam().Id)
