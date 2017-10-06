@@ -27,7 +27,7 @@ namespace Hunt.Mobile.Common
 				{
 					if(split[1].ToLower() == "hbo.com") //GoT character
 					{
-						var url = $"https://huntapp.azureedge.net/images/avatars/{split[0].ToLower()}.jpg";
+						var url = $"{Keys.Constants.BlobAssetsBaseUrl}/avatars/{split[0].ToLower()}.jpg";
 						ViewModel.Avatar = url;
 						ViewModel.Alias = split[0].ToTitleCase();
 						return;
@@ -35,7 +35,7 @@ namespace Hunt.Mobile.Common
 				}
 
 				var valid = await App.Instance.DataService.IsGravatarValid(email);
-				ViewModel.Avatar = valid ? email.ToGravatarUrl(200) : Keys.Constants.DefaultAvatar;
+				ViewModel.Avatar = valid ? email.ToGravatarUrl(200) : Keys.Constants.DefaultAvatarUrl;
 			}
 		}
 
