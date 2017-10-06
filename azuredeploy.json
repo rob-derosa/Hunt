@@ -77,8 +77,10 @@
         "cdnProfileName": "[concat(parameters('siteName'), '-cdn')]",
         "cdnEndPointName": "[concat(parameters('siteName'), '-cdnendpoint')]",
         "namespaceName": "[concat(parameters('siteName'), 'namespace')]",
-        "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', parameters('siteName'))]",
-        "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', parameters('siteName'))]"
+        "visionApiAccountName": "[concat(parameters('siteName'), 'vision')]",
+        "contentModeratorAccountName": "[concat(parameters('siteName'), 'contentmoderator')]",
+        "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('visionApiAccountName'))]",
+        "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('contentModeratorAccountName'))]"
     },
     "resources": [
         {
@@ -187,7 +189,7 @@
             "name": "[parameters('SKUCognitive')]"
           },
           "kind": "ComputerVision",
-          "name": "[concat(parameters('siteName'), 'vision')]",
+          "name": "[variables('visionApiAccountName')]",
           "apiVersion": "2016-02-01-preview",
           "location": "[parameters('cognitiveServicesLocation')]",
           "scale": null,
@@ -200,7 +202,7 @@
             "name": "[parameters('SKUCognitive')]"
             },
             "kind": "ContentModerator",
-            "name": "[concat(parameters('siteName'), 'contentmoderator')]",
+            "name": "[variables('contentModeratorAccountName')]",
             "apiVersion": "2016-02-01-preview",
             "location": "[parameters('cognitiveServicesLocation')]",
             "scale": null,
