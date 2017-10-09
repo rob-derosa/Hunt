@@ -265,7 +265,6 @@
                   "type": "config",
                   "dependsOn": [
                     "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]",
-                    "[resourceId('Microsoft.Web/Sites/sourcecontrols', parameters('siteName'), 'web')]",
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('huntAppStorageName'))]"
                   ],
                   "properties": {
