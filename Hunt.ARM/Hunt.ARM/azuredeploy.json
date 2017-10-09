@@ -1,0 +1,316 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "siteName": {
+        "type": "string",
+        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
+      },
+        "CDNSku": {
+            "type": "string",
+            "metadata": {
+                "description": "CDN SKU names"
+            },
+            "defaultValue": "Standard_Akamai",
+            "allowedValues": [
+                "Standard_Akamai",
+                "Standard_Verizon",
+                "Premium_Verizon"
+            ]
+        },
+        "HuntAppStorageType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_ZRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Premium_LRS"
+            ]
+        },
+        "HuntAppSKU": {
+            "type": "string",
+            "allowedValues": [
+                "Free",
+                "Shared",
+                "Basic",
+                "Standard"
+            ],
+            "defaultValue": "Free"
+        },
+        "SKUCognitive": {
+            "type": "string",
+            "metadata": {
+                "description": "SKU for Computer Vision API"
+            },
+            "defaultValue": "F0",
+            "allowedValues": [
+                "F0",
+                "S1"
+            ]
+        },
+        "cognitiveServicesLocation": {
+            "metadata": {
+                "description": "The location for the Computer Vision API"
+            },
+            "type": "string",
+            "minLength": 1,
+            "allowedValues": [
+                "westeurope",
+                "eastus2",
+                "southeastasia",
+                "centralus",
+                "westus"
+            ],
+            "defaultValue": "westeurope"
+        }
+    },
+    "variables": {
+      "hubName": "hunthub",
+      "huntAppStorageName": "[concat('huntstorage', uniqueString(resourceGroup().id))]",
+      "databaseAccountName": "[concat('huntdbaccount', uniqueString(resourceGroup().id))]",
+      "cdnProfileName": "[concat(parameters('siteName'), '-cdn')]",
+      "cdnEndPointName": "[concat(parameters('siteName'), '-cdnendpoint')]",
+      "namespaceName": "[concat(parameters('siteName'), 'namespace')]",
+      "visionApiAccountName": "[concat(parameters('siteName'), 'vision')]",
+      "contentModeratorAccountName": "[concat(parameters('siteName'), 'contentmoderator')]",
+      "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('visionApiAccountName'))]",
+      "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('contentModeratorAccountName'))]",
+      "alertfailuresName": "[concat(parameters('siteName'), 'alertfailures')]",
+      "serviceBusName": "[concat(parameters('siteName'), 'bus')]",
+      "endGameQueueName": "endgame"
+    },
+    "resources": [
+        {
+            "name": "[variables('cdnProfileName')]",
+            "type": "Microsoft.Cdn/profiles",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2016-04-02",
+            "sku": {
+                "name": "[parameters('CDNSku')]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2016-04-02",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Cdn/profiles', variables('cdnProfileName'))]"
+                    ],
+                    "location": "[resourceGroup().location]",
+                    "name": "[variables('cdnEndPointName')]",
+                    "type": "endpoints",
+                    "properties": {
+                        "originHostHeader": "[concat('siteName', '.azurewebsites.com')]",
+                        "isHttpAllowed": true,
+                        "isHttpsAllowed": true,
+                        "queryStringCachingBehavior": "IgnoreQueryString",
+                        "contentTypesToCompress": [
+                            "text/plain",
+                            "text/html",
+                            "text/css",
+                            "application/x-javascript",
+                            "text/javascript"
+                        ],
+                        "isCompressionEnabled": true,
+                        "origins": [
+                            {
+                                "name": "origin1",
+                                "properties": {
+                                    "hostName": "[concat('siteName', '.azurewebsites.com')]"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "[variables('huntAppStorageName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "HuntStorage"
+            },
+            "properties": {
+                "accountType": "[parameters('HuntAppStorageType')]"
+            }
+        },
+        {
+            "apiVersion": "2015-04-08",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "kind": "MongoDB",
+            "name": "[variables('databaseAccountName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "databaseAccountOfferType": "Standard",
+                "name": "[variables('databaseAccountName')]"
+            }
+        },
+        {
+            "name": "[parameters('siteName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2014-06-01",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "HuntApp"
+            },
+            "properties": {
+                "name": "[parameters('siteName')]",
+                "sku": "[parameters('HuntAppSKU')]",
+                "numberOfWorkers": 1
+            }
+        },
+        {
+            "apiVersion": "2014-09-01",
+            "name": "[variables('namespaceName')]",
+            "type": "Microsoft.NotificationHubs/namespaces",
+            "location": "[resourceGroup().location]",
+            "kind": "NotificationHub",
+            "resources": [
+                {
+                    "name": "[concat(variables('namespaceName'), '/', variables('hubName'))]",
+                    "apiVersion": "2014-09-01",
+                    "type": "Microsoft.NotificationHubs/namespaces/notificationHubs",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[variables('namespaceName')]"
+                    ]
+                }
+            ]
+        },
+        {
+          "type": "Microsoft.CognitiveServices/accounts",
+          "sku": {
+            "name": "[parameters('SKUCognitive')]"
+          },
+          "kind": "ComputerVision",
+          "name": "[variables('visionApiAccountName')]",
+          "apiVersion": "2016-02-01-preview",
+          "location": "[parameters('cognitiveServicesLocation')]",
+          "scale": null,
+          "properties": {},
+          "dependsOn": []
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "sku": {
+              "name": "[parameters('SKUCognitive')]"
+            },
+            "kind": "ContentModerator",
+            "name": "[variables('contentModeratorAccountName')]",
+            "apiVersion": "2016-02-01-preview",
+            "location": "[parameters('cognitiveServicesLocation')]",
+            "scale": null,
+            "properties": {},
+            "dependsOn": []
+        },
+		{
+	      "apiVersion": "2015-08-01",
+	      "name": "[variables('serviceBusName')]",
+	      "type": "Microsoft.ServiceBus/namespaces",
+	      "location": "[resourceGroup().location]",
+	      "properties": {},
+	      "resources": [
+	        {
+	          "apiVersion": "2015-08-01",
+	          "name": "[variables('endGameQueueName')]",
+	          "type": "Queues",
+	          "dependsOn": [
+	            "[concat('Microsoft.ServiceBus/namespaces/', variables('serviceBusName'))]"
+	          ],
+	          "properties": {},
+	          "resources": []
+	        }
+	      ]
+	    },
+        {
+            "type": "microsoft.insights/components",
+            "name": "[parameters('siteName')]",
+            "apiVersion": "2014-04-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "ApplicationId": "[parameters('siteName')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2015-08-01",
+            "name": "[parameters('siteName')]",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[resourceId('Microsoft.Storage/storageAccounts', variables('huntAppStorageName'))]",
+              "[resourceId('Microsoft.Web/serverfarms', parameters('siteName'))]"
+            ],
+          "properties": {
+            "serverFarmId": "[parameters('siteName')]",
+            "siteConfig": {
+              "alwaysOn": true,
+              "appSettings": [
+                {
+                  "name": "FUNCTIONS_EXTENSION_VERSION",
+                  "value": "~1"
+                },
+                {
+                  "name": "Project",
+                  "value": "src"
+                }
+              ]
+            }
+          },
+            "resources": [
+               {
+                  "apiVersion": "2015-08-01",
+                  "name": "appsettings",
+                  "type": "config",
+                  "dependsOn": [
+                    "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]",
+                    "[resourceId('Microsoft.Storage/storageAccounts', variables('huntAppStorageName'))]"
+                  ],
+                  "properties": {
+                    
+                  }
+               }
+            ]
+        }
+    ],
+    "outputs": {
+      "cognitivevisionkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview')]"
+      },
+      "cognitivevisionkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivevisionkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicesvisionid'),'2016-02-01-preview').key2]"
+      },
+      "endpointvision": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicesvisionid'),'2016-02-01-preview').endpoint]"
+      },
+      "cognitivecontentmoderatorkeys": {
+        "type": "object",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview')]"
+      },
+      "cognitivecontentmoderatorkey1": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key1]"
+      },
+      "cognitivecontentmoderatorkey2": {
+        "type": "string",
+        "value": "[listKeys(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').key2]"
+      },
+      "endpointcontentmoderator": {
+        "type": "string",
+        "value": "[reference(variables('cognitiveservicescontentmoderatorid'),'2016-02-01-preview').endpoint]"
+      }
+    }
+}

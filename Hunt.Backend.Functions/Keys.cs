@@ -22,8 +22,8 @@ namespace Hunt.Backend.Functions
 
             //Account
             public const string AccountName = "RootManageSharedAccessKey";
-            public const string AccountKey = "KGkiZqcbFsaOsvSfDTuertGHyNkxjYBPP7Hv2JOG/6o=";
-            public const string AccountNamespace = "huntapp";
+            public const string AccountKey = "kk9LBTWE3lOYtTXI/ituYOiGlS+4qDE0JAMYKzBHXPo=";
+            public const string AccountNamespace = "huntappbus";
         }
 
         //Blob
