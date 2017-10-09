@@ -2,10 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "siteName": {
-            "type": "string",
-            "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
-        },
+      "siteName": {
+        "type": "string",
+        "defaultValue": "[concat('site', uniqueString(resourceGroup().id))]"
+      },
         "CDNSku": {
             "type": "string",
             "metadata": {
@@ -67,19 +67,19 @@
         }
     },
     "variables": {
-        "hubName": "hunthub",
-        "huntAppStorageName": "[concat('huntstorage', uniqueString(resourceGroup().id))]",
-        "databaseAccountName": "[concat('huntdbaccount', uniqueString(resourceGroup().id))]",
-        "cdnProfileName": "[concat(parameters('siteName'), '-cdn')]",
-        "cdnEndPointName": "[concat(parameters('siteName'), '-cdnendpoint')]",
-        "namespaceName": "[concat(parameters('siteName'), 'namespace')]",
-        "visionApiAccountName": "[concat(parameters('siteName'), 'vision')]",
-        "contentModeratorAccountName": "[concat(parameters('siteName'), 'contentmoderator')]",
-        "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('visionApiAccountName'))]",
-        "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('contentModeratorAccountName'))]",
-        "alertfailuresName": "[concat(parameters('siteName'), 'alertfailures')]",
-		"serviceBusName": "[concat(parameters('siteName'), 'bus')]",
-		"endGameQueueName": "endgame"
+      "hubName": "hunthub",
+      "huntAppStorageName": "[concat('huntstorage', uniqueString(resourceGroup().id))]",
+      "databaseAccountName": "[concat('huntdbaccount', uniqueString(resourceGroup().id))]",
+      "cdnProfileName": "[concat(parameters('siteName'), '-cdn')]",
+      "cdnEndPointName": "[concat(parameters('siteName'), '-cdnendpoint')]",
+      "namespaceName": "[concat(parameters('siteName'), 'namespace')]",
+      "visionApiAccountName": "[concat(parameters('siteName'), 'vision')]",
+      "contentModeratorAccountName": "[concat(parameters('siteName'), 'contentmoderator')]",
+      "cognitiveservicesvisionid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('visionApiAccountName'))]",
+      "cognitiveservicescontentmoderatorid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', variables('contentModeratorAccountName'))]",
+      "alertfailuresName": "[concat(parameters('siteName'), 'alertfailures')]",
+      "serviceBusName": "[concat(parameters('siteName'), 'bus')]",
+      "endGameQueueName": "endgame"
     },
     "resources": [
         {
@@ -160,7 +160,6 @@
             "properties": {
                 "name": "[parameters('siteName')]",
                 "sku": "[parameters('HuntAppSKU')]",
-                "workerSize": "0",
                 "numberOfWorkers": 1
             }
         },
@@ -198,7 +197,7 @@
         {
             "type": "Microsoft.CognitiveServices/accounts",
             "sku": {
-            "name": "[parameters('SKUCognitive')]"
+              "name": "[parameters('SKUCognitive')]"
             },
             "kind": "ContentModerator",
             "name": "[variables('contentModeratorAccountName')]",
@@ -248,16 +247,22 @@
               "[resourceId('Microsoft.Storage/storageAccounts', variables('huntAppStorageName'))]",
               "[resourceId('Microsoft.Web/serverfarms', parameters('siteName'))]"
             ],
-            "properties": {
-               "serverFarmId": "[variables('appServicePlanName')]",
-               "siteConfig": {
-                  "alwaysOn": true,
-                  "appSettings": [
-                      { "name": "FUNCTIONS_EXTENSION_VERSION", "value": "~1" },
-                      { "name": "Project", "value": "src" }
-                  ]
-               }
-            },
+          "properties": {
+            "serverFarmId": "[parameters('siteName')]",
+            "siteConfig": {
+              "alwaysOn": true,
+              "appSettings": [
+                {
+                  "name": "FUNCTIONS_EXTENSION_VERSION",
+                  "value": "~1"
+                },
+                {
+                  "name": "Project",
+                  "value": "src"
+                }
+              ]
+            }
+          },
             "resources": [
                {
                   "apiVersion": "2015-08-01",
