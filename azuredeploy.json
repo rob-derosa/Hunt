@@ -251,7 +251,6 @@
             "properties": {
                "serverFarmId": "[variables('appServicePlanName')]",
                "siteConfig": {
-                  "alwaysOn": true,
                   "appSettings": [
                       { "name": "FUNCTIONS_EXTENSION_VERSION", "value": "~1" },
                       { "name": "Project", "value": "src" }
