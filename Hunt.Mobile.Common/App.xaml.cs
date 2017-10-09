@@ -60,7 +60,7 @@ namespace Hunt.Mobile.Common
 				Instance.CurrentGame.StartDate = null;
 
 				//Has game started
-				Instance.CurrentGame.StartDate = DateTime.Now;
+				//Instance.CurrentGame.StartDate = DateTime.Now;
 
 				//Has game ended
 				//Instance.CurrentGame.EndDate = DateTime.Now;

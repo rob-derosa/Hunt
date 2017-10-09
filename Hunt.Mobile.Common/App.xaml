@@ -14,7 +14,7 @@
 			<Color x:Key="hudBackgroundColor">#C000</Color>
 			<Color x:Key="toastBackgroundColor">#FFAB4D</Color>
 
-			<Color x:Key="accent">#FF2D63</Color> <!--Fucia-->
+			<Color x:Key="accent">#FF2D63</Color> <!--fucia-->
 			
 			<Color x:Key="fucia">#FF2D63</Color>
 			<Color x:Key="aqua">#35D3C2</Color>

@@ -104,6 +104,9 @@ namespace Hunt.Mobile.Common
 		{
 			get
 			{
+				if(Game == null)
+					return 0;
+				
 				if(!Game.HasEnded && Game.IsCoordinator())
 					return 100;
 

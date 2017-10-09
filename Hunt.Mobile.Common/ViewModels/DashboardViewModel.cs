@@ -55,12 +55,10 @@ namespace Hunt.Mobile.Common
 
 					if(task.WasSuccessful())
 					{
-						if(task.Result == null)
-						{
-							Hud.Instance.ShowToast("Invalid code", NoticationType.Info);
-							return null;
-						}
-						return task.Result;
+						if(task.Result != null)
+							return task.Result;
+						Hud.Instance.ShowToast("Invalid code", NoticationType.Info);
+						return null;
 					}
 					return null;
 				}
