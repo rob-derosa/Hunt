@@ -250,6 +250,7 @@
           "properties": {
             "serverFarmId": "[parameters('siteName')]",
             "siteConfig": {
+              "alwaysOn": true,
               "appSettings": [
                 {
                   "name": "FUNCTIONS_EXTENSION_VERSION",
