@@ -269,8 +269,7 @@
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('huntAppStorageName'))]"
                   ],
                   "properties": {
-                    "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('huntAppStorageName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
-                    "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('huntAppStorageName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+                    
                   }
                }
             ]
