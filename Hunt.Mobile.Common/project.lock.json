@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "targets": {
     ".NETPortable,Version=v4.5,Profile=Profile111": {
       "Ansuria.XFGloss/1.0.6.59": {
@@ -818,9 +818,6 @@
         "runtime": {
           "lib/portable-net45+netcore45+wpa81+wp8/ZXing.Net.Mobile.Forms.dll": {}
         }
-      },
-      "Hunt.Common/1.0.0": {
-        "type": "project"
       }
     }
   },
@@ -3951,11 +3948,6 @@
         "zxing.net.mobile.forms.2.2.9.nupkg.sha512",
         "zxing.net.mobile.forms.nuspec"
       ]
-    },
-    "Hunt.Common/1.0.0": {
-      "type": "project",
-      "path": "../Hunt.Common/Hunt.Common.csproj",
-      "msbuildProject": "../Hunt.Common/Hunt.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3993,15 +3985,13 @@
       "projectName": "Hunt.Mobile.Common",
       "projectPath": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
       "projectJsonPath": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/project.json",
+      "packagesPath": "/Users/rob/.nuget/packages/",
       "projectStyle": "ProjectJson",
-      "frameworks": {
-        "portable45-net45+win8+wpa81": {
-          "projectReferences": {
-            "/Users/rob/Projects/Github/Hunt/Hunt.Common/Hunt.Common.csproj": {
-              "projectPath": "/Users/rob/Projects/Github/Hunt/Hunt.Common/Hunt.Common.csproj"
-            }
-          }
-        }
+      "configFilePaths": [
+        "/Users/rob/.config/NuGet/NuGet.Config"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
       }
     },
     "dependencies": {
