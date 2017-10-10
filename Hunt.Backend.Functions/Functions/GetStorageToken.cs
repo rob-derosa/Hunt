@@ -28,7 +28,7 @@ namespace Hunt.Backend.Functions
 		public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(GetStorageToken))] 
                                                           HttpRequestMessage req, TraceWriter log)
 		{
-            using (var analytic = new Analytic(new RequestTelemetry
+            using (var analytic = new AnalyticService(new RequestTelemetry
             {
                 Name = nameof(GetStorageToken)
             }))

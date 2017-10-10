@@ -6,14 +6,14 @@ using Microsoft.ApplicationInsights.DataContracts;
 
 namespace Hunt.Backend.Analytics
 {
-	public class Analytic : IDisposable
+	public class AnalyticService : IDisposable
 	{
 		private readonly TelemetryClient _telemetryClient = new TelemetryClient(TelemetryConfiguration.Active);
 		private readonly RequestTelemetry _requestTelemetry;
 
 		private IOperationHolder<RequestTelemetry> _operation;
 
-        public Analytic(RequestTelemetry requestTelemetry)
+        public AnalyticService(RequestTelemetry requestTelemetry)
 		{
             /*_telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APP_INSIGHTS_KEY");
 

@@ -19,7 +19,7 @@ namespace Hunt.Backend.Functions
 														   Route = nameof(PostMessageToQueue))]
 			HttpRequestMessage req, TraceWriter log)
 		{
-            using (var analytic = new Analytic(new RequestTelemetry
+            using (var analytic = new AnalyticService(new RequestTelemetry
             {
                 Name = nameof(PostMessageToQueue)
             }))
