@@ -24,14 +24,14 @@ namespace Hunt.Backend.Functions
 		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(AnalyseImage))]
 			HttpRequestMessage req, TraceWriter log)
 		{
-			using (var analytic = new Analytic(new RequestTelemetry
+			using (var analytic = new AnalyticService(new RequestTelemetry
 			{
 				Name = nameof(AnalyseImage)
 			}))
             {
 				try
 				{
-					var allTags = new List<Tag>();
+					var allTags = new List<string>();
 					var json = req.Content.ReadAsStringAsync().Result;
 					var photoUrls = JsonConvert.DeserializeObject<string[]>(json);
 
@@ -40,24 +40,22 @@ namespace Hunt.Backend.Functions
 						foreach (var url in photoUrls)
 						{
 							var result = visionClient.GetImageDescriptionAsync(url).Result;
-							allTags.AddRange(result.Tags);
+							allTags.AddRange(result.Tags.Select(t => t.Name).ToArray());
+							allTags.AddRange(result.Description.Tags);
 						}
 					}
 
 					var attributes = new Dictionary<string, int>();
 					foreach (var tag in allTags)
 					{
-						if (tag.Confidence > .5)
-						{
-							if (attributes.ContainsKey(tag.Name))
-							{
-								attributes[tag.Name]++;
-							}
-							else
-							{
-								attributes.Add(tag.Name, 1);
-							}
-						}
+						if (tag.Equals("indoor", StringComparison.InvariantCultureIgnoreCase) ||
+							tag.Equals("outdoor", StringComparison.InvariantCultureIgnoreCase))
+							continue;
+
+						if (attributes.ContainsKey(tag))
+							attributes[tag]++;
+						else
+							attributes.Add(tag, 1);
 					}
 
 					var topAttributes = attributes.OrderByDescending(k => k.Value);

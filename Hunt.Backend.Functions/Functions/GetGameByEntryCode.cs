@@ -19,7 +19,7 @@ namespace Hunt.Backend.Functions
 		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(GetGameByEntryCode))]
 		HttpRequestMessage req, TraceWriter log)
 		{
-            using (var analytic = new Analytic(new RequestTelemetry
+            using (var analytic = new AnalyticService(new RequestTelemetry
             {
                 Name = nameof(GetGameByEntryCode)
             }))

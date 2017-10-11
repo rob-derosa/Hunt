@@ -20,7 +20,7 @@ namespace Hunt.Backend.Triggers
 		[FunctionName(nameof(EndGame))]
 		public static void Run([ServiceBusTrigger(Keys.ServiceBus.EndGameBusName)] BrokeredMessage message, TraceWriter log)
 		{
-			using (var analytic = new Analytic(new RequestTelemetry
+			using (var analytic = new AnalyticService(new RequestTelemetry
 			{
 				Name = nameof(EndGame)
 			}))
