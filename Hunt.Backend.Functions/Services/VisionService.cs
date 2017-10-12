@@ -1,23 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using System.IO;
 using System.Linq;
-
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 
-using Newtonsoft.Json;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.DataContracts;
-
 namespace Hunt.Backend.Functions
 {
-	/// <summary>
-	/// Queue service.
-	/// </summary>
 	public partial class VisionService : IDisposable
 	{
 		#region Private Properties
@@ -28,9 +16,6 @@ namespace Hunt.Backend.Functions
 
         #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Hunt.Mobile.Common.CosmosDataService"/> class.
-        /// </summary>
         public VisionService()
 		{
 			_visionClient = new VisionServiceClient(Keys.Vision.ServiceKey, Keys.Vision.Url);
@@ -40,12 +25,7 @@ namespace Hunt.Backend.Functions
 		{
 			VisualFeature[] features = 
 			{   
-				VisualFeature.Adult, 
-				VisualFeature.Categories, 
-				VisualFeature.Color, 
 				VisualFeature.Description, 
-				VisualFeature.Faces, 
-				VisualFeature.ImageType, 
 				VisualFeature.Tags 
 			};
 

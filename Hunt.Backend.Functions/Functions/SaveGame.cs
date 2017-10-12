@@ -25,7 +25,7 @@ namespace Hunt.Backend.Functions
 		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(SaveGame))]
 		HttpRequestMessage req, TraceWriter log)
 		{
-			using (var analytic = new Analytic(new RequestTelemetry
+			using (var analytic = new AnalyticService(new RequestTelemetry
 			{
 				Name = nameof(SaveGame)
 			}))
@@ -125,7 +125,7 @@ namespace Hunt.Backend.Functions
 		
 		#region Game Timer
 
-		static void SetEndGameTimer(Game game, Analytic analytic)
+		static void SetEndGameTimer(Game game, AnalyticService analytic)
 		{
 			try
 			{
@@ -277,7 +277,7 @@ namespace Hunt.Backend.Functions
 		/// Not used right now
 		/// </summary>
 		/// <param name="game"></param>
-		static void CreateAudiences(Game game, Analytic analytic)
+		static void CreateAudiences(Game game, AnalyticService analytic)
 		{
 			//Configure the proper Push Audiences in Mobile Center so notifications can be sent to all in a game or team
 			var p = new PushService();
