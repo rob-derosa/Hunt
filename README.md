@@ -102,6 +102,9 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * VSTS Code repository
   * VSTS Build for backend + unit testing
 
+#### Server Architecture
+<div style="text-align:center"><center><img src="https://github.com/rob-derosa/Hunt/blob/master/Resources/Assets/Design/architecture.png?raw=true" alt="Azure Architecture"/></center></div>
+
 
 ### Presentations and Hackathons
 
