@@ -51,11 +51,12 @@ namespace Hunt.Mobile.Common
 			{
 				using(var b = new Busy(ViewModel))
 				{
-					await Task.Run(() =>
-					{
-						ViewModel.RegisterPlayer();
-						_loadingPage = new LoadingDataPage();
-					});
+					var success = await ViewModel.RegisterPlayer();
+
+					if(!success)
+						return;
+
+					_loadingPage = new LoadingDataPage();
 
 					await Navigation.PushAsync(_loadingPage);
 					ViewModel.Reset();

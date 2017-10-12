@@ -3,4 +3,4 @@
 */obj
 *.cache
 *.userpref
-/.vs
+*/.vs

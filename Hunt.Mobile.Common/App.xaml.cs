@@ -34,8 +34,8 @@ namespace Hunt.Mobile.Common
 		public Player Player { get; set; }
 		public Game CurrentGame { get; set; }
 
-		AzureService _dataService;
-		public AzureService DataService => _dataService ?? (_dataService = new AzureService());
+		AzureFunctionService _dataService;
+		public AzureFunctionService DataService => _dataService ?? (_dataService = new AzureFunctionService());
 
 		StorageService _storageService;
 		public StorageService StorageService => _storageService ?? (_storageService = new StorageService());

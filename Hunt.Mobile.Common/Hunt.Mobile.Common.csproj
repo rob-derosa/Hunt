@@ -35,7 +35,7 @@
     <EmbeddedResource Include="Pages\CreateGamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <Compile Include="Services\AzureService.cs" />
+    <Compile Include="Services\AzureFunctionService.cs" />
     <Compile Include="Abstractions\EntryExtend.cs" />
     <Compile Include="Pages\GameDetailsPage.xaml.cs">
       <DependentUpon>GameDetailsPage.xaml</DependentUpon>

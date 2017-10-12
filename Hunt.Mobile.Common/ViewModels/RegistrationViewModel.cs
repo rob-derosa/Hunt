@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Hunt.Common;
 using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
@@ -30,7 +31,7 @@ namespace Hunt.Mobile.Common
 
 		public bool CanContinue { get { return !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Alias); } }
 
-		public void RegisterPlayer()
+		async public Task<bool> RegisterPlayer()
 		{
 			if(string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Alias))
 				throw new Exception("Please specify an email and alias.");
@@ -47,6 +48,26 @@ namespace Hunt.Mobile.Common
 				}
 			}
 
+			bool isAppropriate = false;
+			var task = new Task(() =>
+			{
+				var aliasValid = App.Instance.DataService.IsTextValidAppropriate(Alias.Trim()).Result;
+				var emailValid = App.Instance.DataService.IsTextValidAppropriate(Email.Trim()).Result;
+
+				isAppropriate = aliasValid && emailValid;
+			});
+
+			await task.RunProtected();
+
+			if(!task.WasSuccessful())
+				return false;
+
+			if(!isAppropriate)
+			{
+				Hud.Instance.ShowToast("Inappropriate content was detected");
+				return false;
+			}
+
 			var player = new Player
 			{
 				Avatar = Avatar,
@@ -58,6 +79,7 @@ namespace Hunt.Mobile.Common
 			var args = new KVP { { "email", player.Email }, { "firstName", player.Alias }, { "avatar", player.Avatar } };
 			Analytics.TrackEvent("Player registered", args);
 			App.Instance.SetPlayer(player);
+			return true;
 		}
 
 		public void Reset()

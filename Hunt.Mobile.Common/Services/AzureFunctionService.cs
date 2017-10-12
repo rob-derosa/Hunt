@@ -19,6 +19,7 @@ namespace Hunt.Mobile.Common
 		public static string WakeUp = nameof(WakeUp);
 		public static string SaveImage = nameof(SaveImage);
 		public static string GetStorageToken = nameof(GetStorageToken);
+		public static string AnalyseText = nameof(AnalyseText);
 		public static string AnalyseImage = nameof(AnalyseImage);
 		public static string PostMessageToQueue = nameof(PostMessageToQueue);
 
@@ -33,7 +34,7 @@ namespace Hunt.Mobile.Common
 
 	#endregion
 
-	public class AzureService
+	public class AzureFunctionService
 	{
 		#region Properties
 
@@ -223,6 +224,12 @@ namespace Hunt.Mobile.Common
 		async public Task WakeUpServer()
 		{
 			var result = await SendGetRequest<string>(nameof(FunctionNames.WakeUp), null);
+		}
+
+		async public Task<bool> IsTextValidAppropriate(string text)
+		{
+			var result = await SendGetRequest<bool>(nameof(FunctionNames.AnalyseText), new Dictionary<string, object> { { "text", text } });
+			return result;
 		}
 	}
 
