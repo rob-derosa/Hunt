@@ -15,12 +15,12 @@ namespace Hunt.Backend.Analytics
 
         public AnalyticService(RequestTelemetry requestTelemetry)
 		{
-            /*_telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APP_INSIGHTS_KEY");
+            _telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APP_INSIGHTS_KEY");
 
             _requestTelemetry = requestTelemetry;
 
 			// start tracking request operation
-			_operation = _telemetryClient.StartOperation(_requestTelemetry);*/
+			_operation = _telemetryClient.StartOperation(_requestTelemetry);
 		}
 
 		public void TrackException(Exception e)
