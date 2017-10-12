@@ -22,7 +22,7 @@ namespace Hunt.Backend.Functions
 	{
         [FunctionName(nameof(AnalyseText))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(AnalyseText))]
+		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(AnalyseText))]
 			HttpRequestMessage req, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
@@ -58,7 +58,7 @@ namespace Hunt.Backend.Functions
                             var json = response.Content.ReadAsStringAsync().Result;
                             var textModeration = JsonConvert.DeserializeObject<TextModeration>(json);
 
-                            return req.CreateResponse(HttpStatusCode.OK, textModeration.Terms != null);
+                            return req.CreateResponse(HttpStatusCode.OK, textModeration.Terms == null);
                         }
                     }
 				}
