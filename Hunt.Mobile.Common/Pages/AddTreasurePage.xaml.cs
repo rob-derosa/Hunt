@@ -31,17 +31,7 @@ namespace Hunt.Mobile.Common
 
 		void TakePhotoClicked(object sender, EventArgs e)
 		{
-			#if !DEBUG
-			if(Orientation != Orientation.Landscape)
-			{
-				_isWaitingForLandscape = true;
-				Hud.Instance.Show("Please take all photos in landscape mode.\n\nThank you, kindly.");
-			}
-			else
-			#endif
-			{
-				DisplayCameraView();
-			}
+			DisplayCameraView();
 		}
 
 		protected override void OnOrientationChanged(Orientation orientation)
