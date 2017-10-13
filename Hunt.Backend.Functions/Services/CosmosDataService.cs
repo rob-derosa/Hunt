@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Hunt.Common;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Hunt.Backend.Functions
@@ -17,11 +16,12 @@ namespace Hunt.Backend.Functions
 		const string _collectionId = @"Items";
 
 		Uri _collectionLink = UriFactory.CreateDocumentCollectionUri(_databaseId, _collectionId);
-		DocumentClient _client;
+		static DocumentClient _client;
 
 		public CosmosDataService()
 		{
-			_client = new DocumentClient(new Uri(Keys.Cosmos.Url), Keys.Cosmos.Key, ConnectionPolicy.Default);
+			if(_client == null)
+				_client = new DocumentClient(new Uri(Keys.Cosmos.Url), Keys.Cosmos.Key, ConnectionPolicy.Default);
 		}
 
 		Uri GetCollectionUri()
@@ -58,19 +58,12 @@ namespace Hunt.Backend.Functions
 		/// <param name="id">The Id of the item to retrieve</param>
 		public async Task<T> GetItemAsync<T>(string id) where T : BaseModel, new()
 		{
-			try
-			{
-				var docUri = GetDocumentUri(id);
-				var result = await _client.ReadDocumentAsync<T>(docUri);
+			var docUri = GetDocumentUri(id);
+			var result = await _client.ReadDocumentAsync<T>(docUri);
 
-				if(result.StatusCode == HttpStatusCode.OK)
-				{
-					return result.Document;
-				}
-			}
-			catch (Exception e)
+			if(result.StatusCode == HttpStatusCode.OK)
 			{
-				Console.Error.WriteLine(@"ERROR {0}", e.Message);
+				return result.Document;
 			}
 
 			return null;
@@ -95,10 +88,6 @@ namespace Hunt.Backend.Functions
 					await InsertItemAsync(item);
 				}
 			}
-			catch(Exception e)
-			{
-				Console.Error.WriteLine(@"ERROR {0}", e.Message);
-			}
 		}
 
 		/// <summary>
@@ -107,29 +96,15 @@ namespace Hunt.Backend.Functions
 		/// <param name="item">The item to update</param>
 		public async Task UpdateItemAsync<T>(T item) where T : BaseModel
 		{
-			try
-			{
-				await _client.ReplaceDocumentAsync(GetDocumentUri(item.Id), item);
-			}
-			catch(Exception e)
-			{
-				Console.Error.WriteLine(@"ERROR {0}", e.Message);
-			}
+			await _client.ReplaceDocumentAsync(GetDocumentUri(item.Id), item);
 		}
 
 		public Game GetGameByEntryCode(string entryCode)
 		{
-			try
-			{
-				var query = _client.CreateDocumentQuery<Game>(GetCollectionUri()).Where(g => g.EntryCode == entryCode);
+			var query = _client.CreateDocumentQuery<Game>(GetCollectionUri()).Where(g => g.EntryCode == entryCode);
 
-				foreach (var game in query)
-					return game;
-			}
-			catch (Exception e)
-			{
-				Console.Error.WriteLine(@"ERROR {0}", e);
-			}
+			foreach (var game in query)
+				return game;
 
 			return null;
 		}
@@ -141,36 +116,29 @@ namespace Hunt.Backend.Functions
 		/// <returns>A dynamic Game, should one exist</returns>
 		public dynamic GetOngoingGame(string email)
 		{
-			try
 			{
+				//First lets check to see if the user has a game they're coordinating
+				var sql = $"SELECT * FROM game WHERE game.endDate = null AND game.coordinator.email = \"{email}\"";
+				var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
+
+				foreach (var game in query)
 				{
-					//First lets check to see if the user has a game they're coordinating
-					var sql = $"SELECT * FROM game WHERE game.endDate = null AND game.coordinator.email = \"{email}\"";
-					var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
-
-					foreach (var game in query)
-					{
-						return game;
-					}
-				}
-
-				{
-					//Now check to see if the the user is part of an onging game as a player
-					var sql = "SELECT game FROM game " +
-						"JOIN teams IN game.teams " +
-						"JOIN player IN teams.players " +
-						$"WHERE game.endDate = null AND player.email = \"{email}\"";
-					var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
-
-					foreach (var game in query)
-					{
-						return game.game;
-					}
+					return game;
 				}
 			}
-			catch(Exception e)
+
 			{
-				Console.Error.WriteLine(@"ERROR {0}", e);
+				//Now check to see if the the user is part of an onging game as a player
+				var sql = "SELECT game FROM game " +
+					"JOIN teams IN game.teams " +
+					"JOIN player IN teams.players " +
+					$"WHERE game.endDate = null AND player.email = \"{email}\"";
+				var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
+
+				foreach (var game in query)
+				{
+					return game.game;
+				}
 			}
 
 			return null;
@@ -178,8 +146,6 @@ namespace Hunt.Backend.Functions
 
 		public void Dispose()
 		{
-			_client?.Dispose();
-			_client = null;
 		}
 	}
 }
