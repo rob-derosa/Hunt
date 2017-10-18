@@ -77,7 +77,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * 3rd Party SDKs
     * SkiaSharp (vector and SVG render kit)
     * Lottie (animations)
-    * PullToRefreshPage (pull to refresh on non-listview pages)
+    * PullToRefreshPage (pull to refresh on non-ListView pages)
     * ImageCircle (better than a square)
     * CrossMedia (capturing camera photos)
     * CrossConnectivity (determining device network connectivity)
@@ -96,6 +96,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * Service Bus (timed brokered message to end games)
   * Unit tested on commit
   * Deployment via ARM Templates
+  * Azure CDN
   
 * #### Planning and Build
   * VSTS Work item tracking
