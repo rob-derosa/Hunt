@@ -42,7 +42,7 @@ namespace Hunt.Mobile.Common
 		{
 			get
 			{
-				if(Game.WinnningTeamId == null)
+				if(Game == null || Game.WinnningTeamId == null)
 					return null;
 			
 				return Game.Teams.SingleOrDefault(t => t.Id == Game.WinnningTeamId);
@@ -147,6 +147,9 @@ namespace Hunt.Mobile.Common
 		{
 			get
 			{
+				if(Game == null)
+					return null;
+				
 				if(!Game.HasEnded)
 					return null;
 				

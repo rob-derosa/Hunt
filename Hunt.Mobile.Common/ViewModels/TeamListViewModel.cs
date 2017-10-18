@@ -63,10 +63,10 @@ namespace Hunt.Mobile.Common
 				InvokeRefreshedGame();
 				var playerExists = savedTeam.Players.Exists(p => p.Email == App.Instance.Player.Email);
 
-				if(playerExists)
-				{
-					Hud.Instance.ShowToast($"You are now part of {savedTeam.Name}", NoticationType.Success);
-				}
+				//if(playerExists)
+				//{
+				//	Hud.Instance.ShowToast($"You are now part of {savedTeam.Name}", NoticationType.Success);
+				//}
 
 				return playerExists ? savedGame : null;
 			}

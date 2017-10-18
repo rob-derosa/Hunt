@@ -257,7 +257,7 @@ namespace Hunt.Mobile.Common
 
 			_toastLabel = new Label
 			{
-				FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+				FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
 				TextColor = Color.White,
 				HorizontalTextAlignment = TextAlignment.Center,
 				LineBreakMode = LineBreakMode.TailTruncation,

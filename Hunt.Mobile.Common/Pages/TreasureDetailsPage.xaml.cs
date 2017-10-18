@@ -18,7 +18,7 @@ namespace Hunt.Mobile.Common
 			if(IsDesignMode)
 			{
 				ViewModel.SetGame(App.Instance.CurrentGame);
-				ViewModel.Treasure = App.Instance.CurrentGame.Treasures[1];
+				ViewModel.Treasure = App.Instance.CurrentGame.Treasures[2];
 			}
 
 			InitializeComponent();

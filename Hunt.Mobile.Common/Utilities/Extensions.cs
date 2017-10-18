@@ -253,6 +253,9 @@ namespace Hunt.Mobile.Common
 
 		public static Team GetWinningTeam(this Game game)
 		{
+			if(game == null || game.Teams == null)
+				return null;
+			
 			return game.Teams.SingleOrDefault(t => t.Id == game.WinnningTeamId);
 		}
 

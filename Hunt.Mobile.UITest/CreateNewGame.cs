@@ -13,7 +13,7 @@ namespace Hunt.Mobile.UITest
 		{
 			Reigster("bronn@hbo.com", "Bronn");
 
-			app.Tap("createGameButton");
+			app.Tap("saveButton");
 			app.Screenshot("And I click the 'Create Game' button");
 
 			app.ScrollDownTo("isCoordinatorSwitch");

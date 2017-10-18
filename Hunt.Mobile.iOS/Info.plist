@@ -33,6 +33,8 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Only needed for simulator</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow the camera to be used for scanning QR codes and taking pictures of treasure</string>
 	<key>UIStatusBarStyle</key>
