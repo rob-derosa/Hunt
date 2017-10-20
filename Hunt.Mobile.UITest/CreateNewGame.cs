@@ -11,9 +11,10 @@ namespace Hunt.Mobile.UITest
 		[Test]
 		public void CreateNewGame()
 		{
-			Reigster("bronn@hbo.com", "Bronn");
+			Register("bronn@hbo.com", "Bronn");
 
-			app.Tap("saveButton");
+			app.WaitForElement("createGameButton", "Timed out waiting for createGameButton", TimeSpan.FromMinutes(2));
+			app.Tap("createGameButton");
 			app.Screenshot("And I click the 'Create Game' button");
 
 			app.ScrollDownTo("isCoordinatorSwitch");
