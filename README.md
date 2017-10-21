@@ -1,16 +1,14 @@
 # Hunt
 
-### Description
-Hunt is a virtual scavenger hunt app where players can join a game, select a team and solve hints to acquire treasure. The team with the most points wins.
-
-
 ### Supported Platforms
 
-Platform | Build | Deploy
+Platform | Build | Install
 --- | --- | ---
-iOS 10.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com) | [latest build](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt/distribution_groups/public)
-Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) | [latest build](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt-android/distribution_groups/public)
+iOS 10.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt/distribution_groups/public)
+Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt-android/distribution_groups/public)
 
+### Description
+Hunt is a virtual scavenger hunt app where players can join a game, select a team and solve hints to acquire treasure. The team with the most points wins.
 
 ### Overview
 The purpose of Hunt is to facilitate a virtual scavenger hunt between multiple teams. Players on each team will need to solve a riddle/hint and photograph the answer/object. If the photograph contains the correct object, the team will be awarded the full amount of points for that treasure.
@@ -77,7 +75,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * 3rd Party SDKs
     * SkiaSharp (vector and SVG render kit)
     * Lottie (animations)
-    * PullToRefreshPage (pull to refresh on non-listview pages)
+    * PullToRefreshPage (pull to refresh on non-ListView pages)
     * ImageCircle (better than a square)
     * CrossMedia (capturing camera photos)
     * CrossConnectivity (determining device network connectivity)
@@ -96,6 +94,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * Service Bus (timed brokered message to end games)
   * Unit tested on commit
   * Deployment via ARM Templates
+  * Azure CDN
   
 * #### Planning and Build
   * VSTS Work item tracking

@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using NUnit.Framework;
 using Xamarin.UITest;
@@ -25,7 +22,7 @@ namespace Hunt.Mobile.UITest
 			app = AppInitializer.StartApp(platform);
 		}
 
-		public void Reigster(string email, string firstName)
+		public void Register(string email, string firstName)
 		{
 			app.Screenshot("When the app launches");
 			app.WaitForElement("emailEntry");
@@ -42,7 +39,10 @@ namespace Hunt.Mobile.UITest
 			app.Tap("continueButton");
 
 			app.Screenshot("and I wait for data to load");
+			Thread.Sleep(10000);
+
 			app.WaitForNoElement("loadingMessage");
+			app.Screenshot("I will see the dashboard");
 		}
 	}
 }

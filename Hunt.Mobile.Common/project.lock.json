@@ -299,7 +299,7 @@
           "lib/portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10/PInvoke.Windows.Core.dll": {}
         }
       },
-      "Plugin.MediaManager/0.4.4": {
+      "Plugin.MediaManager/0.4.5": {
         "type": "package",
         "compile": {
           "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Plugin.MediaManager.Abstractions.dll": {},
@@ -713,7 +713,7 @@
           "lib/portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/8.4.0": {
+      "WindowsAzure.Storage/8.5.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Data.OData": "5.8.2",
@@ -766,7 +766,7 @@
           "lib/portable-net45+wp80+win8+wpa81/ImageCircle.Forms.Plugin.Abstractions.dll": {}
         }
       },
-      "Xam.Plugins.Settings/3.0.1": {
+      "Xam.Plugins.Settings/3.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard1.0/Plugin.Settings.Abstractions.dll": {},
@@ -1226,10 +1226,10 @@
         "pinvoke.windows.core.nuspec"
       ]
     },
-    "Plugin.MediaManager/0.4.4": {
-      "sha512": "ptF+JXeDdrWZy9BBZbbvKPBPVkiqykp+hXRl8KTMdZhFWcf9K106STL+VrAWAj0SSr3IXo8ZJoKnQTZbAmiGuw==",
+    "Plugin.MediaManager/0.4.5": {
+      "sha512": "cpTcuGY+HUDhz2spS4jlB8zmlVsULzbR+YYcxXanKnARUmXO7L66gC+MiJYhVfOEhg96EKYPGEGPuIPtzST3+A==",
       "type": "package",
-      "path": "plugin.mediamanager/0.4.4",
+      "path": "plugin.mediamanager/0.4.5",
       "files": [
         "lib/MonoAndroid/Plugin.MediaManager.Abstractions.dll",
         "lib/MonoAndroid/Plugin.MediaManager.Abstractions.xml",
@@ -1255,7 +1255,7 @@
         "lib/uap10.0/Plugin.MediaManager.dll",
         "lib/uap10.0/Plugin.MediaManager.pdb",
         "lib/uap10.0/Properties/Plugin.MediaManager.UWP.rd.xml",
-        "plugin.mediamanager.0.4.4.nupkg.sha512",
+        "plugin.mediamanager.0.4.5.nupkg.sha512",
         "plugin.mediamanager.nuspec"
       ]
     },
@@ -3494,10 +3494,10 @@
         "validation.nuspec"
       ]
     },
-    "WindowsAzure.Storage/8.4.0": {
-      "sha512": "2BzIL/b/2d86+kd74xRoNqz97VVnNv0+aaggSCR6k78nN2UVKWudMe2kxi6gmimGcJqq8BkFCavXhS8xF1INvg==",
+    "WindowsAzure.Storage/8.5.0": {
+      "sha512": "m+G55ljrj0nV9MCjqiGbkr008t+IzkT5oJtu+gPzUgdP2d7CHnyFKUe6E3msA204ldJjQsoLCT0oHFeC7T2D4g==",
       "type": "package",
-      "path": "windowsazure.storage/8.4.0",
+      "path": "windowsazure.storage/8.5.0",
       "files": [
         "lib/net45/Microsoft.WindowsAzure.Storage.dll",
         "lib/net45/Microsoft.WindowsAzure.Storage.pdb",
@@ -3512,7 +3512,7 @@
         "lib/wp8/Microsoft.WindowsAzure.Storage.pdb",
         "lib/wpa/Microsoft.WindowsAzure.Storage.dll",
         "lib/wpa/Microsoft.WindowsAzure.Storage.pdb",
-        "windowsazure.storage.8.4.0.nupkg.sha512",
+        "windowsazure.storage.8.5.0.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
     },
@@ -3651,10 +3651,10 @@
         "xam.plugins.forms.imagecircle.nuspec"
       ]
     },
-    "Xam.Plugins.Settings/3.0.1": {
-      "sha512": "kdW6sarcRfu+BWlw8iAycIsxR2zgfh8c0QuHsSGC0pww00JlhOKqAHI8YsaZyB7mfKNKZga+Kh2R61daoUtt7g==",
+    "Xam.Plugins.Settings/3.1.1": {
+      "sha512": "EQEYQJ64ZLqui5GWkLMavgqitHxwUHZHryTzUD1021UBuz1XwDSjPL45W0K4pPXjz9oKbg7YpRXKPR1luPr/5Q==",
       "type": "package",
-      "path": "xam.plugins.settings/3.0.1",
+      "path": "xam.plugins.settings/3.1.1",
       "files": [
         "content/MonoAndroid10/Helpers/Settings.cs.pp",
         "content/UAP10/Helpers/Settings.cs.pp",
@@ -3713,7 +3713,7 @@
         "lib/xamarinwatchOS/Plugin.Settings.pdb",
         "lib/xamarinwatchOS/Plugin.Settings.xml",
         "readme.txt",
-        "xam.plugins.settings.3.0.1.nupkg.sha512",
+        "xam.plugins.settings.3.1.1.nupkg.sha512",
         "xam.plugins.settings.nuspec"
       ]
     },
@@ -3961,16 +3961,16 @@
       "Microsoft.Azure.Mobile.Push >= 0.16.0",
       "Newtonsoft.Json >= 10.0.3",
       "PCLCrypto >= 2.0.147",
-      "Plugin.MediaManager >= 0.4.4",
+      "Plugin.MediaManager >= 0.4.5",
       "Refractored.XamForms.PullToRefresh >= 2.0.0.13",
       "SkiaSharp.Svg >= 1.59.1",
       "SkiaSharp.Views.Forms >= 1.59.1.1",
       "System.ValueTuple >= 4.4.0",
-      "WindowsAzure.Storage >= 8.4.0",
+      "WindowsAzure.Storage >= 8.5.0",
       "Xam.Plugin.Connectivity >= 3.0.3",
       "Xam.Plugin.Media >= 3.0.1",
       "Xam.Plugins.Forms.ImageCircle >= 1.8.1",
-      "Xam.Plugins.Settings >= 3.0.1",
+      "Xam.Plugins.Settings >= 3.1.1",
       "Xamarin.Forms >= 2.4.0.282",
       "ZXing.Net.Mobile.Forms >= 2.2.9"
     ],
@@ -4004,16 +4004,16 @@
       "Microsoft.Azure.Mobile.Push": "0.16.0",
       "Newtonsoft.Json": "10.0.3",
       "PCLCrypto": "2.0.147",
-      "Plugin.MediaManager": "0.4.4",
+      "Plugin.MediaManager": "0.4.5",
       "Refractored.XamForms.PullToRefresh": "2.0.0.13",
       "SkiaSharp.Svg": "1.59.1",
       "SkiaSharp.Views.Forms": "1.59.1.1",
       "System.ValueTuple": "4.4.0",
-      "WindowsAzure.Storage": "8.4.0",
+      "WindowsAzure.Storage": "8.5.0",
       "Xam.Plugin.Connectivity": "3.0.3",
       "Xam.Plugin.Media": "3.0.1",
       "Xam.Plugins.Forms.ImageCircle": "1.8.1",
-      "Xam.Plugins.Settings": "3.0.1",
+      "Xam.Plugins.Settings": "3.1.1",
       "Xamarin.Forms": "2.4.0.282",
       "ZXing.Net.Mobile.Forms": "2.2.9"
     },

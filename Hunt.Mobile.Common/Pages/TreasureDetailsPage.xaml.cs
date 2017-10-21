@@ -18,7 +18,7 @@ namespace Hunt.Mobile.Common
 			if(IsDesignMode)
 			{
 				ViewModel.SetGame(App.Instance.CurrentGame);
-				ViewModel.Treasure = App.Instance.CurrentGame.Treasures[1];
+				ViewModel.Treasure = App.Instance.CurrentGame.Treasures[2];
 			}
 
 			InitializeComponent();
@@ -102,7 +102,7 @@ namespace Hunt.Mobile.Common
 				else
 				{
 					ViewModel.Reset();
-					Hud.Instance.ShowToast("You didn't get any matching tags. Please try again.");
+					Hud.Instance.ShowToast("Solid effort but incorrect. Please try again.");
 					return;
 				}
 			}

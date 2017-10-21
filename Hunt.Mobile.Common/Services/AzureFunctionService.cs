@@ -149,8 +149,11 @@ namespace Hunt.Mobile.Common
 			if(args == null)
 				args = new Dictionary<string, string>();
 
-			args.Add("playerId", App.Instance.Player.Id);
-			args.Add("playerInstallId", App.Instance.Player.InstallId);
+			if(!args.ContainsKey("playerId"))
+				args.Add("playerId", App.Instance.Player.Id);
+	
+			if(!args.ContainsKey("playerInstallId"))
+				args.Add("playerInstallId", App.Instance.Player.InstallId);
 
 			dynamic payload = new JObject();
 			payload.action = action;

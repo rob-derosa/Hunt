@@ -52,6 +52,7 @@
 									VerticalOptions="Center"
 									VerticalTextAlignment="Center"
 									HorizontalOptions="End"
+									FontSize="Small"
 									HorizontalTextAlignment="End"
 									Text="{Binding AcquiredBy}" />
 

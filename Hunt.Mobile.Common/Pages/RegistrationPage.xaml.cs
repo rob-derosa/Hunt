@@ -49,7 +49,7 @@ namespace Hunt.Mobile.Common
 		{
 			try
 			{
-				using(var b = new Busy(ViewModel))
+				using(var b = new Busy(ViewModel, "One moment, please"))
 				{
 					var success = await ViewModel.RegisterPlayer();
 

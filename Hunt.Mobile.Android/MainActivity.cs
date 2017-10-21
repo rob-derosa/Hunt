@@ -25,7 +25,7 @@ namespace Hunt.Mobile.Android
 			var h = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
 			App.Instance.ScreenSize = new Size(w, h);
 
-			XFGloss.Droid.Library.Init(this, savedInstanceState);
+			try { XFGloss.Droid.Library.Init(this, savedInstanceState); }catch{}
 			Window.SetStatusBarColor(Color.FromHex("#282827").ToAndroid());
 			//Window.SetStatusBarColor(Color.Teal.ToAndroid());
 		}
