@@ -33,6 +33,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Models\ContentModeration.cs" />
     <Compile Include="Models\BaseDocument.cs" />
+    <Compile Include="Models\DeviceRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Attribute.cs" />
     <Compile Include="Models\BaseModel.cs" />

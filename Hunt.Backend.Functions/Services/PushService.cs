@@ -1,3 +1,5 @@
+using Hunt.Common;
+using Microsoft.Azure.NotificationHubs;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,50 +11,47 @@ namespace Hunt.Backend.Functions
 	public class PushService
 	{
 		static PushService _instance;
+		NotificationHubClient _hub;
+
 		public static PushService Instance
 		{
 			get { return _instance ?? (_instance = new PushService()); }
 		}
 
-		List<string> _platforms = new List<string> { Keys.MobileCenter.iOSUrl, Keys.MobileCenter.AndroidUrl };
-
-		async public Task<bool> SendNotification(string title, string message, string key, string value, Dictionary<string, string> payload = null)
+		public PushService()
 		{
-			var audienceName = $"{key} eq '{value}'";
-			var notification = new MobileCenterNotification();
-			notification.Target.Type = TargetType.Audience;
-			notification.Target.Audiences.Add(audienceName);
-			notification.Content.Title = title;
-			notification.Content.Body = message;
-			notification.Content.CustomData = payload;
-			notification.Content.Name = Guid.NewGuid().ToString();
-
-			foreach (var baseUrl in _platforms)
-			{
-				var url = $"{baseUrl}/push/notifications/";
-				var result = await Http.Client.AddMobileCenterToken().Post<JObject>(url, notification);
-			}
-
-			return true;
+			_hub = NotificationHubClient.CreateClientFromConnectionString(Keys.NotificationHub.ConnectionString, Keys.NotificationHub.Name);
 		}
 
-		async public Task<bool> SendNotification(string title, string message, string[] devices, Dictionary<string, string> payload = null)
+		async public Task<string> Register(DeviceRegistration registration)
 		{
-			var notification = new MobileCenterNotification();
-			notification.Target.Type = TargetType.Device;
-			notification.Target.Devices = devices;
-			notification.Content.Title = title;
-			notification.Content.Body = message;
-			notification.Content.CustomData = payload;
-			notification.Content.Name = devices.First();
+			const string templateBodyAPNS = "{\"aps\":{\"alert\":\"$(message)\"}}";
+			const string templateBodyFCM = "{\"data\":{\"message\":\"$(messageParam)\"}}";
 
-			foreach (var baseUrl in _platforms)
+			RegistrationDescription description;
+
+			switch(registration.Platform)
 			{
-				var url = $"{baseUrl}/push/notifications/";
-				var result = await Http.Client.AddMobileCenterToken().Post<JObject>(url, notification);
+				case "iOS":
+					description = new AppleTemplateRegistrationDescription(registration.Handle, templateBodyAPNS, registration.Tags);
+					break;
+
+				case "Android":
+					description = new GcmTemplateRegistrationDescription(registration.Handle, templateBodyFCM, registration.Tags);
+					break;
+
+				default:
+					return null;
 			}
 
-			return true;
+			var result = await _hub.CreateOrUpdateRegistrationAsync(description);
+			return result?.RegistrationId;
+		}
+
+		async public Task<bool> SendNotification(string title, string message, string[] tags, Dictionary<string, string> payload = null)
+		{
+			var outcome = await _hub.SendTemplateNotificationAsync(payload, tags);
+			return outcome.Success > 0;
 		}
 	}
 }

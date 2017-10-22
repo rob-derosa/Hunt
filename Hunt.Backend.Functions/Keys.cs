@@ -55,7 +55,7 @@ namespace Hunt.Backend.Functions
 		public static class NotificationHub
 		{
 			public static string Name = "huntappnotificationhub";
-			public static string Key = "Endpoint=sb://huntappnotificationnamespace.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=flvckIUORk8JmF9tutOLeS+dKfJSSUD+IeD/rYGJYUg=";
+			public static string ConnectionString = "Endpoint=sb://huntappnotificationnamespace.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=flvckIUORk8JmF9tutOLeS+dKfJSSUD+IeD/rYGJYUg=";
 		}
     }
 }
