@@ -47,6 +47,12 @@ namespace Hunt.Mobile.iOS
 
 		#region Lifecycle
 
+		public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+		{
+			System.Console.WriteLine(deviceToken);
+			App.Instance.DeviceToken = deviceToken.ToString();
+		}
+
 		public override void OnResignActivation(UIApplication uiApplication)
 		{
 			// Invoked when the application is about to move from active to inactive state.

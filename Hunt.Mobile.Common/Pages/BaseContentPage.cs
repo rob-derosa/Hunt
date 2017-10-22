@@ -263,7 +263,7 @@ namespace Hunt.Mobile.Common
 				LineBreakMode = LineBreakMode.TailTruncation,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
-				Margin = new Thickness(20,10),
+				Margin = new Thickness(20, 10 + _toastTopMargin, 20, 10),
 			};
 
 			_toastRoot.Children.Add(separatorTop);
@@ -294,7 +294,7 @@ namespace Hunt.Mobile.Common
 			AbsoluteLayout.SetLayoutFlags(_toastRoot, AbsoluteLayoutFlags.All);
 			AbsoluteLayout.SetLayoutBounds(_toastRoot, new Rectangle(0, 0, 1, 1));
 
-			_toastRoot.Margin = new Thickness(0, NavigationBar.YOffset, 0, 0);
+			//_toastRoot.Margin = new Thickness(0, NavigationBar.YOffset, 0, 0);
 			_rootLayout.Children.Add(_contentView);
 			_rootLayout.Children.Add(_toastRoot);
 			_rootLayout.Children.Add(_hudRoot);
@@ -327,15 +327,16 @@ namespace Hunt.Mobile.Common
 			{
 				_hudView.Content = _progressAnimation;
 				_hudLabel.Text = message;
+				_hudRoot.IsVisible = true;
 				_hudLabel.IsVisible = !string.IsNullOrWhiteSpace(message);
 				_hudView.IsVisible = true;
 				_progressAnimation.Loop = true;
 				_progressAnimation.Play();
-				_hudRoot.IsVisible = true;
 			});
 		}
 
-		double? _toastHeight;
+		double _toastTopMargin = Device.RuntimePlatform == Device.iOS ? 20 : 0;
+		double _toastHeight = NavigationBar.YOffset;
 		async public void ShowToast(string message, NoticationType type, int timeout = 3500)
 		{
 			if(_toastRoot == null || _toastRoot.IsVisible)
@@ -344,16 +345,13 @@ namespace Hunt.Mobile.Common
 			if(_hudRoot != null && _hudRoot.IsVisible)
 				await Dismiss();
 
-			if(_toastHeight == null)
-				_toastHeight = 40;
-
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				_toastLabel.Text = message;
 				_toastRoot.IsVisible = true;
 			});
 
-			await _toastRoot.LayoutTo(new Rectangle(0, _toastRoot.Y, _toastRoot.Width, _toastHeight.Value), 350);
+			await _toastRoot.LayoutTo(new Rectangle(0, _toastRoot.Y, _toastRoot.Width, _toastHeight), 350);
 			await Task.Delay(timeout).ConfigureAwait(false);
 			await _toastRoot.LayoutTo(new Rectangle(0, _toastRoot.Y, _toastRoot.Width, 0), 350);
 
@@ -365,7 +363,7 @@ namespace Hunt.Mobile.Common
 
 		async public Task Dismiss(bool animate = false)
 		{
-			if(_hudRoot == null || !_hudRoot.IsVisible)
+			if(_hudRoot == null)
 				return;
 
 			if(animate)
@@ -376,7 +374,9 @@ namespace Hunt.Mobile.Common
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				_progressAnimation.Loop = false;
+				if(_progressAnimation != null)
+					_progressAnimation.Loop = false;
+
 				_hudRoot.IsVisible = false;
 			});
 		}

@@ -34,7 +34,7 @@ namespace Hunt.Mobile.Common
 		async public Task<bool> RegisterPlayer()
 		{
 			if(string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Alias))
-				throw new Exception("Please specify an email and alias.");
+				throw new Exception("Please specify an email and first name.");
 
 			var email = Email; //We toy with a copy because the two-way binding will cause the TextChanged event to fire
 			var split = email.Split('@');
@@ -73,7 +73,7 @@ namespace Hunt.Mobile.Common
 				Avatar = Avatar,
 				Email = email.Trim(),
 				Alias = Alias.Trim(),
-				InstallId = MobileCenter.GetInstallIdAsync().Result.ToString(),
+				DeviceToken = App.Instance.DeviceToken,
 			};
 
 			var args = new KVP { { "email", player.Email }, { "firstName", player.Alias }, { "avatar", player.Avatar } };

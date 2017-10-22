@@ -31,6 +31,8 @@ namespace Hunt.Mobile.Common
 
 		static App _instance;
 		public static App Instance => _instance;
+
+		public string DeviceToken { get; set; }
 		public Player Player { get; set; }
 		public Game CurrentGame { get; set; }
 
@@ -53,23 +55,23 @@ namespace Hunt.Mobile.Common
 
 			if(IsDesignMode)
 			{
-				Instance.CurrentGame = Mocker.GetGame(5, 4, true, true, true, true, true);
-				Instance.CurrentGame.StartDate = null;
+				//Instance.CurrentGame = Mocker.GetGame(5, 4, true, true, true, true, true);
+				//Instance.CurrentGame.StartDate = null;
 
-				//Has game started
+				////Has game started
+				////Instance.CurrentGame.StartDate = DateTime.Now;
+
+				////Has game ended
+				//Instance.CurrentGame.EndDate = DateTime.Now;
 				//Instance.CurrentGame.StartDate = DateTime.Now;
+				//Instance.CurrentGame.WinnningTeamId = Instance.CurrentGame.Teams[1].Id;
 
-				//Has game ended
-				Instance.CurrentGame.EndDate = DateTime.Now;
-				Instance.CurrentGame.StartDate = DateTime.Now;
-				Instance.CurrentGame.WinnningTeamId = Instance.CurrentGame.Teams[1].Id;
+				////Are you a player
+				//Player = Instance.CurrentGame.Teams[1].Players[0];
 
-				//Are you a player
-				Player = Instance.CurrentGame.Teams[1].Players[0];
-
-				//Are you the coordinator
-				Player = Instance.CurrentGame.Coordinator.Clone(); //Jon
-				Instance.CurrentGame.Coordinator = Player;
+				////Are you the coordinator
+				//Player = Instance.CurrentGame.Coordinator.Clone(); //Jon
+				//Instance.CurrentGame.Coordinator = Player;
 
 			}
 
@@ -179,7 +181,9 @@ namespace Hunt.Mobile.Common
 				if(player == null)
 					return;
 
-				player.InstallId = MobileCenter.GetInstallIdAsync().Result.ToString();
+				if(DeviceToken != null && player.DeviceToken != DeviceToken)
+					player.DeviceToken = DeviceToken;
+	
 				Player = player;
 			}
 		}

@@ -120,7 +120,7 @@
 								<local:SvgImage
 									Source="qr_code_scan.svg"
 									Clicked="ScanCodeClicked"
-									Margin="0,0,30,0"
+									Margin="0,0,20,0"
 									VerticalOptions="Center"
 									AutomationId="scanQrButton"
 									HorizontalOptions="End" />
@@ -142,6 +142,8 @@
 									VerticalOptions="Center" />
 
 								<local:SvgImage
+									WidthRequest="24"
+									HeightRequest="24"
 									Source="accessory_right.svg"
 									Margin="0,0,20,0"
 									VerticalOptions="Center"

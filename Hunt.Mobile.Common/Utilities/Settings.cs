@@ -29,12 +29,5 @@ namespace Hunt.Mobile.Common
 				}
 			}
 		}
-
-		public static string PlayerAlias
-		{
-			get { return AppSettings.GetValueOrDefault(nameof(PlayerAlias), null); }
-			set { AppSettings.AddOrUpdateValue(nameof(PlayerAlias), value); }
-		}
-
 	}
 }

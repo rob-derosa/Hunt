@@ -136,6 +136,8 @@
 							WidthRequest="56">
 							<local:SvgImage
 								Source="circle_filled.svg"
+								VerticalOptions="FillAndExpand"
+								HorizontalOptions="FillAndExpand"
 								Color="{StaticResource aqua}" />
 
 							<Label Text="{Binding Treasure.Points, StringFormat='{0}pts'}"

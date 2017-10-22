@@ -21,7 +21,7 @@ namespace Hunt.Common
 		[JsonProperty("alias")]
 		public string Alias { get; set; }
 
-		[JsonProperty("installId")]
-		public string InstallId { get; set; }
+		[JsonProperty("deviceToken")]
+		public string DeviceToken { get; set; }
 	}
 }
