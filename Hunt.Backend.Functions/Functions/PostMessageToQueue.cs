@@ -28,18 +28,14 @@ namespace Hunt.Backend.Functions
 
                 try
                 {
-                    using (var client = new QueueService("imageprocess"))
-                    {
-                        client.SendBrokeredMessageAsync(image).Wait();
-
-                        return req.CreateResponse(HttpStatusCode.OK);
-                    }
+					var client = new QueueService("imageprocess");
+                    client.SendBrokeredMessageAsync(image).Wait();
+                    return req.CreateResponse(HttpStatusCode.OK);
                 }
                 catch (Exception e)
                 {
                     // track exceptions that occur
                     analytic.TrackException(e);
-
                     return req.CreateErrorResponse(HttpStatusCode.BadRequest, e);
                 }
             }

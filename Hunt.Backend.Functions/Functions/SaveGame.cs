@@ -49,68 +49,65 @@ namespace Hunt.Backend.Functions
 				bool isEndOfgame = false;
 				try
 				{
-					using (var client = new CosmosDataService())
+					if (!game.IsPersisted)
 					{
-						if (!game.IsPersisted)
+						CosmosDataService.Instance.InsertItemAsync(game).Wait();
+					}
+					else
+					{
+						var existingGame = CosmosDataService.Instance.GetItemAsync<Game>(game.Id).Result;
+						if (existingGame.TS != game.TS)
+							return req.CreateErrorResponse(HttpStatusCode.Conflict, "Unable to save game - version conflict. Please pull the latest version and reapply your changes.");
+
+						if (action == GameUpdateAction.EndGame && existingGame.HasEnded)
+							return req.CreateResponse(HttpStatusCode.OK);
+
+						if (action == GameUpdateAction.StartGame)
+							game.StartDate = DateTime.UtcNow;
+
+						if (action == GameUpdateAction.EndGame)
+							isEndOfgame = true;
+
+						bool isWinningAcquisition = false;
+						if (action == GameUpdateAction.AcquireTreasure)
 						{
-							client.InsertItemAsync(game).Wait();
+							//Need to evaluate the game first before we save as there might be a winner
+							var teamId = arguments["teamId"];
+							isWinningAcquisition = game.EvaluateGameForWinner(teamId);
+
+							if (isWinningAcquisition)
+								isEndOfgame = true;
+						}
+
+						if(isEndOfgame)
+						{
+							game.EndDate = DateTime.UtcNow;
+							var teams = game.Teams.OrderByDescending(t => t.TotalPoints).ToArray();
+
+							if (teams[0].TotalPoints == teams[1].TotalPoints)
+								game.WinnningTeamId = null; //Draw
+							else
+								game.WinnningTeamId = teams[0].Id;
+						}
+
+						CosmosDataService.Instance.UpdateItemAsync(game).Wait();
+
+						if (action == GameUpdateAction.StartGame)
+						{
+							SetEndGameTimer(game, analytic);
+						}
+
+						if(isEndOfgame)
+						{
+							SendTargetedNotifications(game, GameUpdateAction.EndGame, arguments);
 						}
 						else
 						{
-							var existingGame = client.GetItemAsync<Game>(game.Id).Result;
-							if (existingGame.TS != game.TS)
-								return req.CreateErrorResponse(HttpStatusCode.Conflict, "Unable to save game - version conflict. Please pull the latest version and reapply your changes.");
-
-							if (action == GameUpdateAction.EndGame && existingGame.HasEnded)
-								return req.CreateResponse(HttpStatusCode.OK);
-
-							if (action == GameUpdateAction.StartGame)
-								game.StartDate = DateTime.UtcNow;
-
-							if (action == GameUpdateAction.EndGame)
-								isEndOfgame = true;
-
-							bool isWinningAcquisition = false;
-							if (action == GameUpdateAction.AcquireTreasure)
-							{
-								//Need to evaluate the game first before we save as there might be a winner
-								var teamId = arguments["teamId"];
-								isWinningAcquisition = game.EvaluateGameForWinner(teamId);
-
-								if (isWinningAcquisition)
-									isEndOfgame = true;
-							}
-
-							if(isEndOfgame)
-							{
-								game.EndDate = DateTime.UtcNow;
-								var teams = game.Teams.OrderByDescending(t => t.TotalPoints).ToArray();
-
-								if (teams[0].TotalPoints == teams[1].TotalPoints)
-									game.WinnningTeamId = null; //Draw
-								else
-									game.WinnningTeamId = teams[0].Id;
-							}
-
-							client.UpdateItemAsync(game).Wait();
-
-							if (action == GameUpdateAction.StartGame)
-							{
-								SetEndGameTimer(game, analytic);
-							}
-
-							if(isEndOfgame)
-							{
-								SendTargetedNotifications(game, GameUpdateAction.EndGame, arguments);
-							}
-							else
-							{
-								SendTargetedNotifications(game, action, arguments);
-							}
+							SendTargetedNotifications(game, action, arguments);
 						}
-
-						savedGame = client.GetItemAsync<Game>(game.Id).Result; //Comment out at some point if not needed
 					}
+
+					savedGame = CosmosDataService.Instance.GetItemAsync<Game>(game.Id).Result; //Comment out at some point if not needed
 
 					return req.CreateResponse(HttpStatusCode.OK, savedGame);
 				}
@@ -129,10 +126,8 @@ namespace Hunt.Backend.Functions
 		{
 			try
 			{
-				using(var client = new QueueService(Keys.ServiceBus.EndGameBusName))
-				{
-					client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
-				}
+				var client = new QueueService(Keys.ServiceBus.EndGameBusName);
+				client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
 			}
 			catch (Exception e)
 			{
@@ -146,7 +141,6 @@ namespace Hunt.Backend.Functions
 
 		static async Task SendTargetedNotifications(Game game, string action, Dictionary<string, string> args)
 		{
-			var push = new PushService();
 			string title = null;
 			string message = null;
 			List<Player> players = new List<Player>();
@@ -253,7 +247,7 @@ namespace Hunt.Backend.Functions
 					devices.Remove(playerInstallId);
 
 				if (devices.Count > 0)
-					await push.SendNotification(title, message, devices.ToArray(),
+					await PushService.Instance.SendNotification(title, message, devices.ToArray(),
 						new Dictionary<string, string> { { "gameId", game.Id } });
 			}
 
@@ -267,43 +261,12 @@ namespace Hunt.Backend.Functions
 
 				if (allDevices.Count> 0)
 				{
-					await push.SendNotification("", "", allDevices.ToArray(),
+					await PushService.Instance.SendNotification("", "", allDevices.ToArray(),
 						new Dictionary<string, string> { { "content-available", "1" }, { "gameId", game.Id } });
 				}
 			}
 		}
 
-		/// <summary>
-		/// Not used right now
-		/// </summary>
-		/// <param name="game"></param>
-		static void CreateAudiences(Game game, AnalyticService analytic)
-		{
-			//Configure the proper Push Audiences in Mobile Center so notifications can be sent to all in a game or team
-			var p = new PushService();
-			var success = p.CreateAudience(HuntAudience.GameId, game.Id).Result;
-
-			if (success)
-			{
-				foreach (var team in game.Teams)
-				{
-					var good = p.CreateAudience(HuntAudience.TeamId, team.Id).Result;
-
-					if (!good)
-						throw new Exception("Unable to properly configure push notifications");
-				}
-			}
-			else
-			{
-				var e = new Exception("Unable to properly configure push notifications");
-
-				// track exceptions that occur
-				analytic.TrackException(e);
-
-				throw e;
-			}
-		}
-	
 		#endregion
 	}
 }

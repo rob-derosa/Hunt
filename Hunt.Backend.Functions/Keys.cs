@@ -51,5 +51,11 @@ namespace Hunt.Backend.Functions
             public static string Url = @"https://southcentralus.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessText/Screen/?language=eng&autocorrect=true&PII=true";
             public static string Key = "0484d9eaf67a40b5ac5bb40d9f368ec5";
         }
+
+		public static class NotificationHub
+		{
+			public static string Name = "huntappnotificationhub";
+			public static string Key = "Endpoint=sb://huntappnotificationnamespace.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=flvckIUORk8JmF9tutOLeS+dKfJSSUD+IeD/rYGJYUg=";
+		}
     }
 }

@@ -1,12 +1,6 @@
 using System;
 using System.Threading.Tasks;
 
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-
-using Hunt.Common;
-using System.IO;
-using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.ServiceBus;
@@ -16,11 +10,9 @@ namespace Hunt.Backend.Functions
 	/// <summary>
 	/// Queue service.
 	/// </summary>
-	public partial class QueueService : IDisposable
+	public partial class QueueService
 	{
         #region Private Properties
-
-        static QueueService defaultInstance = new QueueService("endgame");
 
 		/// <summary>
         /// The queue client
@@ -39,9 +31,6 @@ namespace Hunt.Backend.Functions
 
 		#endregion
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Hunt.Mobile.Common.CosmosDataService"/> class.
-		/// </summary>
 		public QueueService(string queueName)
 		{
             _queueName = queueName;
@@ -56,12 +45,6 @@ namespace Hunt.Backend.Functions
             _queueClient = _factory.CreateQueueClient(_queueName);
         }
 
-		/// <summary>
-		/// Inserts the item async.
-		/// </summary>
-		/// <returns>The item async.</returns>
-		/// <param name="item">Item.</param>
-		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public async Task SendBrokeredMessageAsync(object item, string gameId = "", 
             string messageLabel = "", int delay = 0)
 		{
@@ -82,10 +65,6 @@ namespace Hunt.Backend.Functions
 			{
 				Console.Error.WriteLine(@"ERROR {0}", e.Message);
 			}
-		}
-
-		public void Dispose()
-		{
 		}
 	}
 }

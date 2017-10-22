@@ -8,16 +8,20 @@ namespace Hunt.Backend.Analytics
 {
 	public class AnalyticService : IDisposable
 	{
-		private readonly TelemetryClient _telemetryClient = new TelemetryClient(TelemetryConfiguration.Active);
-		private readonly RequestTelemetry _requestTelemetry;
+		static TelemetryClient _telemetryClient;
+		static RequestTelemetry _requestTelemetry;
 
 		private IOperationHolder<RequestTelemetry> _operation;
 
         public AnalyticService(RequestTelemetry requestTelemetry)
 		{
-            _telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APP_INSIGHTS_KEY");
+			if(_telemetryClient == null)
+			{
+				_telemetryClient = new TelemetryClient(TelemetryConfiguration.Active);
+				_telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APP_INSIGHTS_KEY");
+			}
 
-            _requestTelemetry = requestTelemetry;
+			_requestTelemetry = requestTelemetry;
 
 			// start tracking request operation
 			_operation = _telemetryClient.StartOperation(_requestTelemetry);

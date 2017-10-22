@@ -28,13 +28,8 @@ namespace Hunt.Backend.Functions
                 try
                 {
                     var gameId = req.GetQueryNameValuePairs().FirstOrDefault(kvp => kvp.Key == "id").Value;
-
-                    using (var client = new CosmosDataService())
-                    {
-                        var game = client.GetItemAsync<Game>(gameId).Result;
-
-                        return req.CreateResponse(HttpStatusCode.OK, game);
-                    }
+                    var game = CosmosDataService.Instance.GetItemAsync<Game>(gameId).Result;
+                    return req.CreateResponse(HttpStatusCode.OK, game);
                 }
                 catch (Exception e)
                 {

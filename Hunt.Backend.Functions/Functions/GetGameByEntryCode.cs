@@ -30,17 +30,14 @@ namespace Hunt.Backend.Functions
                     var email = kvps.FirstOrDefault(kvp => kvp.Key == "email").Value;
                     var entryCode = kvps.FirstOrDefault(kvp => kvp.Key == "entryCode").Value;
 
-                    using (var client = new CosmosDataService())
-                    {
-                        var existingGame = client.GetOngoingGame(email);
+                    var existingGame = CosmosDataService.Instance.GetOngoingGame(email);
 
-                        if (existingGame != null)
-							return req.CreateErrorResponse(HttpStatusCode.Conflict, "User already has an ongoing game");
+                    if (existingGame != null)
+						return req.CreateErrorResponse(HttpStatusCode.Conflict, "User already has an ongoing game");
 
-						var openGame = client.GetGameByEntryCode(entryCode);
+					var openGame = CosmosDataService.Instance.GetGameByEntryCode(entryCode);
 
-                        return req.CreateResponse(HttpStatusCode.OK, openGame);
-                    }
+                    return req.CreateResponse(HttpStatusCode.OK, openGame);
                 }
                 catch (Exception e)
                 {

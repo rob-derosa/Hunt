@@ -8,20 +8,23 @@ using System.Linq;
 
 namespace Hunt.Backend.Functions
 {
-	public partial class CosmosDataService : IDisposable
+	public partial class CosmosDataService
 	{
-		static CosmosDataService defaultInstance = new CosmosDataService();
-
 		const string _databaseId = @"Games";
 		const string _collectionId = @"Items";
+		DocumentClient _client;
 
 		Uri _collectionLink = UriFactory.CreateDocumentCollectionUri(_databaseId, _collectionId);
-		static DocumentClient _client;
 
 		public CosmosDataService()
 		{
-			if(_client == null)
-				_client = new DocumentClient(new Uri(Keys.Cosmos.Url), Keys.Cosmos.Key, ConnectionPolicy.Default);
+			_client = new DocumentClient(new Uri(Keys.Cosmos.Url), Keys.Cosmos.Key, ConnectionPolicy.Default);
+		}
+
+		static CosmosDataService _instance;
+		public static CosmosDataService Instance
+		{
+			get { return _instance ?? (_instance = new CosmosDataService()); }
 		}
 
 		Uri GetCollectionUri()
@@ -142,10 +145,6 @@ namespace Hunt.Backend.Functions
 			}
 
 			return null;
-		}
-
-		public void Dispose()
-		{
 		}
 	}
 }

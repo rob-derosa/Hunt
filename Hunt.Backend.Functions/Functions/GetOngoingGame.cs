@@ -33,12 +33,8 @@ namespace Hunt.Backend.Functions
                         return req.CreateErrorResponse(HttpStatusCode.BadRequest, "email address required");
                     }
 
-                    using (var client = new CosmosDataService())
-                    {
-                        var game = client.GetOngoingGame(email);
-
-                        return req.CreateResponse(HttpStatusCode.OK, game as Object);
-                    }
+                    var game = CosmosDataService.Instance.GetOngoingGame(email);
+                    return req.CreateResponse(HttpStatusCode.OK, game as Object);
                 }
                 catch (Exception e)
                 {

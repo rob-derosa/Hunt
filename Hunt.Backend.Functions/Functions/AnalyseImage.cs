@@ -35,14 +35,11 @@ namespace Hunt.Backend.Functions
 					var json = req.Content.ReadAsStringAsync().Result;
 					var photoUrls = JsonConvert.DeserializeObject<string[]>(json);
 
-					using (var visionClient = new VisionService())
+					foreach (var url in photoUrls)
 					{
-						foreach (var url in photoUrls)
-						{
-							var result = visionClient.GetImageDescriptionAsync(url).Result;
-							allTags.AddRange(result.Tags.Select(t => t.Name).ToArray());
-							allTags.AddRange(result.Description.Tags);
-						}
+						var result = VisionService.Instance.GetImageDescriptionAsync(url).Result;
+						allTags.AddRange(result.Tags.Select(t => t.Name).ToArray());
+						allTags.AddRange(result.Description.Tags);
 					}
 
 					var attributes = new Dictionary<string, int>();

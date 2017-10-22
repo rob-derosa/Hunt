@@ -29,21 +29,18 @@ namespace Hunt.Backend.Triggers
 				{
 					var gameId = (string)message.Properties["gameId"];
 
-					using (var client = new CosmosDataService())
-					{
-						var game = client.GetItemAsync<Game>(gameId).Result;
-						var http = new HttpClient();
-						var url = $"https://huntapp.azurewebsites.net/api/SaveGame";
+					var game = CosmosDataService.Instance.GetItemAsync<Game>(gameId).Result;
+					var http = new HttpClient();
+					var url = $"https://huntapp.azurewebsites.net/api/SaveGame";
 
-						dynamic payload = new JObject();
-						payload.action = GameUpdateAction.EndGame;
-						payload.game = JObject.FromObject(game);
-						payload.arguments = null;
+					dynamic payload = new JObject();
+					payload.action = GameUpdateAction.EndGame;
+					payload.game = JObject.FromObject(game);
+					payload.arguments = null;
 
-						var json = JsonConvert.SerializeObject(payload);
-						var content = new StringContent(json);
-						var response = http.PostAsync(url, content).Result;
-					}
+					var json = JsonConvert.SerializeObject(payload);
+					var content = new StringContent(json);
+					var response = http.PostAsync(url, content).Result;
 				}
 				catch (Exception e)
 				{
