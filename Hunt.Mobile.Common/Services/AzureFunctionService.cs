@@ -152,8 +152,8 @@ namespace Hunt.Mobile.Common
 			if(!args.ContainsKey("playerId"))
 				args.Add("playerId", App.Instance.Player.Id);
 	
-			if(!args.ContainsKey("playerInstallId"))
-				args.Add("playerInstallId", App.Instance.Player.InstallId);
+			if(!args.ContainsKey("playerDeviceToken"))
+				args.Add("playerDeviceToken", App.Instance.Player.DeviceToken);
 
 			dynamic payload = new JObject();
 			payload.action = action;

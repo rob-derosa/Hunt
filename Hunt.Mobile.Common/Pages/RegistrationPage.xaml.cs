@@ -13,6 +13,7 @@ namespace Hunt.Mobile.Common
 			InitializeComponent();
 
 			emailEntry.TextChanged += (sender, e) => ViewModel.Avatar = null;
+			emailEntry.Completed += (sender, e) => aliasEntry.Focus();
 			emailEntry.Unfocused += async(sender, e) => await CheckForAvatar();
 		}
 

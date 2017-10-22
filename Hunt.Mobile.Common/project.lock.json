@@ -1119,7 +1119,7 @@
       ]
     },
     "Newtonsoft.Json/10.0.3": {
-      "sha512": "wBM7i7i3U2WX0ecor4zdVGvgrwFUjuigBoHKiL+nH39fCOpCPjBY3RDqJM32edvdyTAVdjzlccHsg41+/+zpSA==",
+      "sha512": "hSXaFmh7hNCuEoC4XNY5DrRkLDzYHqPx/Ik23R4J86Z7PE/Y6YidhG602dFVdLBRSdG6xp9NabH3dXpcoxWvww==",
       "type": "package",
       "path": "newtonsoft.json/10.0.3",
       "files": [
@@ -3977,18 +3977,18 @@
     ".NETPortable,Version=v4.5,Profile=Profile111": []
   },
   "packageFolders": {
-    "/Users/rob/.nuget/packages/": {}
+    "/Users/robderosa/.nuget/packages/": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
+      "projectUniqueName": "/Volumes/Data/Projects/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
       "projectName": "Hunt.Mobile.Common",
-      "projectPath": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
-      "projectJsonPath": "/Users/rob/Projects/Github/Hunt/Hunt.Mobile.Common/project.json",
-      "packagesPath": "/Users/rob/.nuget/packages/",
+      "projectPath": "/Volumes/Data/Projects/Hunt/Hunt.Mobile.Common/Hunt.Mobile.Common.csproj",
+      "projectJsonPath": "/Volumes/Data/Projects/Hunt/Hunt.Mobile.Common/project.json",
+      "packagesPath": "/Users/robderosa/.nuget/packages/",
       "projectStyle": "ProjectJson",
       "configFilePaths": [
-        "/Users/rob/.config/NuGet/NuGet.Config"
+        "/Users/robderosa/.config/NuGet/NuGet.Config"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}

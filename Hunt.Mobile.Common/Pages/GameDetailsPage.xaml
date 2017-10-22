@@ -21,7 +21,7 @@
 				HorizontalOptions="FillAndExpand">
 				<local:NavigationBar.RightToolbar>
 					<StackLayout Orientation="Horizontal"
-						Spacing="20">
+						Spacing="4">
 						<local:SvgImage
 							IsVisible="{Binding CanLeaveGame}"
 							Source="logout.svg"
@@ -229,8 +229,6 @@
 									Clicked="ViewTeamsClicked"
 									HorizontalOptions="Center"
 									VerticalOptions="End"
-									WidthRequest="26"
-									HeightRequest="26"
 									AutomationId="teamsButton"
 									Source="teams.svg" />
 							</Grid>
@@ -295,6 +293,8 @@
 											Text="{Binding Hint}" />
 
 										<local:SvgImage
+											WidthRequest="24"
+											HeightRequest="24"
 											Grid.Column="3"
 											Source="accessory_right.svg"
 											Margin="0,0,10,0"

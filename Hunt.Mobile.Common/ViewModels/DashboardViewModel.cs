@@ -108,10 +108,10 @@ namespace Hunt.Mobile.Common
 						var current = App.Instance.Player;
 						var player = game.GetPlayerByEmail();
 
-						if(current.Alias != player.Alias || current.InstallId != player.InstallId)
+						if(current.Alias != player.Alias || current.DeviceToken != player.DeviceToken)
 						{
 							player.Alias = current.Alias;
-							player.InstallId = current.InstallId;
+							player.DeviceToken = current.DeviceToken;
 							game = await App.Instance.DataService.SaveGame(game, GameUpdateAction.UpdatePlayer).ConfigureAwait(false);
 						}
 

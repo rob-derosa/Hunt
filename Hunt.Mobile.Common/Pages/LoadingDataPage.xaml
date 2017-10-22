@@ -6,12 +6,11 @@
 	xmlns:lot="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
 	x:TypeArguments="local:DashboardViewModel"
 	x:Class="Hunt.Mobile.Common.LoadingDataPage">
-
 	<local:BaseContentPage.RootContent>
-		<ScrollView>
+		<ScrollView Padding="0,0,0,20">
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="*" />
+					<RowDefinition />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				
