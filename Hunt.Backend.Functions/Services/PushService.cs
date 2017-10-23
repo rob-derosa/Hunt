@@ -1,27 +1,39 @@
 using Hunt.Common;
 using Microsoft.Azure.NotificationHubs;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hunt.Backend.Functions
 {
 	public class PushService
 	{
-		static PushService _instance;
+		static PushService _dev;
+		static PushService _production;
 		NotificationHubClient _hub;
 
-		public static PushService Instance
+		public static PushService Dev
 		{
-			get { return _instance ?? (_instance = new PushService()); }
+			get { return _dev ?? (_dev = new PushService(AppMode.Dev)); }
 		}
 
-		public PushService()
+		public static PushService Production
 		{
-			_hub = NotificationHubClient.CreateClientFromConnectionString(Keys.NotificationHub.ConnectionString, Keys.NotificationHub.Name);
+			get { return _production ?? (_production = new PushService(AppMode.Production)); }
+		}
+
+		public PushService(AppMode mode)
+		{
+			var connection = Keys.NotificationHub.Production.ConnectionString;
+			var name = Keys.NotificationHub.Production.Name;
+
+			if(mode == AppMode.Dev)
+			{
+				connection = Keys.NotificationHub.Sandbox.ConnectionString;
+				name = Keys.NotificationHub.Sandbox.Name;
+			}
+
+			_hub = NotificationHubClient.CreateClientFromConnectionString(connection, name);
 		}
 
 		async public Task<string> Register(DeviceRegistration registration)

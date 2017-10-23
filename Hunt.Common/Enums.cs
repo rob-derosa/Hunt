@@ -1,5 +1,11 @@
 ﻿namespace Hunt.Common
 {
+	public enum AppMode
+	{
+		Dev,
+		Production,
+	}
+
 	public class GameUpdateAction
 	{
 		public const string Create = nameof(Create);

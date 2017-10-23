@@ -11,5 +11,6 @@ namespace Hunt.Common
 		public string Platform { get; set; }
 		public string Handle { get; set; }
 		public string[] Tags { get; set; }
+		public AppMode AppMode { get; set; }
 	}
 }

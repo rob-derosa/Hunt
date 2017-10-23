@@ -10,6 +10,9 @@ namespace Hunt.Common
 		[JsonProperty("name")]
 		public string Name { get; set; }
 
+		[JsonProperty("appMode")]
+		public AppMode AppMode { get; set; }
+
 		[JsonProperty("entryCode")]
 		public string EntryCode { get; set; }
 

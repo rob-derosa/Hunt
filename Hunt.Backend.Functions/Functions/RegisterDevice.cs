@@ -30,7 +30,10 @@ namespace Hunt.Backend.Functions
 				{
 					var json = req.Content.ReadAsStringAsync().Result;
 					var registration = JsonConvert.DeserializeObject<DeviceRegistration>(json);
-					var result = PushService.Instance.Register(registration).Result;
+
+					var instance = registration.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
+					var result = instance.Register(registration).Result;
+
 					return req.CreateResponse(HttpStatusCode.OK, result);
 				}
 				catch (Exception e)

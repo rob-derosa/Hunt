@@ -247,7 +247,10 @@ namespace Hunt.Backend.Functions
 					devices.Remove(playerId);
 
 				if (devices.Count > 0)
-					await PushService.Instance.SendNotification(message, devices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
+				{
+					var instance = game.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
+					await instance.SendNotification(message, devices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
+				}
 			}
 
 			if (silentNotifyAllPlayers)
@@ -260,7 +263,8 @@ namespace Hunt.Backend.Functions
 
 				if (allDevices.Count> 0)
 				{
-					await PushService.Instance.SendSilentNotification(allDevices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
+					var instance = game.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
+					instance.SendSilentNotification(allDevices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
 				}
 			}
 		}
