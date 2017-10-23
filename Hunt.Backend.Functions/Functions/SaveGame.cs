@@ -234,35 +234,33 @@ namespace Hunt.Backend.Functions
 					break;
 			}
 
-			string playerInstallId = null;
-			if(args.ContainsKey("playerInstallId"))
-				playerInstallId = args["playerInstallId"];
+			string playerId = null;
+			if(args.ContainsKey("playerId"))
+				playerId = args["playerId"];
 
 			var devices = new List<string>();
 			if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(message) && players.Count > 0)
 			{
-				devices = players.Where(pl => pl.InstallId != null).Select(pl => pl.InstallId).ToList();
+				devices = players.Where(pl => pl.Id != null).Select(pl => pl.Id).ToList();
 
-				if(playerInstallId != null)
-					devices.Remove(playerInstallId);
+				if(playerId != null)
+					devices.Remove(playerId);
 
 				if (devices.Count > 0)
-					await PushService.Instance.SendNotification(title, message, devices.ToArray(),
-						new Dictionary<string, string> { { "gameId", game.Id } });
+					await PushService.Instance.SendNotification(message, devices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
 			}
 
 			if (silentNotifyAllPlayers)
 			{
 				var allPlayers = game.GetAllPlayers();
-				var allDevices = allPlayers.Where(pl => pl.InstallId != null && !devices.Contains(pl.InstallId)).Select(pl => pl.InstallId).ToList();
+				var allDevices = allPlayers.Where(pl => pl.Id != null && !devices.Contains(pl.Id)).Select(pl => pl.Id).ToList();
 
-				if (playerInstallId != null)
-					allDevices.Remove(playerInstallId);
+				if (playerId != null)
+					allDevices.Remove(playerId);
 
 				if (allDevices.Count> 0)
 				{
-					await PushService.Instance.SendNotification("", "", allDevices.ToArray(),
-						new Dictionary<string, string> { { "content-available", "1" }, { "gameId", game.Id } });
+					await PushService.Instance.SendSilentNotification(allDevices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
 				}
 			}
 		}

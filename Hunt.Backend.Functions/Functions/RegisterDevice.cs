@@ -1,10 +1,6 @@
 using System.Net;
 using System.Net.Http;
 using System;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Web;
 
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -39,8 +35,8 @@ namespace Hunt.Backend.Functions
 				}
 				catch (Exception e)
 				{
-					analytic.TrackException(e);
-					return req.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+					analytic.TrackException(e.GetBaseException());
+					return req.CreateErrorResponse(HttpStatusCode.BadRequest, e.GetBaseException());
 				}
             }
 		}
