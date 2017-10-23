@@ -39,9 +39,9 @@ namespace Hunt.Backend.Functions
                 catch (Exception e)
                 {
                     // track exceptions that occur
-                    analytic.TrackException(e);
-
-                    return req.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+                    analytic.TrackException(e.GetBaseException());
+					var msg = e.GetBaseException().Message;
+                    return req.CreateErrorResponse(HttpStatusCode.BadRequest, e.GetBaseException().Message);
                 }
             }
 		}

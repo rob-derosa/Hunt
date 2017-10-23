@@ -61,15 +61,25 @@ namespace Hunt.Backend.Functions
 		/// <param name="id">The Id of the item to retrieve</param>
 		public async Task<T> GetItemAsync<T>(string id) where T : BaseModel, new()
 		{
-			var docUri = GetDocumentUri(id);
-			var result = await _client.ReadDocumentAsync<T>(docUri);
-
-			if(result.StatusCode == HttpStatusCode.OK)
+			try
 			{
-				return result.Document;
-			}
+				var docUri = GetDocumentUri(id);
+				var result = await _client.ReadDocumentAsync<T>(docUri);
 
-			return null;
+				if (result.StatusCode == HttpStatusCode.OK)
+				{
+					return result.Document;
+				}
+
+				return null;
+			}
+			catch (DocumentClientException dce)
+			{
+				if (dce.StatusCode == HttpStatusCode.NotFound)
+					await EnsureDatabaseConfigured();
+
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -104,12 +114,22 @@ namespace Hunt.Backend.Functions
 
 		public Game GetGameByEntryCode(string entryCode)
 		{
-			var query = _client.CreateDocumentQuery<Game>(GetCollectionUri()).Where(g => g.EntryCode == entryCode);
+			try
+			{
+				var query = _client.CreateDocumentQuery<Game>(GetCollectionUri()).Where(g => g.EntryCode == entryCode);
 
-			foreach (var game in query)
-				return game;
+				foreach (var game in query)
+					return game;
 
-			return null;
+				return null;
+			}
+			catch (DocumentClientException dce)
+			{
+				if (dce.StatusCode == HttpStatusCode.NotFound)
+					EnsureDatabaseConfigured().Wait();
+
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -119,32 +139,43 @@ namespace Hunt.Backend.Functions
 		/// <returns>A dynamic Game, should one exist</returns>
 		public dynamic GetOngoingGame(string email)
 		{
+			try
 			{
-				//First lets check to see if the user has a game they're coordinating
-				var sql = $"SELECT * FROM game WHERE game.endDate = null AND game.coordinator.email = \"{email}\"";
-				var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
-
-				foreach (var game in query)
 				{
-					return game;
-				}
-			}
+					//First lets check to see if the user has a game they're coordinating
+					var sql = $"SELECT * FROM game WHERE game.endDate = null AND game.coordinator.email = \"{email}\"";
+					var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
 
+					foreach (var game in query)
+						return game;
+				}
+
+				{
+					//Now check to see if the the user is part of an onging game as a player
+					var sql = "SELECT game FROM game " +
+						"JOIN teams IN game.teams " +
+						"JOIN player IN teams.players " +
+						$"WHERE game.endDate = null AND player.email = \"{email}\"";
+					var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
+
+					foreach (var game in query)
+						return game.game;
+				}
+
+				return null;
+			}
+			catch(Exception e)
 			{
-				//Now check to see if the the user is part of an onging game as a player
-				var sql = "SELECT game FROM game " +
-					"JOIN teams IN game.teams " +
-					"JOIN player IN teams.players " +
-					$"WHERE game.endDate = null AND player.email = \"{email}\"";
-				var query = _client.CreateDocumentQuery(GetCollectionUri(), sql);
+				var dce = e.GetBaseException() as DocumentClientException;
 
-				foreach (var game in query)
+				if (dce != null && dce.StatusCode == HttpStatusCode.NotFound)
 				{
-					return game.game;
+					EnsureDatabaseConfigured().Wait();
+					return null;
 				}
-			}
 
-			return null;
+				throw;
+			}
 		}
 	}
 }

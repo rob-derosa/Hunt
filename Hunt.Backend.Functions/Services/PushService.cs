@@ -1,5 +1,6 @@
 using Hunt.Common;
 using Microsoft.Azure.NotificationHubs;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -25,14 +26,31 @@ namespace Hunt.Backend.Functions
 
 		async public Task<string> Register(DeviceRegistration registration)
 		{
-			const string templateBodyAPNS = "{\"aps\":{\"alert\":\"$(message)\"}}";
-			const string templateBodyFCM = "{\"data\":{\"message\":\"$(messageParam)\"}}";
+			if (string.IsNullOrWhiteSpace(registration.Handle))
+				return null;
+
+			const string templateBodyAPNS = @"{ ""aps"" : { ""content-available"" : 1, ""alert"" : { ""title"" : ""$(title)"", ""body"" : ""$(message)"", ""badge"":""#(badge)"" } }, ""payload"" : ""$(payload)"" }";
+			const string templateBodyFCM = @"{""data"":{""title"":""$(title)"",""message"":""$(message)"",""payload"":""$(payload)""}}";
+
+			string newRegistrationId = null;
+			// make sure there are no existing registrations for this push handle (used for iOS and Android)
+ 			var registrations = await _hub.GetRegistrationsByChannelAsync(registration.Handle, 100);
+
+			foreach (var reg in registrations)
+				if (newRegistrationId == null)
+					newRegistrationId = reg.RegistrationId;
+				else
+					await _hub.DeleteRegistrationAsync(reg);
+
+			if(newRegistrationId == null)
+				newRegistrationId = await _hub.CreateRegistrationIdAsync();
 
 			RegistrationDescription description;
 
-			switch(registration.Platform)
+			switch (registration.Platform)
 			{
 				case "iOS":
+					registration.Handle = registration.Handle.Replace("<", "").Replace(">", "").Replace(" ","").ToUpper();
 					description = new AppleTemplateRegistrationDescription(registration.Handle, templateBodyAPNS, registration.Tags);
 					break;
 
@@ -44,14 +62,50 @@ namespace Hunt.Backend.Functions
 					return null;
 			}
 
+			description.RegistrationId = newRegistrationId;
 			var result = await _hub.CreateOrUpdateRegistrationAsync(description);
 			return result?.RegistrationId;
 		}
 
-		async public Task<bool> SendNotification(string title, string message, string[] tags, Dictionary<string, string> payload = null)
+		async public Task<bool> SendNotification(string message, string[] tags, Dictionary<string, string> payload = null)
 		{
-			var outcome = await _hub.SendTemplateNotificationAsync(payload, tags);
-			return outcome.Success > 0;
+			var notification = new Dictionary<string,string> { { "message", message } };
+			notification.Add("title", "Game Update");
+			notification.Add("badge", "-1");
+
+			if (payload != null)
+			{
+				var json = JsonConvert.SerializeObject(payload);
+				notification.Add("payload", json);
+			}
+			else
+			{
+				notification.Add("payload", "");
+			}
+
+			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
+			return true;
 		}
+
+		async public Task<bool> SendSilentNotification(string[] tags, Dictionary<string, string> payload = null)
+		{
+			var notification = new Dictionary<string, string> { { "message", "" } };
+			notification.Add("title", "");
+			notification.Add("badge", "-1");
+
+			if (payload != null)
+			{
+				var json = JsonConvert.SerializeObject(payload);
+				notification.Add("payload", json);
+			}
+			else
+			{
+				notification.Add("payload", "");
+			}
+
+			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
+			return true;
+		}
+
 	}
 }
