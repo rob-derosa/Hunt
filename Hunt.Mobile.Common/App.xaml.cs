@@ -49,10 +49,6 @@ namespace Hunt.Mobile.Common
 		public App()
 		{
 			_instance = this;
-
-			Push.Instance = DependencyService.Get<IPushProvider>();
-			DeviceController.Instance = DependencyService.Get<IDeviceController>();
-
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
 			{

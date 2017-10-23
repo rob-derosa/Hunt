@@ -109,4 +109,23 @@ namespace Hunt.Mobile.Common
 			}
 		}
 	}
+
+	//public class SvgButton : ContentView
+	//{
+	//	public SvgButton()
+	//	{
+	//		Initialize();
+	//	}
+
+
+
+	//	void Initialize()
+	//	{
+	//		var grid = new Grid();
+	//		var button = new Button();
+	//		var svg = new SvgImage();
+
+
+	//	}
+	//}
 }

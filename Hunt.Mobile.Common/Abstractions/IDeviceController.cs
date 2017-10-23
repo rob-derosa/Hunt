@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Hunt.Mobile.Common
 {
@@ -10,7 +11,8 @@ namespace Hunt.Mobile.Common
 
 	public static class DeviceController
 	{
-		public static IDeviceController Instance { get; set; }
+		static IDeviceController _instance;
+		public static IDeviceController Instance => _instance ?? (_instance = DependencyService.Get<IDeviceController>());
 	}
 
 	//public enum Orientation

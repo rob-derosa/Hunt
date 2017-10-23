@@ -94,6 +94,11 @@ namespace Hunt.Mobile.Common
 				game.PlayerCountPerTeam = PlayerCount;
 				game.Name = $"Hunt Game by {App.Instance.Player.Alias}";
 				game.DurationInMinutes = GameLength;
+				game.AppMode = AppMode.Production;
+
+#if DEBUG
+				game.AppMode = AppMode.Dev;
+#endif
 
 				if(IsCoordinator)
 				{

@@ -13,7 +13,8 @@ namespace Hunt.Mobile.Common
 
 	public static class Push
 	{
-		public static IPushProvider Instance { get; set; }
+		static IPushProvider _instance;
+		public static IPushProvider Instance => _instance ?? (_instance = DependencyService.Get<IPushProvider>());
 	}
 
 	public class NotificationEventArgs
