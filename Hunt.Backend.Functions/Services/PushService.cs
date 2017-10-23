@@ -70,18 +70,11 @@ namespace Hunt.Backend.Functions
 		async public Task<bool> SendNotification(string message, string[] tags, Dictionary<string, string> payload = null)
 		{
 			var notification = new Dictionary<string,string> { { "message", message } };
-			notification.Add("title", "Game Update");
-			notification.Add("badge", "-1");
+			var json = payload != null ? JsonConvert.SerializeObject(payload) : "";
 
-			if (payload != null)
-			{
-				var json = JsonConvert.SerializeObject(payload);
-				notification.Add("payload", json);
-			}
-			else
-			{
-				notification.Add("payload", "");
-			}
+			notification.Add("title", "Game Update");
+			notification.Add("badge", "0");
+			notification.Add("payload", "");
 
 			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
 			return true;
@@ -90,18 +83,11 @@ namespace Hunt.Backend.Functions
 		async public Task<bool> SendSilentNotification(string[] tags, Dictionary<string, string> payload = null)
 		{
 			var notification = new Dictionary<string, string> { { "message", "" } };
-			notification.Add("title", "");
-			notification.Add("badge", "-1");
+			var json = payload != null ? JsonConvert.SerializeObject(payload) : "";
 
-			if (payload != null)
-			{
-				var json = JsonConvert.SerializeObject(payload);
-				notification.Add("payload", json);
-			}
-			else
-			{
-				notification.Add("payload", "");
-			}
+			notification.Add("title", "");
+			notification.Add("badge", "0");
+			notification.Add("payload", "");
 
 			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
 			return true;
