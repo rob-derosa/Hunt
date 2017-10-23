@@ -136,7 +136,7 @@ namespace Hunt.Mobile.Common
 			}
 			catch(Exception ex)
 			{
-				Logger.Instance.WriteLine(ex);
+				Log.Instance.LogException(ex);
 			}
 		}
 

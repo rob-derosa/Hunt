@@ -74,7 +74,7 @@ namespace Hunt.Mobile.Common
 		bool OnTimerTick()
 		{
 			_isTimerTicking = _shouldTimerTick && ViewModel.Game.IsRunning;
-			Logger.Instance.WriteLine($"Timer ticking: {_isTimerTicking}");
+			Log.Instance.WriteLine($"Timer ticking: {_isTimerTicking}");
 			ViewModel.SetPropertyChanged(nameof(ViewModel.TimeRemaining));
 			return _isTimerTicking;
 		}
@@ -139,14 +139,19 @@ namespace Hunt.Mobile.Common
 			page.ViewModel.OnTreasureAcquired = async(game) =>
 			{
 				ViewModel.SetGame(game);
-				await Navigation.PopAsyncAndNotify();
+
+				var ac = game.GetAcquiredTreasure(page.ViewModel.Treasure);
+
+				if(ac.PlayerId != App.Instance.Player.Id)
+					await Task.Delay(2000);
+	
+				await page.PlayAnimation();
+				Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsyncAndNotify());
 
 				if(ViewModel.Game.HasEnded)
 				{
-					await Task.Delay(500);
-
 					if(ViewModel.Game.WinnningTeamId == ViewModel.Game.GetTeam().Id)
-						await PlayWinningAnimation();
+						Device.BeginInvokeOnMainThread(async() => await PlayWinningAnimation());
 
 					App.Instance.CurrentGame = null;
 				}
@@ -178,39 +183,46 @@ namespace Hunt.Mobile.Common
 
 		async Task PlayWinningAnimation()
 		{
-			var view = new ContentView
+			try
 			{
-				BackgroundColor = Color.FromHex("#7000"),
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-			};
+				var view = new ContentView
+				{
+					BackgroundColor = Color.FromHex("#7000"),
+					VerticalOptions = LayoutOptions.FillAndExpand,
+					HorizontalOptions = LayoutOptions.FillAndExpand,
+				};
 
-			var animation = new AnimationView
+				var animation = new AnimationView
+				{
+					Animation = "trophy.json",
+					WidthRequest = 360,
+					HeightRequest = 360,
+					Loop = false,
+					AutoPlay = false,
+					HorizontalOptions = LayoutOptions.Center,
+					VerticalOptions = LayoutOptions.Center,
+				};
+
+				view.Content = animation;
+				view.Opacity = 0;
+
+				var layout = Content as AbsoluteLayout;
+
+				AbsoluteLayout.SetLayoutFlags(view, AbsoluteLayoutFlags.All);
+				AbsoluteLayout.SetLayoutBounds(view, new Rectangle(0, 0, 1, 1));
+				layout.Children.Add(view);
+
+				await view.FadeTo(1, 250);
+				animation.Play();
+
+				await Task.Delay(3000);
+				await view.FadeTo(0, 300);
+				layout.Children.Remove(view);
+			}
+			catch(Exception e)
 			{
-				Animation = "trophy.json",
-				WidthRequest = 360,
-				HeightRequest = 360,
-				Loop = false,
-				AutoPlay = false,
-				HorizontalOptions = LayoutOptions.Center,
-				VerticalOptions = LayoutOptions.Center,
-			};
-
-			view.Content = animation;
-			view.Opacity = 0;
-
-			var layout = Content as AbsoluteLayout;
-
-			AbsoluteLayout.SetLayoutFlags(view, AbsoluteLayoutFlags.All);
-			AbsoluteLayout.SetLayoutBounds(view, new Rectangle(0, 0, 1, 1));
-			layout.Children.Add(view);
-
-			await view.FadeTo(1, 250);
-			animation.Play();
-
-			await Task.Delay(3000);
-			await view.FadeTo(0, 300);
-			layout.Children.Remove(view);
+				Log.Instance.LogException(e);
+			}
 		}
 
 		async void StartGameClicked(object sender, EventArgs e)

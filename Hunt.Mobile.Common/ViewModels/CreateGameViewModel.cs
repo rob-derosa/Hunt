@@ -119,7 +119,7 @@ namespace Hunt.Mobile.Common
 				}
 
 				App.Instance.CurrentGame = task.Result;
-				Logger.Instance.WriteLine(task.Result.EntryCode);
+				Log.Instance.WriteLine(task.Result.EntryCode);
 				return task.Result;
 			}
 		}

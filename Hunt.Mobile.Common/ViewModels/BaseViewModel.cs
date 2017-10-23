@@ -12,7 +12,7 @@ namespace Hunt.Mobile.Common
 	{
 		public BaseViewModel()
 		{
-			//Logger.Instance.WriteLine($"{GetType().Name} created");
+			//Log.Instance.WriteLine($"{GetType().Name} created");
 		}
 
 		CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -91,17 +91,17 @@ namespace Hunt.Mobile.Common
 
 		public virtual void OnNotificationReceived(NotificationEventArgs args)
 		{
-			Logger.Instance.WriteLine($"Notification received on {GetType().Name}");
+			Log.Instance.WriteLine($"Notification received on {GetType().Name}");
 		}
 
 		public virtual void OnResume()
 		{
-			Logger.Instance.WriteLine($"App resumed on {GetType().Name}");
+			Log.Instance.WriteLine($"App resumed on {GetType().Name}");
 		}
 
 		public virtual void OnSleep()
 		{
-			Logger.Instance.WriteLine($"App slept on {GetType().Name}");
+			Log.Instance.WriteLine($"App slept on {GetType().Name}");
 		}
 
 		protected void SetProperty(string key, string value)
@@ -130,12 +130,12 @@ namespace Hunt.Mobile.Common
 				try
 				{
 					IsRefreshingGame = true;
-					Logger.Instance.WriteLine("Refreshing game...");
+					Log.Instance.WriteLine("Refreshing game...");
 
 					var task = new Task<Game>(() => App.Instance.DataService.GetGame(game?.Id).Result);
 					await task.RunProtected();
 
-					Logger.Instance.WriteLine("Refreshing game complete");
+					Log.Instance.WriteLine("Refreshing game complete");
 
 					if(!task.WasSuccessful() || task.Result == null)
 						return null;

@@ -74,7 +74,7 @@ namespace Hunt.Mobile.Common
 
 		~BaseContentPage()
 		{
-			Logger.Instance.WriteLine($"Disposing {GetType().Name}");
+			Log.Instance.WriteLine($"Disposing {GetType().Name}");
 		}
 
 		#endregion
@@ -109,7 +109,7 @@ namespace Hunt.Mobile.Common
 		protected override void OnAppearing()
 		{
 			Hud.Instance = this;
-			Logger.Instance.WriteLine($"{GetType().Name} appearing");
+			Log.Instance.WriteLine($"{GetType().Name} appearing");
 			App.Instance.AppResumed += OnAppResumed;
 			App.Instance.AppBackgrounded += OnAppBackgrounded;
 			App.Instance.AppNotificationReceived += OnAppNotificationReceived;
@@ -119,7 +119,7 @@ namespace Hunt.Mobile.Common
 
 		protected override void OnDisappearing()
 		{
-			Logger.Instance.WriteLine($"{GetType().Name} disappearing");
+			Log.Instance.WriteLine($"{GetType().Name} disappearing");
 			App.Instance.AppResumed -= OnAppResumed;
 			App.Instance.AppBackgrounded -= OnAppBackgrounded;
 			App.Instance.AppNotificationReceived -= OnAppNotificationReceived;
@@ -411,7 +411,7 @@ namespace Hunt.Mobile.Common
 		protected virtual void OnOrientationChanged(Orientation orientation)
 		{
 			Orientation = orientation;
-			//Logger.Instance.WriteLine($"Page orientation changed to {orientation}");
+			//Log.Instance.WriteLine($"Page orientation changed to {orientation}");
 		}
 
 		#endregion

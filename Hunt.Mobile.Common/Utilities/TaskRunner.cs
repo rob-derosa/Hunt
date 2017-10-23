@@ -29,7 +29,7 @@ namespace Hunt.Mobile.Common
 			}
 			catch(TaskCanceledException)
 			{
-				Logger.Instance.WriteLine("Task Cancelled");
+				Log.Instance.WriteLine("Task Cancelled");
 				return;
 			}
 			catch(Exception e)
@@ -56,7 +56,7 @@ namespace Hunt.Mobile.Common
 					throw exception;
 
 				var msg = errorMessage ?? exception.Message;
-				Logger.Instance.WriteLine($"Handled exception:\n{exception.ToString()}");
+				Log.Instance.WriteLine($"Handled exception:\n{exception.ToString()}");
 
 				switch(notifyMode)
 				{

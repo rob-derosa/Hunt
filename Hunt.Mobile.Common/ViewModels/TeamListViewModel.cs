@@ -32,6 +32,7 @@ namespace Hunt.Mobile.Common
 
 			using(var busy = new Busy(this, "Joining team"))
 			{
+				await Task.Delay(500);
 				Team team = null;
 				Func<Game, Game> gameUpdateLogic = (game) =>
 				{

@@ -79,7 +79,7 @@ namespace Hunt.Mobile.Common
 			}
 			catch(Exception e)
 			{
-				Logger.Instance.WriteLine(e);
+				Log.Instance.LogException(e);
 				throw;
 			}
 		}
@@ -125,7 +125,7 @@ namespace Hunt.Mobile.Common
 			}
 			catch(Exception e)
 			{
-				Logger.Instance.WriteLine(e);
+				Log.Instance.LogException(e);
 				throw;
 			}
 		}
@@ -200,7 +200,7 @@ namespace Hunt.Mobile.Common
 			}
 			catch(Exception e)
 			{
-				Logger.Instance.WriteLine(e);
+				Log.Instance.LogException(e);
 			}
 
 			return null;

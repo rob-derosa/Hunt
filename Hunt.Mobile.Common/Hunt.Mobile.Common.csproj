@@ -67,7 +67,7 @@
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="ViewModels\AddTreasureViewModel.cs" />
-    <Compile Include="Abstractions\ILogger.cs" />
+    <Compile Include="Abstractions\ILogProvider.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="ViewModels\TreasureDetailsViewModel.cs" />

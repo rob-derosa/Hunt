@@ -177,7 +177,7 @@ namespace Hunt.Mobile.Common
 			using(var busy = new Busy(this, "Uploading photo"))
 			{
 				var url = await App.Instance.StorageService.SaveImage(Photo, Game.Id);
-				Logger.Instance.WriteLine(url);
+				Log.Instance.WriteLine(url);
 
 				if(url == null)
 					throw new Exception("There was an issue uploading the image. Please try again.");
@@ -192,7 +192,7 @@ namespace Hunt.Mobile.Common
 
 				AttributeResults = task.Result;
 				foreach(var a in AttributeResults)
-					Logger.Instance.WriteLine(a);
+					Log.Instance.WriteLine(a);
 
 				_treasureImageUrl = url;
 				var success = GetMatchCount() >= 1;
@@ -245,7 +245,7 @@ namespace Hunt.Mobile.Common
 			int matches = 0;
 			foreach(var att in Treasure.Attributes)
 			{
-				Logger.Instance.WriteLine(att.Name);
+				Log.Instance.WriteLine(att.Name);
 				var found = AttributeResults.Any(a => att.Name.Equals(a, StringComparison.OrdinalIgnoreCase));
 				if(found)
 					matches++;

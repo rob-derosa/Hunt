@@ -66,7 +66,7 @@ namespace Hunt.Mobile.Common
 			catch(Exception ex)
 			{
 				Hud.Instance.ShowToast(ex.Message, NoticationType.Error);
-				Logger.Instance.WriteLine(ex);
+				Log.Instance.LogException(ex);
 			}
 		}
 

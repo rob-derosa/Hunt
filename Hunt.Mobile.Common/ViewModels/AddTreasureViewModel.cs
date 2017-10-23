@@ -82,7 +82,7 @@ namespace Hunt.Mobile.Common
 				
 				var availableAttributes = task.Result;
 				foreach(var a in availableAttributes)
-					Logger.Instance.WriteLine(a);
+					Log.Instance.WriteLine(a);
 
 				_treasureImageUrl = url;
 				AvailableAttributes = availableAttributes;

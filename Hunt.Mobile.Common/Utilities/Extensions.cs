@@ -22,7 +22,7 @@ namespace Hunt.Mobile.Common
 
 		public static void Notify(this Exception e)
 		{
-			Logger.Instance.WriteLine(e.Message);
+			Log.Instance.LogException(e);
 			Hud.Instance.ShowToast(e.Message, NoticationType.Error);
 		}
 
@@ -77,7 +77,7 @@ namespace Hunt.Mobile.Common
 			if(size != null)
 				url = $"{url}?s={size}";
 
-			Logger.Instance.WriteLine(url);
+			Log.Instance.WriteLine(url);
 			return url;
 		}
 

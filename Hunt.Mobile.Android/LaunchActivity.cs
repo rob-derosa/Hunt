@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using Hunt.Mobile.Common;
 
 namespace Hunt.Mobile.Android
 {
@@ -21,7 +22,7 @@ namespace Hunt.Mobile.Android
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine(e);
+				Log.Instance.LogException(e);
 			}
 		}
 

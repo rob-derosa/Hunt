@@ -33,6 +33,10 @@ namespace Hunt.Mobile.Android
 		public override void OnTokenRefresh()
 		{
 			base.OnTokenRefresh();
+
+			if(FirebaseInstanceId.Instance == null)
+				return;
+			
 			var refreshedToken = FirebaseInstanceId.Instance.Token;
 			Push.Instance.DeviceToken = refreshedToken;
 			Console.Write($"Token: {refreshedToken}");

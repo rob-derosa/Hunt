@@ -105,7 +105,7 @@ namespace Hunt.Mobile.Common
 			}
 			catch(Exception ex)
 			{
-				Logger.Instance.WriteLine($"Error drawing SvgImage w/ ImagePath {Source}: {ex}");
+				Log.Instance.WriteLine($"Error drawing SvgImage w/ ImagePath {Source}: {ex}");
 			}
 		}
 	}

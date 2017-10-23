@@ -144,7 +144,7 @@ namespace Hunt.Mobile.Common
 			if(!task.WasSuccessful() || task.Result == null)
 				return null;
 
-			Logger.Instance.WriteLine($"Registration ID: {task.Result}");
+			Log.Instance.WriteLine($"Registration ID: {task.Result}");
 			return task.Result;
 		}
 

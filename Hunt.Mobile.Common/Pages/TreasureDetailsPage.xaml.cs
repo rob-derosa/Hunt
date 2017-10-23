@@ -71,34 +71,8 @@ namespace Hunt.Mobile.Common
 				var success = await ViewModel.AnalyzePhotoForAcquisition();
 				if(success)
 				{
-					await PlayAnimation();
 					ViewModel.OnTreasureAcquired?.Invoke(ViewModel.Game);
 				}
-				//else
-				//{
-				//	var matchCount = ViewModel.GetMatchCount();
-				//	if(matchCount > 0)
-				//	{
-				//		var points = ViewModel.GetMatchCount() * Keys.Constants.PointsPerAttribute;
-				//		var totalPoints = ViewModel.Treasure.Attributes.Count * Keys.Constants.PointsPerAttribute;
-				//		var title = $"You got {matchCount} out of {ViewModel.Treasure.Attributes.Count} matching tags";
-				//		var msg = $"Would you like to take the {points}pts or retry for all {totalPoints}pts?";
-
-				//		var response = await DisplayAlert(title, msg, "Take the Points", "Retry");
-
-				//		if(!response)
-				//		{
-				//			ViewModel.Reset();
-				//			return;
-				//		}
-
-				//		success = await ViewModel.AquireTreasureAndSaveGame();
-				//		if(success)
-				//		{
-				//			await PlayAnimation();
-				//			ViewModel.OnTreasureAcquired?.Invoke(ViewModel.Game);
-				//		}
-				//	}
 				else
 				{
 					ViewModel.Reset();
@@ -145,7 +119,7 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		async Task PlayAnimation()
+		public async Task PlayAnimation()
 		{
 			var animation = new AnimationView
 			{
