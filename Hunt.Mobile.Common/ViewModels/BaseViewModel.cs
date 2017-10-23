@@ -89,7 +89,7 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		public virtual void OnNotificationReceived(PushNotificationReceivedEventArgs args)
+		public virtual void OnNotificationReceived(NotificationEventArgs args)
 		{
 			Logger.Instance.WriteLine($"Notification received on {GetType().Name}");
 		}

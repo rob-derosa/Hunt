@@ -20,8 +20,5 @@ namespace Hunt.Common
 
 		[JsonProperty("alias")]
 		public string Alias { get; set; }
-
-		[JsonProperty("deviceToken")]
-		public string DeviceToken { get; set; }
 	}
 }

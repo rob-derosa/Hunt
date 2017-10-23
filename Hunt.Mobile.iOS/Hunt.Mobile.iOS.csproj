@@ -293,6 +293,7 @@
     <Compile Include="Providers\Logger.cs" />
     <Compile Include="Providers\ViewCellRenderer.cs" />
     <Compile Include="Providers\DeviceController.cs" />
+    <Compile Include="Providers\PushProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hunt.Mobile.Common\Hunt.Mobile.Common.csproj">

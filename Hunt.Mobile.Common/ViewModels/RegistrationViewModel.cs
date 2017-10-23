@@ -1,28 +1,27 @@
 using System;
 using System.Threading.Tasks;
 using Hunt.Common;
-using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
 
 namespace Hunt.Mobile.Common
 {
 	public class RegistrationViewModel : BaseViewModel
 	{
-		string _email;// = $"{Device.RuntimePlatform.ToLower()}@microsoft.com";
+		string _email;
 		public string Email
 		{
 			get { return _email; }
 			set { SetPropertyChanged(ref _email, value); SetPropertyChanged(nameof(CanContinue)); }
 		}
 
-		string _alias;// = $"{Device.RuntimePlatform} Player";
+		string _alias;
 		public string Alias
 		{
 			get { return _alias; }
 			set { SetPropertyChanged(ref _alias, value); SetPropertyChanged(nameof(CanContinue)); }
 		}
 
-		string _avatar;// = "https://s.gravatar.com/avatar/fc29d876d1ae49003cbc76a43f456d9b?s=200";
+		string _avatar;
 		public string Avatar
 		{
 			get { return _avatar; }
@@ -73,7 +72,6 @@ namespace Hunt.Mobile.Common
 				Avatar = Avatar,
 				Email = email.Trim(),
 				Alias = Alias.Trim(),
-				DeviceToken = App.Instance.DeviceToken,
 			};
 
 			var args = new KVP { { "email", player.Email }, { "firstName", player.Alias }, { "avatar", player.Avatar } };

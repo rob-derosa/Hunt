@@ -264,7 +264,7 @@ namespace Hunt.Mobile.Common
 				else
 				{
 					savedGame = await SaveGameSafe(action, GameUpdateAction.LeaveTeam,
-						new Dictionary<string, string> { { "playerAlias", App.Instance.Player.Alias }, { "teamId", teamId } });
+						new KVP { { "playerAlias", App.Instance.Player.Alias }, { "teamId", teamId } });
 				}
 
 				if(savedGame == null)

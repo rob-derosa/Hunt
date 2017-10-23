@@ -154,7 +154,7 @@ namespace Hunt.Mobile.Common
 			OnResume();
 		}
 
-		void OnAppNotificationReceived(object sender, PushNotificationReceivedEventArgs args)
+		void OnAppNotificationReceived(object sender, NotificationEventArgs args)
 		{
 			if(!string.IsNullOrWhiteSpace(args.Title) || !string.IsNullOrWhiteSpace(args.Message))
 			{
@@ -179,7 +179,7 @@ namespace Hunt.Mobile.Common
 			ViewModel?.OnResume();
 		}
 
-		protected virtual void OnNotificationReceived(PushNotificationReceivedEventArgs args)
+		protected virtual void OnNotificationReceived(NotificationEventArgs args)
 		{
 			ViewModel?.OnNotificationReceived(args);
 		}

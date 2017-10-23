@@ -25,14 +25,13 @@ namespace Hunt.Mobile.Common
 
 		public event EventHandler AppResumed;
 		public event EventHandler AppBackgrounded;
-		public event EventHandler<PushNotificationReceivedEventArgs> AppNotificationReceived;
+		public event EventHandler<NotificationEventArgs> AppNotificationReceived;
 
 		public Size ScreenSize { get; set; } = new Size(380, 540);
 
 		static App _instance;
 		public static App Instance => _instance;
 
-		public string DeviceToken { get; set; }
 		public Player Player { get; set; }
 		public Game CurrentGame { get; set; }
 
@@ -51,8 +50,10 @@ namespace Hunt.Mobile.Common
 		{
 			_instance = this;
 
-			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
+			Push.Instance = DependencyService.Get<IPushProvider>();
+			DeviceController.Instance = DependencyService.Get<IDeviceController>();
 
+			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
 			{
 				//Instance.CurrentGame = Mocker.GetGame(5, 4, true, true, true, true, true);
@@ -75,7 +76,7 @@ namespace Hunt.Mobile.Common
 
 			}
 
-			DeviceController.Instance = DependencyService.Get<IDeviceController>();
+			Push.Instance.OnNotificationReceived += OnNotificationReceived;
 			InitializeComponent();
 		}
 
@@ -84,17 +85,12 @@ namespace Hunt.Mobile.Common
 		protected override void OnStart()
 		{
 			MobileCenter.Start($"android={Keys.MobileCenter.AndroidToken};ios={Keys.MobileCenter.iOSToken}",
-				   typeof(Analytics), typeof(Crashes), typeof(Push));
+				typeof(Analytics), typeof(Crashes));
 
-			Push.PushNotificationReceived += OnIncomingPayloadReceived;
 			CrossConnectivity.Current.ConnectivityChanged += OnConnectivityChanged;
 			if(false) { var l = new AnimationView(); }//Warm up the library
 
 			base.OnStart();
-
-			//Load up the registered player, if one exists
-			var installId = MobileCenter.GetInstallIdAsync().Result;
-			Logger.Instance.WriteLine($"Install ID: {installId}");
 
 			LoadRegisteredPlayer();
 			SetMainPage();
@@ -116,10 +112,14 @@ namespace Hunt.Mobile.Common
 			AppBackgrounded?.Invoke(this, new EventArgs());
 		}
 
-		//IHudProvider _connectionHud = DependencyService.Get<IHudProvider>();
 		void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
 		{
 			EvaluateConnectivity();
+		}
+
+		void OnNotificationReceived(object sender, NotificationEventArgs e)
+		{
+			AppNotificationReceived?.Invoke(this, e);
 		}
 
 		public void EvaluateConnectivity()
@@ -127,26 +127,6 @@ namespace Hunt.Mobile.Common
 			if(!CrossConnectivity.Current.IsConnected)
 			{
 				Hud.Instance.ShowToast(Keys.Constants.NoConnectionMessage);
-			}
-		}
-
-		void OnIncomingPayloadReceived(object sender, PushNotificationReceivedEventArgs e)
-		{
-			try
-			{
-				Logger.Instance.WriteLine("\n\nIncoming push notification received");
-				Logger.Instance.WriteLine($"Title: {e.Title}");
-				Logger.Instance.WriteLine($"Message: {e.Message}");
-
-				if(e.CustomData != null)
-					foreach(var p in e.CustomData)
-						Logger.Instance.WriteLine($"{p.Key} : {p.Value}");
-
-				AppNotificationReceived?.Invoke(this, e);
-			}
-			catch(Exception ex)
-			{
-				Logger.Instance.WriteLine(ex);
 			}
 		}
 
@@ -180,9 +160,6 @@ namespace Hunt.Mobile.Common
 
 				if(player == null)
 					return;
-
-				if(DeviceToken != null && player.DeviceToken != DeviceToken)
-					player.DeviceToken = DeviceToken;
 	
 				Player = player;
 			}

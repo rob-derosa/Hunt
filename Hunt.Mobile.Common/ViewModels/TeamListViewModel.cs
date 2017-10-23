@@ -72,7 +72,7 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		async public override void OnNotificationReceived(PushNotificationReceivedEventArgs args)
+		async public override void OnNotificationReceived(NotificationEventArgs args)
 		{
 			base.OnNotificationReceived(args);
 			Game = await RefreshGame(Game);

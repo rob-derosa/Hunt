@@ -108,10 +108,9 @@ namespace Hunt.Mobile.Common
 						var current = App.Instance.Player;
 						var player = game.GetPlayerByEmail();
 
-						if(current.Alias != player.Alias || current.DeviceToken != player.DeviceToken)
+						if(current.Alias != player.Alias)
 						{
 							player.Alias = current.Alias;
-							player.DeviceToken = current.DeviceToken;
 							game = await App.Instance.DataService.SaveGame(game, GameUpdateAction.UpdatePlayer).ConfigureAwait(false);
 						}
 
@@ -132,6 +131,21 @@ namespace Hunt.Mobile.Common
 			{
 				IsRefreshingGame = false;
 			}
+		}
+
+		public async Task<string> RegisterDevice(string playerId)
+		{
+			if(Push.Instance.DeviceToken == null)
+				return null;
+			
+			var task = new Task<string>(() => App.Instance.DataService.RegisterDevice(Push.Instance.DeviceToken, playerId).Result);
+			await task.RunProtected();
+
+			if(!task.WasSuccessful() || task.Result == null)
+				return null;
+
+			Logger.Instance.WriteLine($"Registration ID: {task.Result}");
+			return task.Result;
 		}
 
 		public override void NotifyPropertiesChanged()

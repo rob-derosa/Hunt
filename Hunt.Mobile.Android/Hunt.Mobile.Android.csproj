@@ -59,6 +59,16 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>Custom</type>
+          <name>Smoke Test in Mobile Center</name>
+          <command>../Resources/Scripts/test_android_smoke.sh</command>
+          <workingdir>${SolutionDir}</workingdir>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -311,7 +321,7 @@
     <Compile Include="MainApplication.cs" />
     <Compile Include="Providers\Logger.cs" />
     <Compile Include="Providers\DeviceController.cs" />
-    <Compile Include="FirebaseInstanceIdService.cs" />
+    <Compile Include="Providers\PushNotification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

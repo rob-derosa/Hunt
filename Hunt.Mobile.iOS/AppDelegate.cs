@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Foundation;
@@ -5,6 +7,7 @@ using Hunt.Common;
 using Hunt.Mobile.Common;
 using ImageCircle.Forms.Plugin.iOS;
 using Lottie.Forms.iOS.Renderers;
+using Newtonsoft.Json;
 using Refractored.XamForms.PullToRefresh.iOS;
 using UIKit;
 using Xamarin.Forms;
@@ -42,16 +45,57 @@ namespace Hunt.Mobile.iOS
 			App.Instance.ScreenSize = new Size(w, h);
 
 			UIApplication.SharedApplication.StatusBarStyle = UIStatusBarStyle.LightContent;
+
+			var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, new NSSet());
+			UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
+			UIApplication.SharedApplication.RegisterForRemoteNotifications(); 			UIApplication.SharedApplication.RegisterForRemoteNotifications();
+
 			return base.FinishedLaunching(uiApplication, launchOptions);
 		}
 
-		#region Lifecycle
+		#region Push Notifications
 
 		public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
 		{
-			System.Console.WriteLine(deviceToken);
-			App.Instance.DeviceToken = deviceToken.ToString();
+			Push.Instance.DeviceToken = deviceToken.ToString();
 		}
+
+		public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, System.Action<UIBackgroundFetchResult> completionHandler)
+		{
+			Console.WriteLine(userInfo);
+
+			if(!userInfo.TryGetValue(new NSString("aps"), out NSObject aps))
+				return;
+
+			var apsHash = aps as NSDictionary;
+			var alertHash = apsHash.ObjectForKey(new NSString("alert")) as NSDictionary;
+
+			var badgeValue = alertHash.ObjectForKey(new NSString("badge"));
+			if(badgeValue != null)
+			{
+				if(int.TryParse(new NSString(badgeValue.ToString()), out int count))
+				{
+					UIApplication.SharedApplication.ApplicationIconBadgeNumber = count;
+				}
+			}
+
+			var notification = new NotificationEventArgs();
+
+			if(alertHash.TryGetValue(new NSString("payload"), out NSObject payloadValue))
+				notification.Payload = JsonConvert.DeserializeObject<Dictionary<string, string>>(payloadValue.ToString());
+
+			if(alertHash.TryGetValue(new NSString("title"), out NSObject titleValue))
+				notification.Title = titleValue.ToString();
+			
+			if(alertHash.TryGetValue(new NSString("body"), out NSObject messageValue))
+				notification.Message = messageValue.ToString();
+
+			((PushProvider)Push.Instance).NotifyReceived(notification);
+		}
+
+		#endregion
+
+		#region Lifecycle
 
 		public override void OnResignActivation(UIApplication uiApplication)
 		{

@@ -33,7 +33,7 @@ namespace Hunt.Mobile.Common
 
 		#region Event Handlers
 
-		protected override void OnNotificationReceived(PushNotificationReceivedEventArgs args)
+		protected override void OnNotificationReceived(NotificationEventArgs args)
 		{
 			base.OnNotificationReceived(args);
 		}

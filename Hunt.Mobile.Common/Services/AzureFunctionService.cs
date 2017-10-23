@@ -21,8 +21,6 @@ namespace Hunt.Mobile.Common
 		public static string GetStorageToken = nameof(GetStorageToken);
 		public static string AnalyseText = nameof(AnalyseText);
 		public static string AnalyseImage = nameof(AnalyseImage);
-		public static string PostMessageToQueue = nameof(PostMessageToQueue);
-
 		public static string SaveGame = nameof(SaveGame);
 		public static string GetGame = nameof(GetGame);
 		public static string DeleteGame = nameof(DeleteGame);
@@ -102,6 +100,7 @@ namespace Hunt.Mobile.Common
 
 				var jsonOut = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
 				Debug.WriteLine($"POST OUTPUT:\n{jsonOut}");
+				var errorMessage = resp.ReasonPhrase;
 
 				if(resp.StatusCode == HttpStatusCode.Conflict)
 				{
@@ -110,13 +109,19 @@ namespace Hunt.Mobile.Common
 					throw new DocumentVersionConclictException(msg, body as BaseDocument);
 				}
 
+				if(resp.StatusCode == HttpStatusCode.BadRequest)
+				{
+					var jobject = JObject.Parse(jsonOut);
+					errorMessage = jobject["Message"].ToString();
+				}
+
 				if(resp.StatusCode == HttpStatusCode.OK)
 				{
 					var returnValue = JsonConvert.DeserializeObject<T>(jsonOut);
 					return returnValue;
 				}
 
-				throw new WebException(resp.ReasonPhrase);
+				throw new HttpRequestException(errorMessage);
 			}
 			catch(Exception e)
 			{
@@ -147,14 +152,11 @@ namespace Hunt.Mobile.Common
 		async public Task<Game> SaveGame(Game game, string action, IDictionary<string, string> args = null)
 		{
 			if(args == null)
-				args = new Dictionary<string, string>();
+				args = new KVP();
 
 			if(!args.ContainsKey("playerId"))
 				args.Add("playerId", App.Instance.Player.Id);
 	
-			if(!args.ContainsKey("playerDeviceToken"))
-				args.Add("playerDeviceToken", App.Instance.Player.DeviceToken);
-
 			dynamic payload = new JObject();
 			payload.action = action;
 			payload.arguments = JObject.FromObject(args);
@@ -165,18 +167,26 @@ namespace Hunt.Mobile.Common
 			return result;
 		}
 
+		async public Task<string> RegisterDevice(string deviceToken, string playerId)
+		{
+			var registration = new DeviceRegistration
+			{
+				Handle = deviceToken,
+				Platform = Xamarin.Forms.Device.RuntimePlatform,
+				Tags = new[] { playerId }
+			};
+
+			var url = nameof(FunctionNames.RegisterDevice).ToUrl();
+			var result = await SendPostRequest<string>(url, registration);
+			return result;
+		}
+
 		async public Task<Game> GetGameByEntryCode(string entryCode)
 		{
 			var result = await SendGetRequest<Game>(FunctionNames.GetGameByEntryCode,
 				new Dictionary<string, object> { { "email", App.Instance.Player.Email },
 				{ "entryCode", entryCode } }).ConfigureAwait(false);
 
-			return result;
-		}
-
-		async public Task<byte[]> PostMessageToQueue(byte[] image)
-		{
-			var result = await SendPostRequest<byte[]>(FunctionNames.PostMessageToQueue.ToUrl(), image);
 			return result;
 		}
 

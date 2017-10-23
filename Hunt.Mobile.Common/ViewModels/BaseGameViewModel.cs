@@ -42,7 +42,7 @@ namespace Hunt.Mobile.Common
 			InvokeRefreshedGame();
 		}
 
-		async public override void OnNotificationReceived(Microsoft.Azure.Mobile.Push.PushNotificationReceivedEventArgs args)
+		async public override void OnNotificationReceived(NotificationEventArgs args)
 		{
 			base.OnNotificationReceived(args);
 

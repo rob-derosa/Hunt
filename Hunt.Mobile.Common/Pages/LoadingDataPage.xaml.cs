@@ -63,6 +63,8 @@ namespace Hunt.Mobile.Common
 			if(App.Instance.CurrentGame == null)
 			{
 				StartAnimation();
+
+				await ViewModel.RegisterDevice(App.Instance.Player.Id);
 				success = await ViewModel.GetOngoingGame();
 			}
 			else

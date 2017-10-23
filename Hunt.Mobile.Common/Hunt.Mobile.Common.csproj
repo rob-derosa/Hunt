@@ -112,6 +112,7 @@
     <Compile Include="Pages\FullSizeImagePage.xaml.cs">
       <DependentUpon>FullSizeImagePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Abstractions\IPushProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
