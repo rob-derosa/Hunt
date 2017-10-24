@@ -7,3 +7,4 @@
 /.vs
 *.userprefs
 *.user
+*.lock.json
