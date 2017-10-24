@@ -17,6 +17,12 @@ namespace Hunt.Mobile.Android
 {
 	public class PushProvider : IPushProvider
 	{
+		public PushProvider()
+		{
+			if(MyFirebaseInstanceIdService._loggedToken != null)
+				DeviceToken = MyFirebaseInstanceIdService._loggedToken;
+		}
+
 		public string DeviceToken { get; set; }
 		public event EventHandler<Common.NotificationEventArgs> OnNotificationReceived;
 
@@ -30,15 +36,21 @@ namespace Hunt.Mobile.Android
 	[IntentFilter(new[] { "com.google.firebase.INSTANCE_ID_EVENT" })]
 	public class MyFirebaseInstanceIdService : FirebaseInstanceIdService
 	{
+		internal static string _loggedToken;
 		public override void OnTokenRefresh()
 		{
 			base.OnTokenRefresh();
 
 			if(FirebaseInstanceId.Instance == null)
 				return;
-			
+
 			var refreshedToken = FirebaseInstanceId.Instance.Token;
-			Push.Instance.DeviceToken = refreshedToken;
+
+			if(Forms.IsInitialized)
+				Push.Instance.DeviceToken = refreshedToken;
+			else
+				_loggedToken = refreshedToken;
+
 			Console.Write($"Token: {refreshedToken}");
 		}
 	}
