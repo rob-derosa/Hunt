@@ -72,7 +72,12 @@ namespace Hunt.Mobile.Common
 				Avatar = Avatar,
 				Email = email.Trim(),
 				Alias = Alias.Trim(),
+				AppMode = AppMode.Production
 			};
+
+#if DEBUG
+			player.AppMode = AppMode.Dev;
+#endif
 
 			var args = new KVP { { "email", player.Email }, { "firstName", player.Alias }, { "avatar", player.Avatar } };
 			Analytics.TrackEvent("Player registered", args);

@@ -7,6 +7,14 @@ namespace Hunt.Common
 {
 	public static class Extensions
 	{
+		public static string TrimTo(this string s, int maxChars)
+		{
+			if(s.Length <= maxChars)
+				return s;
+
+			return s.Substring(0, maxChars - 3) + "...";
+		}
+
 		public static T Get<T>(this IList<T> list, string id) where T : BaseModel
 		{
 			return list.SingleOrDefault(t => t.Id == id);
