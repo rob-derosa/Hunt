@@ -37,7 +37,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * Players are responsible for
       * joining games via a 6-char entry code or scanning the QR code
       * choosing a team
-      * acquriing treasure once the game has started
+      * acquring treasure once the game has started
 * Treasure
   * A treasure consists of a hint and a tagged photograph supplied by the Coordinator.
   * There must be at least 2 treasures added to the game before it can be started.
