@@ -55,6 +55,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Almost all UI code is shared, include the custom HUD and Toast elements.
 * The Forms navigation stack is utlizied, however, every page has `SetHasNavigationBar` set to `false`. A custom `NavigationToolbar` is used instead to better control the UI.
 * Content for each page is declared in XAML under the `BaseContentPage.RootContent` node instead of the typical `BaseContentPage.Content` so HUD and Toast can appear at a greater Z-index.
+* Supports iOS, Android, Phone, Tablet, Landscape, Portrait
 
 ### Back-end Patterns
 * Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers a game refresh.
