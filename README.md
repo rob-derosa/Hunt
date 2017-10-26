@@ -41,7 +41,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Treasure
   * A treasure consists of a hint and a tagged photograph supplied by the Coordinator.
   * There must be at least 2 treasures added to the game before it can be started.
-  * Photos taken by the Coordinator are analyzed by Vision API and a set of associated tags is presented, of which up to 2 can be selected.
+  * Photos taken by the Coordinator are analyzed by [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) and a set of associated tags is presented, of which up to 2 can be selected.
   * If teams solve the hint and take a photo of a similar object with any matching tags, the treasure is acquired.
   * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
     
@@ -65,8 +65,8 @@ The first team to acquire all the treasures will win the game. If no team acquir
 
 ### Technologies Utilized
 * #### Front-end
-  * Xamarin Forms
-  * Mobile Center
+  * [Xamarin Forms](http://xamarin.com/forms)
+  * [Mobile Center](http://mobile.azure.com)
     * Build
     * Test
     * Analytics
@@ -84,18 +84,18 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * XFGloss (styled switches and sliders, background gradient)
     
 * #### Back-end
-  * Functions (C#)
-  * Cosmos: Document DB
-  * Blob Storage
-  * Application Insights
-  * Push notifications: Mobile Center Push REST API
+  * [Functions (C#)](https://azure.microsoft.com/en-us/services/functions)
+  * [Cosmos: Document DB](https://azure.microsoft.com/en-us/services/cosmos-db/)
+  * [Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
+  * [Application Insights](https://azure.microsoft.com/en-us/services/application-insights/)
+  * [Notification Hubs](https://azure.microsoft.com/en-us/services/notification-hubs/)
   * Cognitive Services
-    * Vision API
-    * Content Moderator API
-  * Service Bus (timed brokered message to end games)
+    * [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
+    * [Content Moderator API](https://azure.microsoft.com/en-us/services/cognitive-services/content-moderator/)
+  * [Service Bus (timed brokered message to end games)](https://azure.microsoft.com/en-us/services/service-bus/)
   * Unit tested on commit
-  * Deployment via ARM Templates
-  * Azure CDN
+  * [Deployment via ARM Templates](https://azure.microsoft.com/en-us/resources/templates/)
+  * [Azure CDN](https://azure.microsoft.com/en-us/services/cdn/)
   
 * #### Planning and Build
   * VSTS Work item tracking
