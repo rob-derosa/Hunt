@@ -1,17 +1,23 @@
 #region Usings
 
 using System;
-using Hunt.Common;
-using Lottie.Forms;
+
 using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
 using Microsoft.Azure.Mobile.Crashes;
 using Microsoft.Azure.Mobile.Push;
+using Microsoft.Identity.Client;
 using Newtonsoft.Json;
+
+using Lottie.Forms;
+
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
+using Hunt.Common;
 
 #endregion
 
@@ -21,9 +27,31 @@ namespace Hunt.Mobile.Common
 {
 	public partial class App : Application
 	{
-		#region Properties
+        #region Active Directory 
 
-		public event EventHandler AppResumed;
+        public static string TenantId = "viime.onmicrosoft.com";
+        public static string MediaServicesClientId = "42d59532-f239-4669-9c22-fa8243277139";
+
+        // Azure AD B2C Coordinates
+        public static string PolicySignUpSignIn = "B2C_1_viime-signup-signon-policy";
+        public static string PolicyEditProfile = "B2C_1_viime-signup-signon-policy";
+        public static string PolicyResetPassword = "B2C_1_viime-password-reset-policy";
+        public static string[] Scopes = { "https://viime.onmicrosoft.com/api" };
+
+        public static string AuthorityBase = $"https://login.microsoftonline.com/tfp/{TenantId}/";
+        public static string Authority = $"{AuthorityBase}{PolicySignUpSignIn}";
+        public static string AuthorityEditProfile = $"{AuthorityBase}{PolicyEditProfile}";
+        public static string AuthorityPasswordReset = $"{AuthorityBase}{PolicyResetPassword}";
+
+        public static UIParent UiParent = null;
+
+        public static PublicClientApplication PCA = null;
+
+        #endregion
+
+        #region Properties
+
+        public event EventHandler AppResumed;
 		public event EventHandler AppBackgrounded;
 		public event EventHandler<NotificationEventArgs> AppNotificationReceived;
 
@@ -74,6 +102,10 @@ namespace Hunt.Mobile.Common
 
 			Push.Instance.OnNotificationReceived += OnNotificationReceived;
 			InitializeComponent();
+
+            // default redirectURI; each platform specific project will have to override it with its own
+            PCA = new PublicClientApplication(MediaServicesClientId, Authority);
+            PCA.RedirectUri = $"msal{MediaServicesClientId}://auth";
 		}
 
 		#region Lifecycle

@@ -7,6 +7,7 @@
     "Microsoft.Azure.Mobile.Crashes": "0.16.0",
     "Microsoft.Azure.Mobile.Distribute": "0.16.0",
     "Microsoft.Azure.Mobile.Push": "0.16.0",
+    "Microsoft.Identity.Client": "1.1.0-preview",
     "Newtonsoft.Json": "10.0.3",
     "PCLCrypto": "2.0.147",
     "Plugin.MediaManager": "0.4.5",

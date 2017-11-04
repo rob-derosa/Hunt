@@ -726,13 +726,7 @@ namespace Hunt.Mobile.Android
 			global::Lottie.Forms.Droid.Resource.Drawable.abc_textfield_search_material = global::Hunt.Mobile.Android.Resource.Drawable.abc_textfield_search_material;
 			global::Lottie.Forms.Droid.Resource.Drawable.abc_vector_test = global::Hunt.Mobile.Android.Resource.Drawable.abc_vector_test;
 			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password = global::Hunt.Mobile.Android.Resource.Drawable.avd_hide_password;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password_1 = global::Hunt.Mobile.Android.Resource.Drawable.avd_hide_password_1;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password_2 = global::Hunt.Mobile.Android.Resource.Drawable.avd_hide_password_2;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password_3 = global::Hunt.Mobile.Android.Resource.Drawable.avd_hide_password_3;
 			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password = global::Hunt.Mobile.Android.Resource.Drawable.avd_show_password;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password_1 = global::Hunt.Mobile.Android.Resource.Drawable.avd_show_password_1;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password_2 = global::Hunt.Mobile.Android.Resource.Drawable.avd_show_password_2;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password_3 = global::Hunt.Mobile.Android.Resource.Drawable.avd_show_password_3;
 			global::Lottie.Forms.Droid.Resource.Drawable.design_bottom_navigation_item_background = global::Hunt.Mobile.Android.Resource.Drawable.design_bottom_navigation_item_background;
 			global::Lottie.Forms.Droid.Resource.Drawable.design_fab_background = global::Hunt.Mobile.Android.Resource.Drawable.design_fab_background;
 			global::Lottie.Forms.Droid.Resource.Drawable.design_ic_visibility = global::Hunt.Mobile.Android.Resource.Drawable.design_ic_visibility;
@@ -6020,26 +6014,8 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
-			// aapt resource value: 0x7f02011a
-			public const int avd_hide_password_1 = 2130837786;
-			
-			// aapt resource value: 0x7f02011b
-			public const int avd_hide_password_2 = 2130837787;
-			
-			// aapt resource value: 0x7f02011c
-			public const int avd_hide_password_3 = 2130837788;
-			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
-			
-			// aapt resource value: 0x7f02011d
-			public const int avd_show_password_1 = 2130837789;
-			
-			// aapt resource value: 0x7f02011e
-			public const int avd_show_password_2 = 2130837790;
-			
-			// aapt resource value: 0x7f02011f
-			public const int avd_show_password_3 = 2130837791;
 			
 			// aapt resource value: 0x7f020056
 			public const int background = 2130837590;
