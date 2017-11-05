@@ -59,21 +59,37 @@ namespace Hunt.Mobile.Common
             {
                 using (var b = new Busy(ViewModel, "One moment, please"))
                 {
-                    var success = await ViewModel.RegisterPlayer();
+                    var authResult = await App.PCA.AcquireTokenAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
 
-                    if (!success)
-                        return;
+                    // we have successfully logged in
+                    if (authResult != null)
+                    {
+                        var success = await ViewModel.RegisterPlayer();
 
-                    _loadingPage = new LoadingDataPage();
+                        if (!success)
+                            return;
 
-                    await Navigation.PushAsync(_loadingPage);
-                    ViewModel.Reset();
+                        _loadingPage = new LoadingDataPage();
+
+                        await Navigation.PushAsync(_loadingPage);
+                        ViewModel.Reset();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Hud.Instance.ShowToast(ex.Message, NoticationType.Error);
                 Log.Instance.LogException(ex);
+
+                // Checking the exception message 
+                // should ONLY be done for B2C
+                // reset and not any other error.
+                if (ex.Message.Contains("AADB2C90118"))
+                    OnPasswordReset();
+
+                // Alert if any exception excludig user cancelling sign-in dialog - IF REQUIRED
+                //else if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
+                    //await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
 
@@ -83,26 +99,6 @@ namespace Hunt.Mobile.Common
         }
 
         #region Active Directory
-
-        async void OnSignInSignOut(object sender, EventArgs e)
-        {
-            try
-            {
-                var ar = await App.PCA.AcquireTokenAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
-            }
-            catch (Exception ex)
-            {
-                // Checking the exception message 
-                // should ONLY be done for B2C
-                // reset and not any other error.
-                if (ex.Message.Contains("AADB2C90118"))
-                    OnPasswordReset();
-                
-                // Alert if any exception excludig user cancelling sign-in dialog
-                else if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
-                    await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
-            }
-        }
 
         private IUser GetUserByPolicy(IEnumerable<IUser> users, string policy)
         {

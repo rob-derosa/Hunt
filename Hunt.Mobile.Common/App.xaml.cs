@@ -29,14 +29,16 @@ namespace Hunt.Mobile.Common
 	{
         #region Active Directory 
 
-        public static string TenantId = "viime.onmicrosoft.com";
-        public static string MediaServicesClientId = "42d59532-f239-4669-9c22-fa8243277139";
+        public static string TenantId = "huntapp.onmicrosoft.com";
+
+        public static string MediaServicesClientId = "245e1ae8-8220-4189-a5a3-98c870ca1a3e";
 
         // Azure AD B2C Coordinates
-        public static string PolicySignUpSignIn = "B2C_1_viime-signup-signon-policy";
-        public static string PolicyEditProfile = "B2C_1_viime-signup-signon-policy";
-        public static string PolicyResetPassword = "B2C_1_viime-password-reset-policy";
-        public static string[] Scopes = { "https://viime.onmicrosoft.com/api" };
+        public static string PolicySignUpSignIn = "B2C_1_hunt_sign_up";
+        public static string PolicyEditProfile = "B2C_1_hunt_profile_edit";
+        public static string PolicyResetPassword = "B2C_1_hunt_password_reset";
+
+        public static string[] Scopes = { "https://huntapp.onmicrosoft.com/api" };
 
         public static string AuthorityBase = $"https://login.microsoftonline.com/tfp/{TenantId}/";
         public static string Authority = $"{AuthorityBase}{PolicySignUpSignIn}";

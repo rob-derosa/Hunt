@@ -2,16 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using Foundation;
-using Hunt.Common;
-using Hunt.Mobile.Common;
-using ImageCircle.Forms.Plugin.iOS;
-using Lottie.Forms.iOS.Renderers;
-using Newtonsoft.Json;
-using Refractored.XamForms.PullToRefresh.iOS;
 using UIKit;
+
+using Microsoft.Identity.Client;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+
+using Newtonsoft.Json;
+
+using ImageCircle.Forms.Plugin.iOS;
+
+using Lottie.Forms.iOS.Renderers;
+
+using Refractored.XamForms.PullToRefresh.iOS;
+
+using Hunt.Common;
+
+using Hunt.Mobile.Common;
 
 namespace Hunt.Mobile.iOS
 {
@@ -113,7 +123,7 @@ namespace Hunt.Mobile.iOS
 
 		public override void WillEnterForeground(UIApplication uiApplication)
 		{
-			App.Instance.OnHuntResume();
+			//App.Instance.OnHuntResume();
 			// Called as part of the transiton from background to active state.
 			// Here you can undo many of the changes made on entering the background.
 		}
@@ -133,6 +143,19 @@ namespace Hunt.Mobile.iOS
 		{
 			return DeviceController.OrientationMask;
 		}
+
+        /// <summary>
+        /// Opens the URL.
+        /// </summary>
+        /// <returns><c>true</c>, if URL was opened, <c>false</c> otherwise.</returns>
+        /// <param name="app">App.</param>
+        /// <param name="url">URL.</param>
+        /// <param name="options">Options.</param>
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
+            return true;
+        }
 
 		#endregion
 	}

@@ -1,10 +1,16 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Hunt.Mobile.Common;
-using ImageCircle.Forms.Plugin.Droid;
+using Android.Content;
+
+using Microsoft.Identity.Client;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+
+using ImageCircle.Forms.Plugin.Droid;
+
+using Hunt.Mobile.Common;
 
 namespace Hunt.Mobile.Android
 {
@@ -41,5 +47,17 @@ namespace Hunt.Mobile.Android
 			global::ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 #pragma warning restore CS0618 // Type or member is obsolete
 		}
+
+        /// <summary>
+        /// Ons the activity result.
+        /// </summary>
+        /// <param name="requestCode">Request code.</param>
+        /// <param name="resultCode">Result code.</param>
+        /// <param name="data">Data.</param>
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+        }
 	}
 }

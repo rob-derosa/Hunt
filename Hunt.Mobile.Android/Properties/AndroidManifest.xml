@@ -12,5 +12,13 @@
 				<category android:name="${applicationId}" />
 			</intent-filter>
 		</receiver>
+		<activity android:name="microsoft.identity.client.BrowserTabActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="msal245e1ae8-8220-4189-a5a3-98c870ca1a3e" android:host="auth" />
+            </intent-filter>
+        </activity>
 	</application>
 </manifest>

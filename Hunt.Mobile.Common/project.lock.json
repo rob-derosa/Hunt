@@ -4196,6 +4196,7 @@
       "Microsoft.Azure.Mobile.Crashes": "0.16.0",
       "Microsoft.Azure.Mobile.Distribute": "0.16.0",
       "Microsoft.Azure.Mobile.Push": "0.16.0",
+      "Microsoft.Identity.Client": "1.1.0-preview",
       "Newtonsoft.Json": "10.0.3",
       "PCLCrypto": "2.0.147",
       "Plugin.MediaManager": "0.4.5",
@@ -4209,11 +4210,7 @@
       "Xam.Plugins.Forms.ImageCircle": "1.8.1",
       "Xam.Plugins.Settings": "3.1.1",
       "Xamarin.Forms": "2.4.0.282",
-      "ZXing.Net.Mobile.Forms": "2.2.9",
-      "Microsoft.Identity.Client": {
-        "target": "Package",
-        "version": "[1.1.0-preview, )"
-      }
+      "ZXing.Net.Mobile.Forms": "2.2.9"
     },
     "frameworks": {
       "portable45-net45+win8+wpa81": {}
