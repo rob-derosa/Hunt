@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-rm ../Hunt.Backend.Functions
-rm ../Hunt.Backend.Functions.Test
-rm ../Hunt.ARM
+rm -rf ../Hunt.Backend.Functions
+rm -rf ../Hunt.Backend.Functions.Test
+rm -rf ../Hunt.ARM
