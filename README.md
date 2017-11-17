@@ -17,6 +17,9 @@ For example, if the hint is "What has a neck, no head yet still wears a cap?" Th
 
 The first team to acquire all the treasures will win the game. If no team acquires all the treasure, the team with the most points will win when the time runs out. Alternatively, the Coordinator of the game can end the game early, in which case the team with the most points will win.
 
+### Video
+
+[https://www.youtube.com/watch?v=pXjBQD9a3AE](https://www.youtube.com/watch?v=pXjBQD9a3AE)
 
 ### Screenshots
 <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/login_page_completed.jpg" alt="Registration page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/loading.jpg" alt="Loading profile" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/dashboard.jpg" alt="Dashboard page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/add_treasure_complete.jpg" alt="Coordinator adding new treasure" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/coordinator_game_not_started.jpg" alt="Coordinator view of pre-game" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/share_game.jpg" alt="Share game invite" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/teams.jpg" alt="Teams list" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/player_game_started.jpg" alt="Player view of started game" Width="210" />
