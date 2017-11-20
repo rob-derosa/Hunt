@@ -83,6 +83,7 @@ namespace Hunt.Backend.Functions.Test
 
 			// temp, for now just testing if we receive 200 A'OKAY
 			Debug.Assert(result.StatusCode == HttpStatusCode.OK);
+            // hello
 		}
 
         [TestMethod]
