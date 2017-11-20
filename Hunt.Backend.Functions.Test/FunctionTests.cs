@@ -22,7 +22,6 @@ namespace Hunt.Backend.Functions.Test
 		private string _gameId;
         private string _email;
         private string _entryCode;
-
         private string _functionBaseUrl = "https://huntapp.azurewebsites.net/api/{0}";
 
         [TestMethod]
