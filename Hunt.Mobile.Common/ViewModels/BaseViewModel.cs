@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Hunt.Common;
-using Microsoft.Azure.Mobile;
-using Microsoft.Azure.Mobile.Push;
 
 namespace Hunt.Mobile.Common
 {
@@ -102,22 +100,6 @@ namespace Hunt.Mobile.Common
 		public virtual void OnSleep()
 		{
 			Log.Instance.WriteLine($"App slept on {GetType().Name}");
-		}
-
-		protected void SetProperty(string key, string value)
-		{
-			var prop = new CustomProperties();
-
-			if(string.IsNullOrEmpty(value))
-			{
-				prop.Clear(key);
-			}
-			else
-			{
-				prop.Set(key, value);
-			}
-
-			MobileCenter.SetCustomProperties(prop);
 		}
 
 		async public virtual Task<Game> RefreshGame(Game game)

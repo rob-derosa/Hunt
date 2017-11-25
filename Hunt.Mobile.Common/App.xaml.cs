@@ -3,10 +3,9 @@
 using System;
 using Hunt.Common;
 using Lottie.Forms;
-using Microsoft.Azure.Mobile;
-using Microsoft.Azure.Mobile.Analytics;
-using Microsoft.Azure.Mobile.Crashes;
-using Microsoft.Azure.Mobile.Push;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
@@ -52,6 +51,7 @@ namespace Hunt.Mobile.Common
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
 			{
+				#region Mock Data
 				//Instance.CurrentGame = Mocker.GetGame(5, 4, true, true, true, true, true);
 				//Instance.CurrentGame.StartDate = null;
 
@@ -69,7 +69,7 @@ namespace Hunt.Mobile.Common
 				////Are you the coordinator
 				//Player = Instance.CurrentGame.Coordinator.Clone(); //Jon
 				//Instance.CurrentGame.Coordinator = Player;
-
+				#endregion
 			}
 
 			Push.Instance.OnNotificationReceived += OnNotificationReceived;
@@ -80,7 +80,7 @@ namespace Hunt.Mobile.Common
 
 		protected override void OnStart()
 		{
-			MobileCenter.Start($"android={Keys.MobileCenter.AndroidToken};ios={Keys.MobileCenter.iOSToken}",
+			AppCenter.Start($"android={Keys.MobileCenter.AndroidToken};ios={Keys.MobileCenter.iOSToken}",
 				typeof(Analytics), typeof(Crashes));
 
 			CrossConnectivity.Current.ConnectivityChanged += OnConnectivityChanged;

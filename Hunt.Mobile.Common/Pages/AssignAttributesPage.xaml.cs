@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using Hunt.Common;
 using ImageCircle.Forms.Plugin.Abstractions;
-using Microsoft.Azure.Mobile.Push;
 using Xamarin.Forms;
 
 namespace Hunt.Mobile.Common

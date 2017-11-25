@@ -156,6 +156,7 @@ namespace Hunt.Mobile.Common
 					App.Instance.CurrentGame = null;
 				}
 			};
+
 			await Navigation.PushAsync(page);
 		}
 
