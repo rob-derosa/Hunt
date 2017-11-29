@@ -8,8 +8,8 @@ namespace Hunt.Mobile.Common
 		public static class Constants
 		{
 			public static string SourceCodeUrl = "http://github.com/rob-derosa/hunt";
-			public static string BlobBaseUrl = "https://huntappstorage.blob.core.windows.net";
-			public static string CdnBaseUrl = "https://huntapp.azureedge.net";
+			public static string BlobBaseUrl = "PUT_URL_HERE";
+			public static string CdnBaseUrl = "PUT_URL_HERE";
 
 			public static string CdnImagesBaseUrl = $"{CdnBaseUrl}/images";
 			public static string BlobAssetsBaseUrl = $"{BlobBaseUrl}/assets";
@@ -23,14 +23,14 @@ namespace Hunt.Mobile.Common
 		//Mobile Center
 		public static class MobileCenter
 		{
-			public static string iOSToken = "cc9ce6e3-a12d-427a-af56-7745ad9d0218";
-			public static string AndroidToken = "4f5a3f94-5d09-4dd0-b4ba-de5e8c83bee2";
+			public static string iOSToken = "PUT_TOKEN_HERE";
+			public static string AndroidToken = "PUT_TOKEN_HERE";
 		}
 
 		//Azure
 		public static class Azure
 		{
-			public static string FunctionsUrl = "https://huntapp.azurewebsites.net/api";
+			public static string FunctionsUrl = "PUT_URL_HERE/api";
 			//public static string AzureFunctionsUrl = "http://localhost:7071/api";
 		}
 	}

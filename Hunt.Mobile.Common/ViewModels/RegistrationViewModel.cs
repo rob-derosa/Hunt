@@ -33,7 +33,7 @@ namespace Hunt.Mobile.Common
 		async public Task<bool> RegisterPlayer()
 		{
 			if(string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Alias))
-				throw new Exception("Please specify an email and first name and then retry your submission.");
+				throw new Exception("Please specify an email and first name.");
 
 			var email = Email; //We toy with a copy because the two-way binding will cause the TextChanged event to fire
 			var split = email.Split('@');
