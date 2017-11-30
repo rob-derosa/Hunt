@@ -73,7 +73,6 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * Build
     * Test
     * Analytics
-    * Push
     * Crashes
     * Distribution
   * 3rd Party SDKs
