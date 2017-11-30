@@ -6,7 +6,7 @@ namespace Hunt.Backend.Functions
 	{
 		public static class MobileCenter
 		{
-			public static string Token = "bf3a075b9ffbe6fda680801b49ecdf4d163e74e4";
+			public static string Token = "TOKEN_HERE";
 			public static string iOSUrl = "https://api.mobile.azure.com/v0.1/apps/Hunt-App/Hunt";
 			public static string AndroidUrl = "https://api.mobile.azure.com/v0.1/apps/Hunt-App/Hunt-Android";
 		}
@@ -14,7 +14,7 @@ namespace Hunt.Backend.Functions
         //ServiceBus
         public static class ServiceBus
         {
-            public const string Url = @"Endpoint=sb://huntappbus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=kk9LBTWE3lOYtTXI/ituYOiGlS+4qDE0JAMYKzBHXPo=";
+            public const string Url = "ENDPOINT_HERE";
 
             //Queues
             public const string ImageBusName = "imageprocess";
@@ -22,7 +22,7 @@ namespace Hunt.Backend.Functions
 
             //Account
             public const string AccountName = "RootManageSharedAccessKey";
-            public const string AccountKey = "kk9LBTWE3lOYtTXI/ituYOiGlS+4qDE0JAMYKzBHXPo=";
+            public const string AccountKey = "ACCOUNT_KEY";
             public const string AccountNamespace = "huntappbus";
         }
 
@@ -49,7 +49,7 @@ namespace Hunt.Backend.Functions
         public static class ContentModerator
         {
             public static string Url = @"https://southcentralus.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessText/Screen/?language=eng&autocorrect=true&PII=true";
-            public static string Key = "0484d9eaf67a40b5ac5bb40d9f368ec5";
+            public static string Key = "KEY_HERE";
         }
 
 		public static class NotificationHub
@@ -57,13 +57,13 @@ namespace Hunt.Backend.Functions
 			public static class Sandbox
 			{
 				public static string Name = "huntappnotificationhub";
-				public static string ConnectionString = "Endpoint=sb://huntappnotificationnamespace.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=flvckIUORk8JmF9tutOLeS+dKfJSSUD+IeD/rYGJYUg=";
+				public static string ConnectionString = "ENDPOINT_HERE";
 			}
 
 			public static class Production
 			{
 				public static string Name = "huntappnotificationhubproduction";
-				public static string ConnectionString = "Endpoint=sb://huntappnotificationhubnamespaceproduction.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=95ugJ9VM9nz+Uu5vPmd7vdJucF27lx/ABeVQldlNScE=";
+				public static string ConnectionString = "ENDPOINT_HERE";
 			}
 		}
     }
