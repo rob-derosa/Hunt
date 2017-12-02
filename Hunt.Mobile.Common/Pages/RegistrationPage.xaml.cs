@@ -28,7 +28,7 @@ namespace Hunt.Mobile.Common
 				{
 					if(split[1].ToLower() == "hbo.com") //GoT character
 					{
-						var url = $"{Keys.Constants.BlobAssetsBaseUrl}/avatars/{split[0].ToLower()}.jpg";
+						var url = $"{ConfigManager.Instance.AzureStorageUrl}/avatars/{split[0].ToLower()}.jpg";
 						ViewModel.Avatar = url;
 						ViewModel.Alias = split[0].ToTitleCase();
 						return;
@@ -36,7 +36,7 @@ namespace Hunt.Mobile.Common
 				}
 
 				var valid = await App.Instance.DataService.IsGravatarValid(email);
-				ViewModel.Avatar = valid ? email.ToGravatarUrl(200) : Keys.Constants.DefaultAvatarUrl;
+				ViewModel.Avatar = valid ? email.ToGravatarUrl(200) : ConfigManager.Instance.DefaultAvatarUrl;
 			}
 		}
 
@@ -72,7 +72,7 @@ namespace Hunt.Mobile.Common
 
 		void MicrosoftClicked(object sender, EventArgs e)
 		{
-			Device.OpenUri(new Uri(Keys.Constants.SourceCodeUrl));
+			Device.OpenUri(new Uri(Constants.SourceCodeUrl));
 		}
 	}
 }

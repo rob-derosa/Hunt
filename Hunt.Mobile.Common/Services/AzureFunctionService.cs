@@ -258,7 +258,7 @@ namespace Hunt.Mobile.Common
 		public static string ToUrl(this string s, IDictionary<string, object> p = null)
 		{
 			var qs = p == null ? string.Empty : "?" + string.Join("&", p.Select((x) => x.Key + "=" + x.Value));
-			return string.Format($"{Keys.Azure.FunctionsUrl}/{s}{qs}");
+			return string.Format($"{ConfigManager.Instance.AzureFunctionsUrl}/{s}{qs}");
 		}
 	}
 

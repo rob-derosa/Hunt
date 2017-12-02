@@ -48,6 +48,8 @@ namespace Hunt.Mobile.Common
 		public App()
 		{
 			_instance = this;
+			ConfigManager.Instance.Load();
+
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
 			{
@@ -80,7 +82,7 @@ namespace Hunt.Mobile.Common
 
 		protected override void OnStart()
 		{
-			AppCenter.Start($"android={Keys.MobileCenter.AndroidToken};ios={Keys.MobileCenter.iOSToken}",
+			AppCenter.Start($"android={ConfigManager.Instance.AppCenterAndroidToken};ios={ConfigManager.Instance.AppCenteriOSToken}",
 				typeof(Analytics), typeof(Crashes));
 
 			CrossConnectivity.Current.ConnectivityChanged += OnConnectivityChanged;
@@ -122,7 +124,7 @@ namespace Hunt.Mobile.Common
 		{
 			if(!CrossConnectivity.Current.IsConnected)
 			{
-				Hud.Instance.ShowToast(Keys.Constants.NoConnectionMessage);
+				Hud.Instance.ShowToast(Constants.NoConnectionMessage);
 			}
 		}
 

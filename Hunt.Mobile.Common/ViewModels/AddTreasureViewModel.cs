@@ -108,7 +108,7 @@ namespace Hunt.Mobile.Common
 			{
 				ImageSource = _treasureImageUrl,
 				IsRequired = true,
-				Points = Keys.Constants.PointsPerAttribute / SelectedAttributes.Count,
+				Points = Constants.PointsPerAttribute / SelectedAttributes.Count,
 				Hint = Hint,
 			};
 
