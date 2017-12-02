@@ -115,7 +115,7 @@ Hunt was designed and is intended specifically for use with audiences at present
 #### Interactive Option
 To add some fun to a presentation, one option is to engage the audience in a quick game of hunt. Prior to the presentation, plant 2 or 3 well-known objects in the room somewhere inconspicuous, like a Coke bottle and a sneaker. Begin the talk by asking the audience if they want to play a game.
 
-Display http://aka.ms/hunt on a projector and invite people to downoad the app. As you give an overview of Hunt, project your phone's screen so everyone can see. Create a quick 10-15min game seeded with some players and treasures. Then share the game entry code and QR code so participants can join a team.
+Display http://aka.ms/hunt on a projector and invite people to download the app. As you give an overview of Hunt, project your phone's screen so everyone can see ([Reflector](http://www.airsquirrels.com/reflector/) is a good option here as it can broadcast multiple screens simultaneously across iOS and Android using Apple Airplay or Google Chromecast). Create a quick 10-15min game seeded with some players and treasures. Then share the game alphanumeric entry and QR code so participants can join a team.
 
 Start the game and let the teams attempt to find the objects and acquire the treasure. Consider rewarding the winning team with free Azure credit.].
 
@@ -124,11 +124,11 @@ Start the game and let the teams attempt to find the objects and acquire the tre
   * supported accounts: ned, sansa, arya, jon, joffrey, cersei, jamie, theon, yara, euron, etc
 * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
   * User can choose to be the Coordinator or a Player
-  * if coordinator is chosen, the user can add additional treasure and manully start the game
-  * if player is chosen, the user is put on House Stark and the game will be started automatically
-  * Games can be seeded with players that join teams - about half the game slots will fill with random players
-  * Games can be seeded with 3 pre-configured treasures
-  * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
+    * if coordinator is chosen, the user can add additional treasure and manully start the game
+    * if player is chosen, the user is put on House Stark and the game will be started automatically
+  * Games can be seeded with players that join teams - about half the game slots will fill with random mock players
+  * Games can be seeded with 3 pre-configured treasures (bottle, shoe, dog)
+  * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure so it only takes one more acqusition to end the game.
 
 #### Azure Deployment
 To make it easy for new developers to stand up their own personal Hunt backend, ARM templates are used so that by clicking a button and selecting a few options (like subscription, resource group and region), developers can deploy their own pre-configured instance of all services needed by Hunt to function.
