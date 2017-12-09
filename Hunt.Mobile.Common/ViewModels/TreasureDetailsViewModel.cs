@@ -64,7 +64,7 @@ namespace Hunt.Mobile.Common
 				if(AcquiredTreasure == null)
 					return "Not acquired";
 
-				return $"acquired {AcquiredTreasure.ClaimedTimeStampLocal.ToString("M/d 'at' h:mmtt ")} by {Player.Alias}";
+				return $"acquired {AcquiredTreasure.ClaimedTimeStampLocal.ToString("M/d 'at' h:mmtt ")} by {Player.Alias.TrimTo(25)}";
 			}
 		}
 

@@ -18,7 +18,7 @@ namespace Hunt.Mobile.Common
 				if(!CrossConnectivity.Current.IsConnected)
 				{
 					//No connection
-					Hud.Instance.ShowToast(Keys.Constants.NoConnectionMessage);
+					Hud.Instance.ShowToast(Constants.NoConnectionMessage);
 					return;
 				}
 

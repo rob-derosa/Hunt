@@ -3,10 +3,9 @@
 using System;
 using Hunt.Common;
 using Lottie.Forms;
-using Microsoft.Azure.Mobile;
-using Microsoft.Azure.Mobile.Analytics;
-using Microsoft.Azure.Mobile.Crashes;
-using Microsoft.Azure.Mobile.Push;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
@@ -49,31 +48,30 @@ namespace Hunt.Mobile.Common
 		public App()
 		{
 			_instance = this;
-
-			Push.Instance = DependencyService.Get<IPushProvider>();
-			DeviceController.Instance = DependencyService.Get<IDeviceController>();
+			ConfigManager.Instance.Load();
 
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
 			{
-				//Instance.CurrentGame = Mocker.GetGame(5, 4, true, true, true, true, true);
-				//Instance.CurrentGame.StartDate = null;
+				#region Mock Data
+				Instance.CurrentGame = Mocker.GetGame(5, 4, true, true, true, true, true);
+				Instance.CurrentGame.StartDate = null;
 
-				////Has game started
-				////Instance.CurrentGame.StartDate = DateTime.Now;
-
-				////Has game ended
-				//Instance.CurrentGame.EndDate = DateTime.Now;
+				//Has game started
 				//Instance.CurrentGame.StartDate = DateTime.Now;
-				//Instance.CurrentGame.WinnningTeamId = Instance.CurrentGame.Teams[1].Id;
 
-				////Are you a player
-				//Player = Instance.CurrentGame.Teams[1].Players[0];
+				//Has game ended
+				//Instance.CurrentGame.EndDate = DateTime.Now;
+				Instance.CurrentGame.StartDate = DateTime.Now;
+				Instance.CurrentGame.WinnningTeamId = Instance.CurrentGame.Teams[1].Id;
 
-				////Are you the coordinator
-				//Player = Instance.CurrentGame.Coordinator.Clone(); //Jon
-				//Instance.CurrentGame.Coordinator = Player;
+				//Are you a player
+				Player = Instance.CurrentGame.Teams[1].Players[0];
 
+				//Are you the coordinator
+				Player = Instance.CurrentGame.Coordinator.Clone(); //Jon
+				Instance.CurrentGame.Coordinator = Player;
+				#endregion
 			}
 
 			Push.Instance.OnNotificationReceived += OnNotificationReceived;
@@ -84,7 +82,7 @@ namespace Hunt.Mobile.Common
 
 		protected override void OnStart()
 		{
-			MobileCenter.Start($"android={Keys.MobileCenter.AndroidToken};ios={Keys.MobileCenter.iOSToken}",
+			AppCenter.Start($"android={ConfigManager.Instance.AppCenterAndroidToken};ios={ConfigManager.Instance.AppCenteriOSToken}",
 				typeof(Analytics), typeof(Crashes));
 
 			CrossConnectivity.Current.ConnectivityChanged += OnConnectivityChanged;
@@ -126,7 +124,7 @@ namespace Hunt.Mobile.Common
 		{
 			if(!CrossConnectivity.Current.IsConnected)
 			{
-				Hud.Instance.ShowToast(Keys.Constants.NoConnectionMessage);
+				Hud.Instance.ShowToast(Constants.NoConnectionMessage);
 			}
 		}
 

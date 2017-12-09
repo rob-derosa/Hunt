@@ -17,7 +17,7 @@ namespace Hunt.Mobile.Common
 
 		public static string ToUrlCDN(this string url)
 		{
-			return url.Replace(Keys.Constants.BlobBaseUrl, Keys.Constants.CdnBaseUrl);
+			return url.Replace(ConfigManager.Instance.AzureStorageUrl, ConfigManager.Instance.AzureCDNUrl);
 		}
 
 		public static void Notify(this Exception e)

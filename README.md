@@ -17,6 +17,9 @@ For example, if the hint is "What has a neck, no head yet still wears a cap?" Th
 
 The first team to acquire all the treasures will win the game. If no team acquires all the treasure, the team with the most points will win when the time runs out. Alternatively, the Coordinator of the game can end the game early, in which case the team with the most points will win.
 
+### Video
+
+[https://www.youtube.com/watch?v=pXjBQD9a3AE](https://www.youtube.com/watch?v=pXjBQD9a3AE)
 
 ### Screenshots
 <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/login_page_completed.jpg" alt="Registration page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/loading.jpg" alt="Loading profile" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/dashboard.jpg" alt="Dashboard page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/add_treasure_complete.jpg" alt="Coordinator adding new treasure" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/coordinator_game_not_started.jpg" alt="Coordinator view of pre-game" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/share_game.jpg" alt="Share game invite" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/teams.jpg" alt="Teams list" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/player_game_started.jpg" alt="Player view of started game" Width="210" />
@@ -37,11 +40,11 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * Players are responsible for
       * joining games via a 6-char entry code or scanning the QR code
       * choosing a team
-      * acquriing treasure once the game has started
+      * acquring treasure once the game has started
 * Treasure
   * A treasure consists of a hint and a tagged photograph supplied by the Coordinator.
   * There must be at least 2 treasures added to the game before it can be started.
-  * Photos taken by the Coordinator are analyzed by Vision API and a set of associated tags is presented, of which up to 2 can be selected.
+  * Photos taken by the Coordinator are analyzed by [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) and a set of associated tags is presented, of which up to 2 can be selected.
   * If teams solve the hint and take a photo of a similar object with any matching tags, the treasure is acquired.
   * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
     
@@ -55,6 +58,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Almost all UI code is shared, include the custom HUD and Toast elements.
 * The Forms navigation stack is utlizied, however, every page has `SetHasNavigationBar` set to `false`. A custom `NavigationToolbar` is used instead to better control the UI.
 * Content for each page is declared in XAML under the `BaseContentPage.RootContent` node instead of the typical `BaseContentPage.Content` so HUD and Toast can appear at a greater Z-index.
+* Supports iOS, Android, Phone, Tablet, Landscape, Portrait
 
 ### Back-end Patterns
 * Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers a game refresh.
@@ -64,12 +68,11 @@ The first team to acquire all the treasures will win the game. If no team acquir
 
 ### Technologies Utilized
 * #### Front-end
-  * Xamarin Forms
-  * Mobile Center
+  * [Xamarin Forms](http://xamarin.com/forms)
+  * [App Center](http://mobile.azure.com)
     * Build
     * Test
     * Analytics
-    * Push
     * Crashes
     * Distribution
   * 3rd Party SDKs
@@ -83,18 +86,18 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * XFGloss (styled switches and sliders, background gradient)
     
 * #### Back-end
-  * Functions (C#)
-  * Cosmos: Document DB
-  * Blob Storage
-  * Application Insights
-  * Push notifications: Mobile Center Push REST API
+  * [Functions (C#)](https://azure.microsoft.com/en-us/services/functions)
+  * [Cosmos: Document DB](https://azure.microsoft.com/en-us/services/cosmos-db/)
+  * [Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
+  * [Application Insights](https://azure.microsoft.com/en-us/services/application-insights/)
+  * [Notification Hubs](https://azure.microsoft.com/en-us/services/notification-hubs/)
   * Cognitive Services
-    * Vision API
-    * Content Moderator API
-  * Service Bus (timed brokered message to end games)
+    * [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
+    * [Content Moderator API](https://azure.microsoft.com/en-us/services/cognitive-services/content-moderator/)
+  * [Service Bus (timed brokered message to end games)](https://azure.microsoft.com/en-us/services/service-bus/)
   * Unit tested on commit
-  * Deployment via ARM Templates
-  * Azure CDN
+  * [Deployment via ARM Templates](https://azure.microsoft.com/en-us/resources/templates/)
+  * [Azure CDN](https://azure.microsoft.com/en-us/services/cdn/)
   
 * #### Planning and Build
   * VSTS Work item tracking
@@ -112,7 +115,7 @@ Hunt was designed and is intended specifically for use with audiences at present
 #### Interactive Option
 To add some fun to a presentation, one option is to engage the audience in a quick game of hunt. Prior to the presentation, plant 2 or 3 well-known objects in the room somewhere inconspicuous, like a Coke bottle and a sneaker. Begin the talk by asking the audience if they want to play a game.
 
-Display http://aka.ms/hunt on a projector and invite people to downoad the app. As you give an overview of Hunt, project your phone's screen so everyone can see. Create a quick 10-15min game seeded with some players and treasures. Then share the game entry code and QR code so participants can join a team.
+Display http://aka.ms/hunt on a projector and invite people to download the app. As you give an overview of Hunt, project your phone's screen so everyone can see ([Reflector](http://www.airsquirrels.com/reflector/) is a good option here as it can broadcast multiple screens simultaneously across iOS and Android using Apple Airplay or Google Chromecast). Create a quick 10-15min game seeded with some players and treasures. Then share the game alphanumeric entry and QR code so participants can join a team.
 
 Start the game and let the teams attempt to find the objects and acquire the treasure. Consider rewarding the winning team with free Azure credit.].
 
@@ -121,11 +124,11 @@ Start the game and let the teams attempt to find the objects and acquire the tre
   * supported accounts: ned, sansa, arya, jon, joffrey, cersei, jamie, theon, yara, euron, etc
 * When creating a new game, the mobile app has several options for seeding data into an empty game. The following options are available and allow the game to be put into different states depending on the goal of the demo.
   * User can choose to be the Coordinator or a Player
-  * if coordinator is chosen, the user can add additional treasure and manully start the game
-  * if player is chosen, the user is put on House Stark and the game will be started automatically
-  * Games can be seeded with players that join teams - about half the game slots will fill with random players
-  * Games can be seeded with 3 pre-configured treasures
-  * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure
+    * if coordinator is chosen, the user can add additional treasure and manully start the game
+    * if player is chosen, the user is put on House Stark and the game will be started automatically
+  * Games can be seeded with players that join teams - about half the game slots will fill with random mock players
+  * Games can be seeded with 3 pre-configured treasures (bottle, shoe, dog)
+  * If both players and treasures are seeded, the team the player joins can be seeded with 2 acquired treasure so it only takes one more acqusition to end the game.
 
 #### Azure Deployment
 To make it easy for new developers to stand up their own personal Hunt backend, ARM templates are used so that by clicking a button and selecting a few options (like subscription, resource group and region), developers can deploy their own pre-configured instance of all services needed by Hunt to function.

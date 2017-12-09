@@ -20,5 +20,8 @@ namespace Hunt.Common
 
 		[JsonProperty("alias")]
 		public string Alias { get; set; }
+
+		[JsonProperty("appMode")]
+		public AppMode AppMode { get; set; }
 	}
 }

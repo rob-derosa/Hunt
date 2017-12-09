@@ -1,0 +1,7 @@
+﻿{
+	"AzureFunctionsUrl": "https://YOURAPP.azurewebsites.net/api",
+	"AzureStorageUrl": "https://YOURAPP.blob.core.windows.net",
+	"AzureCDNUrl": "https://YOURAPP.azureedge.net",
+	"AppCenteriOSToken": "YOUR_iOS_TOKEN",
+	"AppCenterAndroidToken": "YOUR_ANDROID_TOKEN",
+}

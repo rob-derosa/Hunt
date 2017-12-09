@@ -69,7 +69,7 @@
     <Compile Include="ViewModels\AddTreasureViewModel.cs" />
     <Compile Include="Abstractions\ILogProvider.cs" />
     <Compile Include="Services\StorageService.cs" />
-    <Compile Include="Keys.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="ViewModels\TreasureDetailsViewModel.cs" />
     <Compile Include="ViewModels\TreasureViewModel.cs" />
     <Compile Include="Abstractions\IHudProvider.cs" />
@@ -113,6 +113,8 @@
       <DependentUpon>FullSizeImagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Abstractions\IPushProvider.cs" />
+    <Compile Include="ConfigManager.cs" />
+    <EmbeddedResource Include="config.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />

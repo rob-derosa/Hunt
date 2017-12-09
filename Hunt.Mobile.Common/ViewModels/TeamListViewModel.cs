@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hunt.Common;
-using Microsoft.Azure.Mobile.Push;
 
 namespace Hunt.Mobile.Common
 {
@@ -32,7 +31,6 @@ namespace Hunt.Mobile.Common
 
 			using(var busy = new Busy(this, "Joining team"))
 			{
-				await Task.Delay(500);
 				Team team = null;
 				Func<Game, Game> gameUpdateLogic = (game) =>
 				{

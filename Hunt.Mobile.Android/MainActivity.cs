@@ -27,7 +27,6 @@ namespace Hunt.Mobile.Android
 
 			try { XFGloss.Droid.Library.Init(this, savedInstanceState); }catch{}
 			Window.SetStatusBarColor(Color.FromHex("#282827").ToAndroid());
-			//Window.SetStatusBarColor(Color.Teal.ToAndroid());
 		}
 
 		protected override void OnResume()

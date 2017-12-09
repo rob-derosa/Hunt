@@ -130,7 +130,7 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-#endregion
+		#endregion
 
 		async public Task<Game> GetGame(string gameId)
 		{
@@ -144,7 +144,7 @@ namespace Hunt.Mobile.Common
 		async public Task<Game> GetOngoingGame(string email)
 		{
 			var games = await SendGetRequest<Game>(nameof(FunctionNames.GetOngoingGame),
-				new Dictionary<string, object> { { "email", email } } );
+				new Dictionary<string, object> { { "email", email } });
 
 			return games;
 		}
@@ -156,7 +156,7 @@ namespace Hunt.Mobile.Common
 
 			if(!args.ContainsKey("playerId"))
 				args.Add("playerId", App.Instance.Player.Id);
-	
+
 			dynamic payload = new JObject();
 			payload.action = action;
 			payload.arguments = JObject.FromObject(args);
@@ -173,8 +173,13 @@ namespace Hunt.Mobile.Common
 			{
 				Handle = deviceToken,
 				Platform = Xamarin.Forms.Device.RuntimePlatform,
-				Tags = new[] { playerId }
+				Tags = new[] { playerId },
+				AppMode = AppMode.Production,
 			};
+
+#if DEBUG
+			registration.AppMode = AppMode.Dev;
+#endif 
 
 			var url = nameof(FunctionNames.RegisterDevice).ToUrl();
 			var result = await SendPostRequest<string>(url, registration);
@@ -246,14 +251,14 @@ namespace Hunt.Mobile.Common
 		}
 	}
 
-	#region Utilities
+#region Utilities
 
 	static class FunctionExtensions
 	{
 		public static string ToUrl(this string s, IDictionary<string, object> p = null)
 		{
 			var qs = p == null ? string.Empty : "?" + string.Join("&", p.Select((x) => x.Key + "=" + x.Value));
-			return string.Format($"{Keys.Azure.FunctionsUrl}/{s}{qs}");
+			return string.Format($"{ConfigManager.Instance.AzureFunctionsUrl}/{s}{qs}");
 		}
 	}
 
@@ -267,5 +272,5 @@ namespace Hunt.Mobile.Common
 		public BaseDocument Document { get; set; }
 	}
 
-	#endregion
+#endregion
 }

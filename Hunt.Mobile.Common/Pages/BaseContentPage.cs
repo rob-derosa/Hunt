@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Lottie.Forms;
-using Microsoft.Azure.Mobile.Analytics;
-using Microsoft.Azure.Mobile.Push;
+using Microsoft.AppCenter.Analytics;
 using Xamarin.Forms;
 using XFGloss;
 
@@ -248,7 +247,7 @@ namespace Hunt.Mobile.Common
 				Margin = new Thickness(0),
 				BackgroundColor = (Color)Application.Current.Resources["toastBackgroundColor"],
 				IsVisible = false,
-				HeightRequest = 0,
+				HeightRequest = NavigationBar.YOffset,
 			};
 
 			var separatorBottom = new ContentView { Style = (Style)Application.Current.Resources["separator"] };
@@ -260,7 +259,7 @@ namespace Hunt.Mobile.Common
 				FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
 				TextColor = Color.White,
 				HorizontalTextAlignment = TextAlignment.Center,
-				LineBreakMode = LineBreakMode.TailTruncation,
+				LineBreakMode = LineBreakMode.WordWrap,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
 				Margin = new Thickness(20, 10 + _toastTopMargin, 20, 10),
@@ -293,8 +292,8 @@ namespace Hunt.Mobile.Common
 
 			AbsoluteLayout.SetLayoutFlags(_toastRoot, AbsoluteLayoutFlags.All);
 			AbsoluteLayout.SetLayoutBounds(_toastRoot, new Rectangle(0, 0, 1, 1));
+			_toastRoot.TranslationY = NavigationBar.YOffset * -1;
 
-			//_toastRoot.Margin = new Thickness(0, NavigationBar.YOffset, 0, 0);
 			_rootLayout.Children.Add(_contentView);
 			_rootLayout.Children.Add(_toastRoot);
 			_rootLayout.Children.Add(_hudRoot);
@@ -351,9 +350,9 @@ namespace Hunt.Mobile.Common
 				_toastRoot.IsVisible = true;
 			});
 
-			await _toastRoot.LayoutTo(new Rectangle(0, _toastRoot.Y, _toastRoot.Width, _toastHeight), 350);
+			await _toastRoot.TranslateTo(0, 0, 250);
 			await Task.Delay(timeout).ConfigureAwait(false);
-			await _toastRoot.LayoutTo(new Rectangle(0, _toastRoot.Y, _toastRoot.Width, 0), 350);
+			await _toastRoot.TranslateTo(0, NavigationBar.YOffset * -1, 250);
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
