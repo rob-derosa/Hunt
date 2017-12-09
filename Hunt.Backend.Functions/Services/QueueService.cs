@@ -35,10 +35,10 @@ namespace Hunt.Backend.Functions
 		{
             _queueName = queueName;
 
-            var credentials = TokenProvider.CreateSharedAccessSignatureTokenProvider(Keys.ServiceBus.AccountName,
-                Keys.ServiceBus.AccountKey);
+            var credentials = TokenProvider.CreateSharedAccessSignatureTokenProvider(Config.ServiceBus.AccountName,
+                Config.ServiceBus.AccountKey);
 
-            var serviceBusUri = ServiceBusEnvironment.CreateServiceUri("sb", Keys.ServiceBus.AccountNamespace, string.Empty);
+            var serviceBusUri = ServiceBusEnvironment.CreateServiceUri("sb", Config.ServiceBus.AccountNamespace, string.Empty);
 
             // first create the messaging factory, then create queue client from endpoint url
             _factory = MessagingFactory.Create(serviceBusUri, credentials);

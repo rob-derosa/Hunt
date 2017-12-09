@@ -24,13 +24,13 @@ namespace Hunt.Backend.Functions
 
 		public PushService(AppMode mode)
 		{
-			var connection = Keys.NotificationHub.Production.ConnectionString;
-			var name = Keys.NotificationHub.Production.Name;
+			var connection = Config.NotificationHub.Production.ConnectionString;
+			var name = Config.NotificationHub.Production.Name;
 
 			if(mode == AppMode.Dev)
 			{
-				connection = Keys.NotificationHub.Sandbox.ConnectionString;
-				name = Keys.NotificationHub.Sandbox.Name;
+				connection = Config.NotificationHub.Sandbox.ConnectionString;
+				name = Config.NotificationHub.Sandbox.Name;
 			}
 
 			_hub = NotificationHubClient.CreateClientFromConnectionString(connection, name);

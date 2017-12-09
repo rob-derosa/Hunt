@@ -136,13 +136,6 @@ namespace Hunt.Backend.Functions
 			return client;
 		}
 
-		public static HttpClient AddMobileCenterToken(this HttpClient client)
-		{
-			client.DefaultRequestHeaders.Clear();
-			client.AddJsonHeader().DefaultRequestHeaders.Add("X-API-Token", Keys.MobileCenter.Token);
-			return client;
-		}
-
 		public static string Encode(this string s)
 		{
 			return WebUtility.UrlEncode(s);

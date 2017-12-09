@@ -126,7 +126,7 @@ namespace Hunt.Backend.Functions
 		{
 			try
 			{
-				var client = new QueueService(Keys.ServiceBus.EndGameBusName);
+				var client = new QueueService(Config.ServiceBus.EndGameBusName);
 				client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
 			}
 			catch (Exception e)
@@ -243,7 +243,7 @@ namespace Hunt.Backend.Functions
 			{
 				devices = players.Where(pl => pl.Id != null).Select(pl => pl.Id).ToList();
 
-				if(playerId != null)
+				if (playerId != null)
 					devices.Remove(playerId);
 
 				if (devices.Count > 0)

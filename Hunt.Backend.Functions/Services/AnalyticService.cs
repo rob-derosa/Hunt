@@ -9,7 +9,7 @@ namespace Hunt.Backend.Analytics
 	public class AnalyticService : IDisposable
 	{
 		static TelemetryClient _telemetryClient;
-		static RequestTelemetry _requestTelemetry;
+		RequestTelemetry _requestTelemetry;
 
 		private IOperationHolder<RequestTelemetry> _operation;
 

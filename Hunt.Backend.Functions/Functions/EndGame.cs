@@ -18,7 +18,7 @@ namespace Hunt.Backend.Triggers
 	public static class EndGame
 	{
 		[FunctionName(nameof(EndGame))]
-		public static void Run([ServiceBusTrigger(Keys.ServiceBus.EndGameBusName)] BrokeredMessage message, TraceWriter log)
+		public static void Run([ServiceBusTrigger(Config.ServiceBus.EndGameBusName)] BrokeredMessage message, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
 			{
@@ -30,7 +30,6 @@ namespace Hunt.Backend.Triggers
 					var gameId = (string)message.Properties["gameId"];
 
 					var game = CosmosDataService.Instance.GetItemAsync<Game>(gameId).Result;
-					var http = new HttpClient();
 					var url = $"https://huntapp.azurewebsites.net/api/SaveGame";
 
 					dynamic payload = new JObject();
@@ -40,7 +39,7 @@ namespace Hunt.Backend.Triggers
 
 					var json = JsonConvert.SerializeObject(payload);
 					var content = new StringContent(json);
-					var response = http.PostAsync(url, content).Result;
+					var response = Http.Client.PostAsync(url, content).Result;
 				}
 				catch (Exception e)
 				{

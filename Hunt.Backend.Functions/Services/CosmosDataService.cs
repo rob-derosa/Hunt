@@ -18,7 +18,7 @@ namespace Hunt.Backend.Functions
 
 		public CosmosDataService()
 		{
-			_client = new DocumentClient(new Uri(Keys.Cosmos.Url), Keys.Cosmos.Key, ConnectionPolicy.Default);
+			_client = new DocumentClient(new Uri(Config.Cosmos.Url), Config.Cosmos.Key, ConnectionPolicy.Default);
 		}
 
 		static CosmosDataService _instance;
