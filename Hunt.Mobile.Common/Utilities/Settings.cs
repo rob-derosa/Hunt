@@ -5,13 +5,7 @@ namespace Hunt.Mobile.Common
 {
 	public static class Settings
 	{
-		static ISettings AppSettings
-		{
-			get
-			{
-				return CrossSettings.Current;
-			}
-		}
+		static ISettings AppSettings => CrossSettings.Current;
 
 		public static string Player
 		{

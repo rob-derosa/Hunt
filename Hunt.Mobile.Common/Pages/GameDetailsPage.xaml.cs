@@ -101,13 +101,6 @@ namespace Hunt.Mobile.Common
 			await Navigation.PushAsync(page);
 		}
 
-		async void AddCustomTreasureClicked(object sender, EventArgs e)
-		{
-			var page = new AddCustomTreasurePage(ViewModel.Game);
-			page.ViewModel.OnTreasureAdded = (game) => ViewModel.SetGame(game);
-			await Navigation.PushAsync(page);
-		}
-
 		async Task LeaveGame()
 		{
 			var desc = ViewModel.Game.IsCoordinator() ? "This will immediately end the game for all players." : "";

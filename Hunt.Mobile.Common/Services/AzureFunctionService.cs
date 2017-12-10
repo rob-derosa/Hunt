@@ -37,14 +37,7 @@ namespace Hunt.Mobile.Common
 		#region Properties
 
 		HttpClient _client;
-
-		HttpClient Client
-		{
-			get
-			{
-				return _client ?? (_client = GetHttpClient());
-			}
-		}
+		HttpClient Client => _client ?? (_client = GetHttpClient());
 
 		HttpClient GetHttpClient()
 		{

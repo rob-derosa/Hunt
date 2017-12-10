@@ -20,11 +20,7 @@ namespace Hunt.Mobile.Common
 		public string DefaultAvatarUrl => $"{StorageAssetsBaseUrl}/avatars/jon.jpg";
 
 		static ConfigManager _instance;
-
-		public static ConfigManager Instance
-		{
-			get { return _instance ?? (_instance = new ConfigManager()); }
-		}
+		public static ConfigManager Instance => _instance ?? (_instance = new ConfigManager());
 
 		public void Load()
 		{
