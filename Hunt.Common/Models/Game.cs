@@ -60,5 +60,8 @@ namespace Hunt.Common
 
 		[JsonIgnore]
 		public int TotalPoints { get { return Treasures.Sum(t => t.Points); } }
+
+		[JsonProperty("customVisionProjectId")]
+		public string CustomVisionProjectId { get; set; }
 	}
 }
