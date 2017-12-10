@@ -327,7 +327,7 @@
 					WidthRequest="60"
 					HeightRequest="60"
 					Margin="0,0,20,20"
-					Clicked="AddCustomTreasureClicked"
+					Clicked="AddTreasureClicked"
 					AutomationId="addTreasureButton" />
 
 				<Button Grid.Row="2"

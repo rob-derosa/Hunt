@@ -66,7 +66,7 @@
     <Compile Include="Utilities\Converters.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Settings.cs" />
-    <Compile Include="ViewModels\AddTreasureViewModel.cs" />
+    <Compile Include="ViewModels\AddGenericTreasureViewModel.cs" />
     <Compile Include="Abstractions\ILogProvider.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="Constants.cs" />
@@ -93,11 +93,11 @@
     <Compile Include="Abstractions\IDeviceController.cs" />
     <EmbeddedResource Include="Resources\circle_filled.svg" />
     <Compile Include="ViewModels\BaseGameViewModel.cs" />
-    <EmbeddedResource Include="Pages\AddTreasurePage.xaml">
+    <EmbeddedResource Include="Pages\AddGenericTreasurePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <Compile Include="Pages\AddTreasurePage.xaml.cs">
-      <DependentUpon>AddTreasurePage.xaml</DependentUpon>
+    <Compile Include="Pages\AddGenericTreasurePage.xaml.cs">
+      <DependentUpon>AddGenericTreasurePage.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Pages\AssignAttributesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -115,13 +115,27 @@
     <Compile Include="Abstractions\IPushProvider.cs" />
     <Compile Include="ConfigManager.cs" />
     <EmbeddedResource Include="config.json" />
+    <EmbeddedResource Include="Pages\AddCustomTreasureImagesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Include="Pages\AddCustomTreasureImagesPage.xaml.cs">
+      <DependentUpon>AddCustomTreasureImagesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AddCustomTreasureViewModel.cs" />
+    <EmbeddedResource Include="Pages\TreasureTypePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Include="Pages\TreasureTypePage.xaml.cs">
+      <DependentUpon>TreasureTypePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\TreasureTypeViewModel.cs" />
+    <Compile Include="ViewModels\BaseAddTreasureViewModel.cs" />
     <EmbeddedResource Include="Pages\AddCustomTreasurePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <Compile Include="Pages\AddCustomTreasurePage.xaml.cs">
       <DependentUpon>AddCustomTreasurePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AddCustomTreasureViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />

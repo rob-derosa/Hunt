@@ -96,16 +96,9 @@ namespace Hunt.Mobile.Common
 
 		async void AddTreasureClicked(object sender, EventArgs e)
 		{
-			var page = new AddTreasurePage(ViewModel.Game);
+			var page = new TreasureTypePage(ViewModel.Game);
 			page.ViewModel.OnTreasureAdded = (game) => ViewModel.SetGame(game);
-			await Navigation.PushAsync(page);
-		}
-
-		async void AddCustomTreasureClicked(object sender, EventArgs e)
-		{
-			var page = new AddCustomTreasurePage(ViewModel.Game);
-			page.ViewModel.OnTreasureAdded = (game) => ViewModel.SetGame(game);
-			await Navigation.PushAsync(page);
+			await Navigation.PushModalAsync(page.ToNav());
 		}
 
 		async Task LeaveGame()
@@ -119,7 +112,7 @@ namespace Hunt.Mobile.Common
 			var success = await ViewModel.LeaveGame();
 			if (success)
 			{
-				await Navigation.PopToDashboard();
+				await Navigation.PopToPageType(typeof(DashboardPage));
 			}
 		}
 
@@ -167,27 +160,27 @@ namespace Hunt.Mobile.Common
 			await Navigation.PushAsync(page);
 		}
 
-		void PlayWinnerBandAnimation()
-		{
-			//if(_winningBandAnimation == null)
-			//{
-				//_winningBandAnimation = new AnimationView
-				//{
-				//	Animation = "trophy.json",
-				//	WidthRequest = 50,
-				//	HeightRequest = 50,
-				//	Loop = true,
-				//	AutoPlay = false,
-				//	Margin = new Thickness(20, 0),
-				//	HorizontalOptions = LayoutOptions.Center,
-				//	VerticalOptions = LayoutOptions.Center,
-				//};
-
-				//winnerBand.Children.Insert(0, _winningBandAnimation);
-			//}
-
-			//_winningBandAnimation.Play();
-		}
+		//void PlayWinnerBandAnimation()
+		//{
+		//	if(_winningBandAnimation == null)
+		//	{
+		//		_winningBandAnimation = new AnimationView
+		//		{
+		//			Animation = "trophy.json",
+		//			WidthRequest = 50,
+		//			HeightRequest = 50,
+		//			Loop = true,
+		//			AutoPlay = false,
+		//			Margin = new Thickness(20, 0),
+		//			HorizontalOptions = LayoutOptions.Center,
+		//			VerticalOptions = LayoutOptions.Center,
+		//		};
+		//
+		//		winnerBand.Children.Insert(0, _winningBandAnimation);
+		//	}
+		//
+		//	_winningBandAnimation.Play();
+		//}
 
 		async Task PlayWinningAnimation()
 		{

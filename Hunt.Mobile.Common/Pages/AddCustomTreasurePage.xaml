@@ -15,28 +15,27 @@
 			</Grid.RowDefinitions>
 
 			<local:NavigationBar
-				CanMoveBack="true"
-				Title="Add Treasure" />
+				CanMoveBack="false"
+				CanClose="true"
+				Title="Add Custom Treasure" />
 
 			<ScrollView Grid.Row="1">
 				<Grid x:Name="contentGrid"
 					RowSpacing="0">
 					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" /> <!-- player band -->
 						<RowDefinition Height="Auto" /> <!-- photo/instructions -->
+						<RowDefinition Height="Auto" /> <!-- tag text -->
 						<RowDefinition Height="Auto" /> <!-- hint text -->
 						<RowDefinition Height="*" /> 	<!-- space -->
 						<RowDefinition Height="Auto" />	<!-- button bar -->
 					</Grid.RowDefinitions>
 
 					<!-- hero image / instructions -->
-					
-					<Grid Grid.Row="1"
-						HeightRequest="200"
+					<Grid HeightRequest="300"
 						HorizontalOptions="Center"
 						VerticalOptions="Center">
 
-						<Label Text="To add a new treasure, enter a hint and snap a photo of the object, then click submit. The photo will be analyzed for tags for you to choose from."
+						<Label Text="Enter a hint for the players and a tag for the object below, then we can train the classifier."
 							FontSize="Medium"
 							LineBreakMode="WordWrap"
 							VerticalOptions="Center"
@@ -49,21 +48,30 @@
 							HorizontalOptions="Fill"
 							Aspect="AspectFill" />
 
-						
-						<local:ImageButton
-							ImageSource="fab_camera.png"
-							IsVisible="{Binding CanAcquire}"
-							AutomationId="cameraButton"
-							Clicked="TakePhotoClicked"
-							WidthRequest="56"
-							HeightRequest="56"
-							Margin="20"
-							VerticalOptions="End"
-							HorizontalOptions="End" />
 					</Grid>
 
-					<!-- hint -->
+					<!-- tag -->
+					<Grid Grid.Row="1"
+						HorizontalOptions="FillAndExpand"
+						VerticalOptions="FillAndExpand">
+						
+						<ContentView
+							VerticalOptions="Start"
+							Grid.Style="{StaticResource separator}" />
+						
+						<Entry
+							Margin="20,10"
+							Placeholder="Enter a tag that identifies this object"
+							Text="{Binding AssignedTag}"
+							HorizontalOptions="FillAndExpand"
+							AutomationId="tagEntry"
+							VerticalOptions="Center" />
+						
+						<ContentView
+							Grid.Style="{StaticResource separator}" />
+					</Grid>
 					
+					<!-- hint -->
 					<Grid Grid.Row="2"
 						HorizontalOptions="FillAndExpand"
 						VerticalOptions="FillAndExpand">
@@ -85,14 +93,14 @@
 					</Grid>
 
 					<Button Grid.Row="4"
-						IsVisible="{Binding CanSubmit}"
 						AutomationId="submitButton"
 						Clicked="SubmitClicked"
 						VerticalOptions="End"
-						Text="Submit" />
+						Text="Submit for Training" />
 					
 				</Grid>
 			</ScrollView>
+
 		</Grid>
 	</local:BaseContentPage.RootContent>
 </local:BaseContentPage>

@@ -8,19 +8,13 @@ using Xamarin.Forms;
 
 namespace Hunt.Mobile.Common
 {
-	public class AddCustomTreasureViewModel : BaseGameViewModel
+	public class AddCustomTreasureViewModel : BaseAddTreasureViewModel
 	{
+		public int MinimumPhotoCount = 3;
 		string _treasureImageUrl;
-		public Action<Game> OnTreasureAdded { get; set; }
+		ImageSource _photoImageSource;
 
-		string _hint;
-		public string Hint
-		{
-			get { return _hint; }
-			set { SetPropertyChanged(ref _hint, value); SetPropertyChanged(nameof(CanContinue)); }
-		}
-
-		List<byte[]> _photos;
+		List<byte[]> _photos = new List<byte[]>();
 		public List<byte[]> Photos
 		{
 			get { return _photos; }
@@ -30,54 +24,21 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		List<string> _assignedTags = new List<string>();
-		public List<string> AssignedTags
+		string _assignedTag;
+		public string AssignedTag
 		{
-			get { return _assignedTags; }
-			set { SetPropertyChanged(ref _assignedTags, value); }
+			get { return _assignedTag; }
+			set { SetPropertyChanged(ref _assignedTag, value); }
 		}
 
 		public ImageSource HeroImageSource
 		{
 			get
 			{
-				//if(Photo != null)
-					//return _photoImageSource ?? (_photoImageSource = ImageSource.FromStream(() => new MemoryStream(Photo)));
+				if(Photos.Count > 0)
+					return _photoImageSource ?? (_photoImageSource = ImageSource.FromStream(() => new MemoryStream(Photos[0])));
 
 				return null;
-			}
-		}
-
-		public bool CanContinue
-		{
-			get { return Photos.Count > 0 && !string.IsNullOrWhiteSpace(Hint); }
-		}
-
-		public async Task<bool> AnalyzePhotoForAttributes()
-		{
-			using(var busy = new Busy(this, "Uploading photo"))
-			{
-				//var url = await App.Instance.StorageService.SaveImage(Photo, Game.Id);
-
-				//if(url == null)
-				//	return false;
-
-				//url = url.ToUrlCDN();
-				//Hud.Instance.HudMessage = "Analyzing photo";
-				//var task = new Task<string[]>(() => App.Instance.DataService.AnalyseImage(new [] { url }).Result);
-				//await task.RunProtected();
-
-				//if(!task.WasSuccessful() || task.Result == null)
-				//	return false;
-
-				//var availableAttributes = task.Result;
-				//foreach(var a in availableAttributes)
-				//	Log.Instance.WriteLine(a);
-
-				//_treasureImageUrl = url;
-				//AvailableAttributes = availableAttributes;
-				//return AvailableAttributes.Length > 0;
-				return true;
 			}
 		}
 

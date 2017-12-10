@@ -4,8 +4,8 @@
 	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
 	xmlns:local="clr-namespace:Hunt.Mobile.Common"
 	xmlns:ci="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
-	x:TypeArguments="local:AddTreasureViewModel"
-	x:Class="Hunt.Mobile.Common.AddTreasurePage">
+	x:TypeArguments="local:AddGenericTreasureViewModel"
+	x:Class="Hunt.Mobile.Common.AddGenericTreasurePage">
 	
 	<local:BaseContentPage.RootContent>
 		<Grid RowSpacing="0">
@@ -16,7 +16,8 @@
 
 			<local:NavigationBar
 				CanMoveBack="true"
-				Title="Add Treasure" />
+				CanClose="true"
+				Title="Add Generic Treasure" />
 
 			<ScrollView Grid.Row="1">
 				<Grid x:Name="contentGrid"
@@ -30,9 +31,8 @@
 					</Grid.RowDefinitions>
 
 					<!-- hero image / instructions -->
-					
 					<Grid Grid.Row="1"
-						HeightRequest="200"
+						HeightRequest="300"
 						HorizontalOptions="Center"
 						VerticalOptions="Center">
 
@@ -63,7 +63,6 @@
 					</Grid>
 
 					<!-- hint -->
-					
 					<Grid Grid.Row="2"
 						HorizontalOptions="FillAndExpand"
 						VerticalOptions="FillAndExpand">
@@ -85,7 +84,6 @@
 					</Grid>
 
 					<Button Grid.Row="4"
-						IsVisible="{Binding CanSubmit}"
 						AutomationId="submitButton"
 						Clicked="SubmitClicked"
 						VerticalOptions="End"
