@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "Ansuria.XFGloss": "1.0.6.59",
-    "Com.Airbnb.Xamarin.Forms.Lottie": "2.3.4",
+    "Com.Airbnb.Xamarin.Forms.Lottie": "2.4.0",
     "Microsoft.AppCenter": "1.0.1",
     "Microsoft.AppCenter.Analytics": "1.0.1",
     "Microsoft.AppCenter.Crashes": "1.0.1",
@@ -18,7 +18,7 @@
     "Xam.Plugin.Media": "3.0.1",
     "Xam.Plugins.Forms.ImageCircle": "1.8.1",
     "Xam.Plugins.Settings": "3.1.1",
-    "Xamarin.Forms": "2.5.0.91635",
+    "Xamarin.Forms": "2.5.0.121934",
     "ZXing.Net.Mobile.Forms": "2.3.2"
   },
   "frameworks": {

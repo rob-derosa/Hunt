@@ -48,7 +48,6 @@ namespace Hunt.Mobile.Common
 		public App()
 		{
 			_instance = this;
-			ConfigManager.Instance.Load();
 
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
@@ -72,6 +71,10 @@ namespace Hunt.Mobile.Common
 				Player = Instance.CurrentGame.Coordinator.Clone(); //Jon
 				Instance.CurrentGame.Coordinator = Player;
 				#endregion
+			}
+			else
+			{
+				ConfigManager.Instance.Load();
 			}
 
 			Push.Instance.OnNotificationReceived += OnNotificationReceived;
