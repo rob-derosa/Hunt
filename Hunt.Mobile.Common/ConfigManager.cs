@@ -13,7 +13,6 @@ namespace Hunt.Mobile.Common
 		public string AzureCDNUrl { get; set; }
 		public string AppCenterAndroidToken { get; set; }
 		public string AppCenteriOSToken { get; set; }
-		public string CustomVisionTrainingKey { get; set; }
 
 		public string CdnImagesBaseUrl => $"{AzureCDNUrl}/images";
 		public string StorageAssetsBaseUrl => $"{AzureStorageUrl}/assets";
@@ -24,10 +23,7 @@ namespace Hunt.Mobile.Common
 
 		public static ConfigManager Instance
 		{
-			get
-			{
-				return _instance ?? (_instance = new ConfigManager());
-			}
+			get { return _instance ?? (_instance = new ConfigManager()); }
 		}
 
 		public void Load()
@@ -40,7 +36,6 @@ namespace Hunt.Mobile.Common
 			AzureCDNUrl = props[nameof(AzureCDNUrl)];
 			AppCenteriOSToken = props[nameof(AppCenteriOSToken)];
 			AppCenterAndroidToken = props[nameof(AppCenterAndroidToken)];
-			CustomVisionTrainingKey = props[nameof(CustomVisionTrainingKey)];
 		}
 
 		string GetFileContents(string fileName)

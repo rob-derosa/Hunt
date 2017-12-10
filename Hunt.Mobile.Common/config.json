@@ -4,5 +4,4 @@
   "AzureCDNUrl": "https://yoursite.azureedge.net",
   "AppCenteriOSToken": "000000-0000-0000-0000-000000000000",
   "AppCenterAndroidToken": "000000-0000-0000-0000-000000000000",
-  "CustomVisionTrainingKey": "00000000000000000000000000000000"
 }
