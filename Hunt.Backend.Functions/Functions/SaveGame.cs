@@ -126,7 +126,7 @@ namespace Hunt.Backend.Functions
 		{
 			try
 			{
-				var client = new QueueService(Config.ServiceBus.EndGameBusName);
+				var client = new QueueService(ConfigManager.EndGameBusName);
 				client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
 			}
 			catch (Exception e)

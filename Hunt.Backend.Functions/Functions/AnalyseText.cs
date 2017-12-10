@@ -38,13 +38,13 @@ namespace Hunt.Backend.Functions
                     {
                         var queryString = HttpUtility.ParseQueryString(string.Empty);
 
-                        client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Config.ContentModerator.Key);
+                        client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigManager.Instance.ContentModeratorKey);
 
                         queryString["autocorrect"] = "{boolean}";
                         queryString["PII"] = "{boolean}";
                         queryString["listId"] = "{string}";
 
-                        var uri = Config.ContentModerator.Url + queryString;
+                        var uri = ConfigManager.Instance.ContentModeratorUrl + queryString;
                         HttpResponseMessage response;
                         byte[] byteData = Encoding.UTF8.GetBytes(text);
 
