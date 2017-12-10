@@ -35,7 +35,7 @@
       <CustomCommands>
         <Command>
           <type>Custom</type>
-          <name>Smoke Test in Mobile Center</name>
+          <name>Smoke Test in App Center</name>
           <command>sh ${SolutionDir}/Resources/Scripts/test_ios_smoke.sh</command>
           <workingdir></workingdir>
         </Command>
@@ -59,6 +59,15 @@
     <MtouchUseLlvm>true</MtouchUseLlvm>
     <CodesignProvision></CodesignProvision>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>Custom</type>
+          <name>Smoke Test in App Center</name>
+          <command>sh ${SolutionDir}/Resources/Scripts/test_ios_smoke.sh</command>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>pdbonly</DebugType>

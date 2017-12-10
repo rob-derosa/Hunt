@@ -37,7 +37,7 @@
       <CustomCommands>
         <Command>
           <type>Custom</type>
-          <name>Smoke Test in Mobile Center</name>
+          <name>Smoke Test in App Center</name>
           <command>sh ${SolutionDir}/Resources/Scripts/test_android_smoke.sh</command>
           <workingdir></workingdir>
         </Command>
@@ -62,7 +62,7 @@
       <CustomCommands>
         <Command>
           <type>Custom</type>
-          <name>Smoke Test in Mobile Center</name>
+          <name>Smoke Test in App Center</name>
           <command>../Resources/Scripts/test_android_smoke.sh</command>
           <workingdir>${SolutionDir}</workingdir>
         </Command>
