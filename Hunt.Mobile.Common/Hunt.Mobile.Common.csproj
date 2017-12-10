@@ -115,12 +115,6 @@
     <Compile Include="Abstractions\IPushProvider.cs" />
     <Compile Include="ConfigManager.cs" />
     <EmbeddedResource Include="config.json" />
-    <EmbeddedResource Include="Pages\AddCustomTreasurePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <Compile Include="Pages\AddCustomTreasurePage.xaml.cs">
-      <DependentUpon>AddCustomTreasurePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\AddCustomTreasureViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
