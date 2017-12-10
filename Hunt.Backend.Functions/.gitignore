@@ -7,6 +7,7 @@ edge
 Publish
 .vscode
 
+*.pubxml
 *.user
 *.suo
 *.cscfg
@@ -16,7 +17,8 @@ project.lock.json
 /packages
 /TestResults
 
-/PublishProfiles
+
+*/PublishProfiles
 /tools/NuGet.exe
 /App_Data
 /secrets

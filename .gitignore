@@ -5,6 +5,8 @@
 *.userpref
 */.vs
 /.vs
+*/PublishProfiles
 *.userprefs
 *.user
 *.lock.json
+*.pubxml
