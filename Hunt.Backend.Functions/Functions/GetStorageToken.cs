@@ -49,12 +49,12 @@ namespace Hunt.Backend.Functions
                     }
 
                     if (_storageAccount == null)
-                        _storageAccount = CloudStorageAccount.Parse(Config.Blob.SharedStorageKey);
+                        _storageAccount = CloudStorageAccount.Parse(ConfigManager.Instance.BlobSharedStorageKey);
 
                     if (_blobClient == null)
                         _blobClient = _storageAccount.CreateCloudBlobClient();
 
-                    _container = _blobClient.GetContainerReference(Config.Blob.ImageContainer);
+                    _container = _blobClient.GetContainerReference(ConfigManager.BlobImageContainer);
                     await _container.CreateIfNotExistsAsync();
 
                     var sasUri = await GetSASToken(blobName);

@@ -18,7 +18,7 @@ namespace Hunt.Backend.Triggers
 	public static class EndGame
 	{
 		[FunctionName(nameof(EndGame))]
-		public static void Run([ServiceBusTrigger(Config.ServiceBus.EndGameBusName)] BrokeredMessage message, TraceWriter log)
+		public static void Run([ServiceBusTrigger(ConfigManager.EndGameBusName)] BrokeredMessage message, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
 			{

@@ -2,59 +2,100 @@ using System;
 
 namespace Hunt.Backend.Functions
 {
-	public class Config
+	public class ConfigManager
 	{
-        //ServiceBus
-        public static class ServiceBus
-        {
-			//Queues
-			public const string EndGameBusName = "endgame";
+		static ConfigManager _instance;
+		public static ConfigManager Instance => _instance ?? (_instance = Load());
+		public string ServiceBusAccountKey;
+		public string ServiceBusAccountName;
+		public string ServiceBusAccountNamespace;
+		public string BlobSharedStorageKey;
+		public string ContentModeratorKey;
+		public string ContentModeratorUrl;
+		public string CosmosKey;
+		public string CosmosUrl;
+		public string NotificationHubSandboxConnectionString;
+		public string NotificationHubSandboxName;
+		public string NotificationHubProductionConnectionString;
+		public string NotificationHubProductionName;
+		public string VisionUrl;
+		public string VisionServiceKey;
 
-            //Account
-            public static string AccountName;
-            public static string AccountKey;
-            public static string AccountNamespace;
-        }
+		public const string EndGameBusName = "endgame";
+		public const string BlobImageContainer = "images";
+		public const string CosmosCollectionId = "items";
+		public const string CosmosDatabaseId = "games";
 
-        //Blob
-        public static class Blob
+		public static ConfigManager Load()
 		{
-			public static string SharedStorageKey;
-            public static string ImageContainer;
-        }
-
-        //Vision
-        public static class Vision
-		{
-			public static string Url;
-			public static string ServiceKey;
-		}
-
-		public static class Cosmos
-		{
-			public static string Url;
-			public static string Key;
-		}
-
-        public static class ContentModerator
-        {
-			public static string Url;
-			public static string Key;
-		}
-
-		public static class NotificationHub
-		{
-			public static class Sandbox
+			var config = new ConfigManager
 			{
-				public static string Name;
-				public static string ConnectionString;
-			}
+				ServiceBusAccountKey = Environment.GetEnvironmentVariable("SERVICEBUS_ACCOUNTKEY"),
+				ServiceBusAccountName = Environment.GetEnvironmentVariable("SERVICEBUS_ACCOUNTNAME"),
+				ServiceBusAccountNamespace = Environment.GetEnvironmentVariable("SERVICEBUS_NAMESPACE"),
+				BlobSharedStorageKey = Environment.GetEnvironmentVariable("BLOB_SHAREDSTORAGEKEY"),
+				ContentModeratorKey = Environment.GetEnvironmentVariable("CONTENTMODERATOR_KEY"),
+				ContentModeratorUrl = Environment.GetEnvironmentVariable("CONTENTMODERATOR_URL"),
+				CosmosKey = Environment.GetEnvironmentVariable("COSMOS_KEY"),
+				CosmosUrl = Environment.GetEnvironmentVariable("COSMOS_URL"),
+				NotificationHubSandboxConnectionString = Environment.GetEnvironmentVariable("HUB_SANDBOX_CONNECTIONSTRING"),
+				NotificationHubSandboxName = Environment.GetEnvironmentVariable("HUB_SANDBOX_NAME"),
+				NotificationHubProductionConnectionString = Environment.GetEnvironmentVariable("HUB_PRODUCTION_CONNECTIONSTRING"),
+				NotificationHubProductionName = Environment.GetEnvironmentVariable("HUB_PRODUCTION_NAME"),
+				VisionUrl = Environment.GetEnvironmentVariable("VISION_URL"),
+				VisionServiceKey = Environment.GetEnvironmentVariable("VISION_SERVICEKEY"),
+			};
 
-			public static class Production
-			{
-				public static string Name;
-				public static string ConnectionString;
-			}
+			return config;
 		}
-    }
+	}
+
+	//ServiceBus
+	public class ServiceBusConfig
+	{
+		//Queues
+
+		//Account
+		public string AccountName;
+		public string AccountKey;
+		public string AccountNamespace;
+	}
+
+	//Blob
+	public class BlobConfig
+	{
+		public string SharedStorageKey;
+		public string ImageContainer;
+	}
+
+	//Vision
+	public class VisionConfig
+	{
+		public string Url;
+		public string ServiceKey;
+	}
+
+	public class CosmosConfig
+	{
+		public string Url;
+		public string Key;
+	}
+
+	public class ContentModeratorConfig
+	{
+		public string Url;
+		public string Key;
+	}
+
+	public class NotificationHubConfig
+	{
+		public HubMode Sandbox = new HubMode();
+		public HubMode Production = new HubMode();
+	}
+
+	public class HubMode
+	{
+		public string Name;
+		public string ConnectionString;
+	}
 }

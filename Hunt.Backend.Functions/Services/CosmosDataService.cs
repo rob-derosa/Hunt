@@ -10,15 +10,13 @@ namespace Hunt.Backend.Functions
 {
 	public partial class CosmosDataService
 	{
-		const string _databaseId = @"Games";
-		const string _collectionId = @"Items";
 		DocumentClient _client;
 
-		Uri _collectionLink = UriFactory.CreateDocumentCollectionUri(_databaseId, _collectionId);
+		Uri _collectionLink = UriFactory.CreateDocumentCollectionUri(ConfigManager.CosmosDatabaseId, ConfigManager.CosmosCollectionId);
 
 		public CosmosDataService()
 		{
-			_client = new DocumentClient(new Uri(Config.Cosmos.Url), Config.Cosmos.Key, ConnectionPolicy.Default);
+			_client = new DocumentClient(new Uri(ConfigManager.Instance.CosmosUrl), ConfigManager.Instance.CosmosKey, ConnectionPolicy.Default);
 		}
 
 		static CosmosDataService _instance;
@@ -29,12 +27,12 @@ namespace Hunt.Backend.Functions
 
 		Uri GetCollectionUri()
 		{
-			return UriFactory.CreateDocumentCollectionUri(_databaseId, _collectionId);
+			return UriFactory.CreateDocumentCollectionUri(ConfigManager.CosmosDatabaseId, ConfigManager.CosmosCollectionId);
 		}
 
 		Uri GetDocumentUri(string id)
 		{
-			return UriFactory.CreateDocumentUri(_databaseId, _collectionId, id);
+			return UriFactory.CreateDocumentUri(ConfigManager.CosmosDatabaseId, ConfigManager.CosmosCollectionId, id);
 		}
 
 		/// <summary>
@@ -42,14 +40,14 @@ namespace Hunt.Backend.Functions
 		/// </summary>
 		async Task EnsureDatabaseConfigured()
 		{
-			var db = new Database { Id = _databaseId };
-			var collection = new DocumentCollection { Id = _collectionId };
+			var db = new Database { Id = ConfigManager.CosmosDatabaseId };
+			var collection = new DocumentCollection { Id = ConfigManager.CosmosCollectionId };
 
 			var result = await _client.CreateDatabaseIfNotExistsAsync(db);
 
 			if(result.StatusCode == HttpStatusCode.Created || result.StatusCode == HttpStatusCode.OK)
 			{
-				var dbLink = UriFactory.CreateDatabaseUri(_databaseId);
+				var dbLink = UriFactory.CreateDatabaseUri(ConfigManager.CosmosDatabaseId);
 				var colResult = await _client.CreateDocumentCollectionIfNotExistsAsync(dbLink, collection);
 			}
 		}

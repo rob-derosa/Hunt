@@ -18,7 +18,7 @@ namespace Hunt.Backend.Functions
 
         public VisionService()
 		{
-			_visionClient = new VisionServiceClient(Config.Vision.ServiceKey, Config.Vision.Url);
+			_visionClient = new VisionServiceClient(ConfigManager.Instance.VisionServiceKey, ConfigManager.Instance.VisionUrl);
 		}
 
 		public async Task<AnalysisResult> GetImageDescriptionAsync(string url)
