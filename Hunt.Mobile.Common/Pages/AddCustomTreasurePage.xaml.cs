@@ -26,11 +26,11 @@ namespace Hunt.Mobile.Common
 			InitializeComponent();
 		}
 
-		void SubmitClicked(object sender, EventArgs e)
+		async void SubmitClicked(object sender, EventArgs e)
 		{
-			if(string.IsNullOrWhiteSpace(ViewModel.AssignedTag))
+			if(string.IsNullOrWhiteSpace(ViewModel.AssignedTags) || ViewModel.AssignedTags.Split(',').Length < 2)
 			{
-				Hud.Instance.ShowToast("Please enter a tag that defines this object");
+				Hud.Instance.ShowToast("Please enter at least 2 comma-separated tags that define this object");
 				return;
 			}
 
@@ -40,17 +40,16 @@ namespace Hunt.Mobile.Common
 				return;
 			}
 
-			//var success = await ViewModel.TrainImageSet();
-			//if(success)
-			//{
-			//	var page = new AssignAttributesPage(ViewModel);
-			//	await Navigation.PushAsync(page);
-			//}
-			//else
-			//{
-			//	Hud.Instance.ShowToast($"No objects were able to be identified in the photo. Please take another photo.");
-			//	ViewModel.Photo = null;
-			//}
+			var success = await ViewModel.SaveTreasure();
+
+			if(success)
+			{
+				await Navigation.PopModalAsync();
+			}
+			else
+			{
+				Hud.Instance.ShowToast($"There was an error - shrug");
+			}
 		}
 	}
 }

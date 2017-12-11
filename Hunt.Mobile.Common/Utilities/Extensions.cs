@@ -373,7 +373,7 @@ namespace Hunt.Mobile.Common
 					return team.AcquiredTreasure.SingleOrDefault(t => t.TreasureId == treasure.Id);
 			}
 
-			if(game.IsCoordinator())
+			if(game.IsCoordinator() || game.GetTeam() == null)
 				return null;
 
 			return game.GetTeam().AcquiredTreasure.SingleOrDefault(t => t.TreasureId == treasure.Id);

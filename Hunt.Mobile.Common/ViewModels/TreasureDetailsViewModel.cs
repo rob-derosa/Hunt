@@ -184,18 +184,34 @@ namespace Hunt.Mobile.Common
 
 				url = url.ToUrlCDN();
 				Hud.Instance.HudMessage = "Analyzing photo";
-				var task = new Task<string[]>(() => App.Instance.DataService.AnalyseImage(new string[] { url }).Result);
-				await task.RunProtected();
 
-				if(!task.WasSuccessful() || task.Result == null)
-					return false;
+				bool success = false;
+				if(Treasure.Attributes[0].ServiceType == CognitiveServiceType.CustomVision)
+				{
+					var task = new Task<bool>(() => App.Instance.DataService.AnalyzeCustomImage(Game, url, Treasure.Id).Result);
+					await task.RunProtected();
 
-				AttributeResults = task.Result;
-				foreach(var a in AttributeResults)
-					Log.Instance.WriteLine(a);
+					if(!task.WasSuccessful() || !task.Result)
+						return false;
 
-				_treasureImageUrl = url;
-				var success = GetMatchCount() >= 1;
+					_treasureImageUrl = url;
+					success = true;
+				}
+				else
+				{
+					var task = new Task<string[]>(() => App.Instance.DataService.AnalyseImage(new string[] { url }).Result);
+					await task.RunProtected();
+
+					if(!task.WasSuccessful() || task.Result == null)
+						return false;
+
+					AttributeResults = task.Result;
+					foreach(var a in AttributeResults)
+						Log.Instance.WriteLine(a);
+
+					_treasureImageUrl = url;
+					success = GetMatchCount() >= 1;
+				}
 
 				if(success)
 				{

@@ -1,7 +1,7 @@
 ﻿{
-	"AzureFunctionsUrl": "https://huntapp.azurewebsites.net/api",
-	"AzureStorageUrl": "https://huntappstorage.blob.core.windows.net",
-	"AzureCDNUrl": "https://huntapp.azureedge.net",
-	"AppCenteriOSToken": "cc9ce6e3-a12d-427a-af56-7745ad9d0218",
-	"AppCenterAndroidToken": "4f5a3f94-5d09-4dd0-b4ba-de5e8c83bee2",
+	"AzureFunctionsUrl": "https://yoursite.azurewebsites.net/api",
+	"AzureStorageUrl": "https://yoursite.blob.core.windows.net",
+	"AzureCDNUrl": "https://yoursite.azureedge.net",
+	"AppCenteriOSToken": "000000-0000-0000-0000-000000000000",
+	"AppCenterAndroidToken": "000000-0000-0000-0000-000000000000",
 }

@@ -4,14 +4,15 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Hunt.Common;
+using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 
 namespace Hunt.Mobile.Common
 {
 	public class AddCustomTreasureViewModel : BaseAddTreasureViewModel
 	{
-		public int MinimumPhotoCount = 3;
-		string _treasureImageUrl;
+		public int MinimumPhotoCount = 5;
+		public int MaximumPhotoCount = 10;
 		ImageSource _photoImageSource;
 
 		List<byte[]> _photos = new List<byte[]>();
@@ -25,7 +26,7 @@ namespace Hunt.Mobile.Common
 		}
 
 		string _assignedTag;
-		public string AssignedTag
+		public string AssignedTags
 		{
 			get { return _assignedTag; }
 			set { SetPropertyChanged(ref _assignedTag, value); }
@@ -44,27 +45,54 @@ namespace Hunt.Mobile.Common
 
 		public async Task<bool> SaveTreasure()
 		{
-			var treasure = new Treasure
+			var imageUrls = new List<string>();
+			using(var busy = new Busy(this, "Uploading photo 1"))
 			{
-				ImageSource = _treasureImageUrl,
-				IsRequired = true,
-				Points = Constants.PointsPerAttribute,
-				Hint = Hint,
-			};
+				int i = 1;
+				foreach(var photo in Photos)
+				{
+					Hud.Instance.HudMessage = $"Uploading photo {i}";
+					var url = await UploadPhotoToAzureStorage(photo);
 
-			//foreach(var attributeString in SelectedAttributes)
-			//{
-			//	var attribute = new Hunt.Common.Attribute
-			//	{
-			//		 Name = attributeString,
-			//		 ServiceType = CognitiveServiceType.Vision
-			//	};
+					if(url == null)
+					{
+						Hud.Instance.ShowToast("Unable to upload all the photos.", NoticationType.Error);
+						return false;
+					}
 
-			//	treasure.Attributes.Add(attribute);
-			//}
+					imageUrls.Add(url);
+					i++;
+				}
 
-			using(var busy = new Busy(this, "Adding treasure"))
-			{
+				var tags = AssignedTags.Split(',');
+				Hud.Instance.HudMessage = $"Training the classifier";
+				var task = new Task<bool>(() => App.Instance.DataService.TrainClassifier(Game, imageUrls, tags).Result);
+				await task.RunProtected();
+
+				if(!task.WasSuccessful() || !task.Result)
+					return false;
+
+				Hud.Instance.HudMessage = $"Adding the treasure";
+
+				var treasure = new Treasure
+				{
+					ImageSource = imageUrls[0],
+					IsRequired = true,
+					Points = Constants.PointsPerAttribute,
+					Hint = Hint,
+				};
+
+				foreach(var tag in tags)
+				{
+					var attribute = new Hunt.Common.Attribute
+					{
+						Name = tag,
+						ServiceType = CognitiveServiceType.CustomVision,
+					};
+
+					treasure.Attributes.Add(attribute);
+				}
+
 				Func<Game, Game> action = (refreshedGame) =>
 				{
 					refreshedGame = refreshedGame ?? Game;
@@ -79,11 +107,20 @@ namespace Hunt.Mobile.Common
 				{
 					SetGame(game);
 					OnTreasureAdded?.Invoke(Game);
-					Hud.Instance.ShowToast("Treasure successfully added.");
 				}
 
 				return game != null;
 			}
+		}
+
+		public async Task<string> UploadPhotoToAzureStorage(byte[] photo)
+		{
+			var url = await App.Instance.StorageService.SaveImage(photo, Game.Id);
+
+			if(url == null)
+				return null;
+
+			return url.ToUrlCDN();
 		}
 	}
 }

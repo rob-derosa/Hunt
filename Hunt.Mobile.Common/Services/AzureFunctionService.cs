@@ -16,6 +16,8 @@ namespace Hunt.Mobile.Common
 
 	public struct FunctionNames
 	{
+		public static string AnalyseCustomImage = nameof(AnalyseCustomImage);
+		public static string TrainClassifier = nameof(TrainClassifier);
 		public static string WakeUp = nameof(WakeUp);
 		public static string SaveImage = nameof(SaveImage);
 		public static string GetStorageToken = nameof(GetStorageToken);
@@ -195,12 +197,58 @@ namespace Hunt.Mobile.Common
 			return result;
 		}
 
-		async public Task<string[]> AnalyseImage(string[] imageIds)
+		async public Task<bool> AnalyzeCustomImage(Game game, string imageUrl, string treasureId)
+		{
+			try
+			{
+				var j = new JObject
+				{
+					{ "gameId", game.Id },
+					{ "treasureId", treasureId },
+					{ "imageUrl", imageUrl }
+				};
+
+				var url = nameof(FunctionNames.AnalyseCustomImage).ToUrl();
+				var result = await SendPostRequest<bool>(url, j);
+				return result;
+			}
+			catch(Exception e)
+			{
+				Log.Instance.LogException(e);
+			}
+
+			return false;
+		}
+
+		async public Task<bool> TrainClassifier(Game game, List<string> imageUrls, string[] tags)
+		{
+			try
+			{
+				var j = new JObject
+				{
+					{ "gameId", game.Id },
+					{ "tags", JToken.FromObject(tags) },
+					{ "imageUrls", JToken.FromObject(imageUrls) }
+				};
+
+				var url = nameof(FunctionNames.TrainClassifier).ToUrl();
+				var result = await SendPostRequest<bool>(url, j);
+				return result;
+			}
+			catch(Exception e)
+			{
+				Log.Instance.LogException(e);
+			}
+
+			return false;
+		}
+
+		async public Task<string[]> AnalyseImage(string[] imageUrls)
 		{
 			try
 			{
 				var url = nameof(FunctionNames.AnalyseImage).ToUrl();
-				var result = await SendPostRequest<string[]>(url, imageIds);
+				var result = await SendPostRequest<string[]>(url, imageUrls);
 				return result;
 			}
 			catch(Exception e)

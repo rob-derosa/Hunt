@@ -42,7 +42,7 @@ namespace Hunt.Mobile.Common
 			var rowIndex = rootGrid.RowDefinitions.Count;
 			var height = ((App.Instance.ScreenSize.Width / 2) - 8) * 1.333333333333;
 
-			for(int i = 0; i < ViewModel.MinimumPhotoCount; i++)
+			for(int i = 0; i < ViewModel.MaximumPhotoCount; i++)
 			{
 				if(i % 2 == 0)
 					rootGrid.RowDefinitions.Add(new RowDefinition { Height = height });
@@ -71,11 +71,13 @@ namespace Hunt.Mobile.Common
 					FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
 					FontAttributes = FontAttributes.Bold,
 					CommandParameter = i,
-					BackgroundColor = Color.FromHex("#03FFFFFF"),
+					BackgroundColor = i < ViewModel.MinimumPhotoCount ? Color.FromHex("#03FFFFFF") : Color.FromHex("#2000"),
 					HorizontalOptions = LayoutOptions.Fill,
 					VerticalOptions = LayoutOptions.Fill,
 					Margin = new Thickness(0),
 					AutomationId = $"tag{i}",
+					BorderColor = Color.FromHex("#4FFF"),
+					BorderWidth = i < ViewModel.MinimumPhotoCount ? .5 : 0,
 				};
 
 				button.Clicked += TakePhotoClicked;
@@ -87,21 +89,33 @@ namespace Hunt.Mobile.Common
 					rowIndex++;
 			}
 
-			//var submit = new Button
-			//{
-			//	Text = "Submit",
-			//	VerticalOptions = LayoutOptions.End,
-			//};
+			var submit = new Button
+			{
+				Text = "Submit",
+				VerticalOptions = LayoutOptions.End,
+			};
 
-			//rootGrid.RowDefinitions.Add(new RowDefinition { Height = submit.HeightRequest });
-			//rootGrid.Children.Add(submit);
-			//Grid.SetRow(submit, rootGrid.RowDefinitions.Count - 1);
-			//Grid.SetColumnSpan(submit, 2);
+			rootGrid.RowDefinitions.Add(new RowDefinition { Height = submit.HeightRequest });
+			rootGrid.Children.Add(submit);
+			Grid.SetRow(submit, rootGrid.RowDefinitions.Count - 1);
+			Grid.SetColumnSpan(submit, 2);
 
-			//submit.Clicked += SubmitClicked;
+			submit.Clicked += SubmitClicked;
 		}
 
 		#endregion
+
+		async void SubmitClicked(object sender, EventArgs e)
+		{
+			if(ViewModel.Photos.Count < ViewModel.MinimumPhotoCount)
+			{
+				Hud.Instance.ShowToast($"Please snap at least {ViewModel.MinimumPhotoCount} photos and up to {ViewModel.MaximumPhotoCount}");
+				return;
+			}
+
+			var page = new AddCustomTreasurePage(ViewModel);
+			await Navigation.PushAsync(page);
+		}
 
 		#region Take Photo
 
@@ -125,13 +139,6 @@ namespace Hunt.Mobile.Common
 			Grid.SetColumn(image, index % 2);
 			rootGrid.Children.Add(image);
 			ViewModel.Photos.Add(photo);
-
-			if(ViewModel.Photos.Count >= ViewModel.MinimumPhotoCount)
-			{
-				await Task.Delay(1000);
-				var page = new AddCustomTreasurePage(ViewModel);
-				await Navigation.PushAsync(page);
-			}
 		}
 
 		async public Task<byte[]> TakePhotoAsync()
