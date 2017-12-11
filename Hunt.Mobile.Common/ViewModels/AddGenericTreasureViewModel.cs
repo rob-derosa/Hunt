@@ -8,18 +8,9 @@ using Xamarin.Forms;
 
 namespace Hunt.Mobile.Common
 {
-	public class AddTreasureViewModel : BaseGameViewModel
+	public class AddGenericTreasureViewModel : BaseAddTreasureViewModel
 	{
 		string _treasureImageUrl;
-		public Action<Game> OnTreasureAdded { get; set; }
-
-		string _hint;
-		public string Hint
-		{
-			get { return _hint; }
-			set { SetPropertyChanged(ref _hint, value); SetPropertyChanged(nameof(CanContinue)); }
-		}
-
 		byte[] _photo;
 		ImageSource _photoImageSource;
 		public byte[] Photo
@@ -58,11 +49,6 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		public bool CanContinue
-		{
-			get { return Photo != null && SelectedAttributes.Count >= 2 && !string.IsNullOrWhiteSpace(Hint); }
-		}
-
 		public async Task<bool> AnalyzePhotoForAttributes()
 		{
 			using(var busy = new Busy(this, "Uploading photo"))
@@ -93,13 +79,11 @@ namespace Hunt.Mobile.Common
 		public void AddAttribute(string text)
 		{
 			SelectedAttributes.Add(text);
-			SetPropertyChanged(nameof(CanContinue));
 		}
 
 		public void RemoveAttribute(string text)
 		{
 			SelectedAttributes.Remove(text);
-			SetPropertyChanged(nameof(CanContinue));
 		}
 
 		public async Task<bool> SaveTreasure()

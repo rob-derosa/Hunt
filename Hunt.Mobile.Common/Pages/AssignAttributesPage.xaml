@@ -2,7 +2,7 @@
 <local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:Hunt.Mobile.Common"
-	x:TypeArguments="local:AddTreasureViewModel"
+	x:TypeArguments="local:AddGenericTreasureViewModel"
 	x:Class="Hunt.Mobile.Common.AssignAttributesPage">
 
 	<local:BaseContentPage.RootContent>

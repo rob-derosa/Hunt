@@ -6,6 +6,7 @@ namespace Hunt.Common
 	{
 		None,
 		Vision,
+		CustomVision,
 		OpticalCharacterRecognition,
 		Emotion,
 		Facial,

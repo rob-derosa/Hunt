@@ -46,6 +46,9 @@ namespace Hunt.Common
 		[JsonProperty("treasures")]
 		public List<Treasure> Treasures { get; set; } = new List<Treasure>();
 
+		[JsonProperty("customVisionProjectId")]
+		public string CustomVisionProjectId { get; set; }
+
 		[JsonIgnore]
 		public bool HasEnded { get { return EndDate != null; } }
 

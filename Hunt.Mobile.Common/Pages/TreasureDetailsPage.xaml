@@ -81,10 +81,9 @@
 						<!-- hero image / instructions -->
 						
 						<Grid Grid.Row="1"
-							HeightRequest="240"
+							HeightRequest="300"
 							HorizontalOptions="FillAndExpand"
 							VerticalOptions="Start">
-
 
 							<Label Text="To acquire this treasure and earn the points, use the hint below to identify and photograph the correct answer."
 								IsVisible="{Binding IsAcquired,

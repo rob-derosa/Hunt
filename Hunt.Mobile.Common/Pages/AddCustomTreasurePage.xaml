@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	xmlns:ci="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+	x:TypeArguments="local:AddCustomTreasureViewModel"
+	x:Class="Hunt.Mobile.Common.AddCustomTreasurePage">
+	
+	<local:BaseContentPage.RootContent>
+		<Grid RowSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				CanMoveBack="false"
+				CanClose="true"
+				Title="Add Custom Treasure" />
+
+			<ScrollView Grid.Row="1">
+				<Grid x:Name="contentGrid"
+					RowSpacing="0">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" /> <!-- photo/instructions -->
+						<RowDefinition Height="Auto" /> <!-- tag text -->
+						<RowDefinition Height="Auto" /> <!-- hint text -->
+						<RowDefinition Height="*" /> 	<!-- space -->
+						<RowDefinition Height="Auto" />	<!-- button bar -->
+					</Grid.RowDefinitions>
+
+					<!-- hero image / instructions -->
+					<Grid HeightRequest="300"
+						HorizontalOptions="Center"
+						VerticalOptions="Center">
+
+						<Label Text="Enter a hint for the players and at least 2 tags, separated by commas, for the object below, then we can train the classifier."
+							FontSize="Medium"
+							LineBreakMode="WordWrap"
+							VerticalOptions="Center"
+							HorizontalTextAlignment="Center"
+							Margin="40,00,40,40" />
+
+						<Image
+							Source="{Binding HeroImageSource}"
+							VerticalOptions="Fill"
+							HorizontalOptions="Fill"
+							Aspect="AspectFill" />
+
+					</Grid>
+
+					<!-- tag -->
+					<Grid Grid.Row="1"
+						HorizontalOptions="FillAndExpand"
+						VerticalOptions="FillAndExpand">
+						
+						<ContentView
+							VerticalOptions="Start"
+							Grid.Style="{StaticResource separator}" />
+						
+						<Entry
+							Margin="20,10"
+							Placeholder="Enter at least 2 tags that define this object"
+							Text="{Binding AssignedTags}"
+							HorizontalOptions="FillAndExpand"
+							AutomationId="tagEntry"
+							VerticalOptions="Center" />
+						
+						<ContentView
+							Grid.Style="{StaticResource separator}" />
+					</Grid>
+					
+					<!-- hint -->
+					<Grid Grid.Row="2"
+						HorizontalOptions="FillAndExpand"
+						VerticalOptions="FillAndExpand">
+						
+						<ContentView
+							VerticalOptions="Start"
+							Grid.Style="{StaticResource separator}" />
+						
+						<Entry
+							Margin="20,10"
+							Placeholder="Enter a hint here"
+							Text="{Binding Hint}"
+							HorizontalOptions="FillAndExpand"
+							AutomationId="hintEntry"
+							VerticalOptions="Center" />
+						
+						<ContentView
+							Grid.Style="{StaticResource separator}" />
+					</Grid>
+
+					<Button Grid.Row="4"
+						AutomationId="submitButton"
+						Clicked="SubmitClicked"
+						VerticalOptions="End"
+						Text="Submit for Training" />
+					
+				</Grid>
+			</ScrollView>
+
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>

@@ -9,11 +9,9 @@ using Xamarin.Forms;
 
 namespace Hunt.Mobile.Common
 {
-	public partial class AddTreasurePage : BaseContentPage<AddTreasureViewModel>
+	public partial class AddGenericTreasurePage : BaseContentPage<AddGenericTreasureViewModel>
 	{
-		bool _isWaitingForLandscape;
-
-		public AddTreasurePage()
+		public AddGenericTreasurePage()
 		{
 			if(IsDesignMode)
 			{
@@ -23,7 +21,7 @@ namespace Hunt.Mobile.Common
 			InitializeComponent();
 		}
 
-		public AddTreasurePage(Game game)
+		public AddGenericTreasurePage(Game game)
 		{
 			ViewModel.SetGame(game);
 			InitializeComponent();
@@ -32,21 +30,6 @@ namespace Hunt.Mobile.Common
 		void TakePhotoClicked(object sender, EventArgs e)
 		{
 			DisplayCameraView();
-		}
-
-		protected override void OnOrientationChanged(Orientation orientation)
-		{
-			base.OnOrientationChanged(orientation);
-
-			if(orientation == Orientation.Landscape)
-			{
-				if(_isWaitingForLandscape)
-				{
-					_isWaitingForLandscape = false;
-					Hud.Instance.Dismiss();
-					DisplayCameraView();
-				}
-			}
 		}
 
 		async void DisplayCameraView()
@@ -64,7 +47,7 @@ namespace Hunt.Mobile.Common
 
 			if(string.IsNullOrWhiteSpace(ViewModel.Hint))
 			{
-				Hud.Instance.ShowToast("Please enter a hint");
+				Hud.Instance.ShowToast("Please enter a hint as a clue for the players");
 				return;
 			}
 

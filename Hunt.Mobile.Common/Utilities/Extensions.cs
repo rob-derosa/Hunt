@@ -124,9 +124,9 @@ namespace Hunt.Mobile.Common
 			page.RemovePage(page.NavigationStack[page.NavigationStack.Count - 2]);
 		}
 
-		async public static Task PopToDashboard(this INavigation page)
+		async public static Task PopToPageType(this INavigation page, Type type)
 		{
-			while(!(page.NavigationStack[page.NavigationStack.Count - 2] is DashboardPage))
+			while(!(page.NavigationStack[page.NavigationStack.Count - 2].GetType() == type))
 			{
 				page.RemoveSecondToLastPage();
 			}
@@ -373,7 +373,7 @@ namespace Hunt.Mobile.Common
 					return team.AcquiredTreasure.SingleOrDefault(t => t.TreasureId == treasure.Id);
 			}
 
-			if(game.IsCoordinator())
+			if(game.IsCoordinator() || game.GetTeam() == null)
 				return null;
 
 			return game.GetTeam().AcquiredTreasure.SingleOrDefault(t => t.TreasureId == treasure.Id);

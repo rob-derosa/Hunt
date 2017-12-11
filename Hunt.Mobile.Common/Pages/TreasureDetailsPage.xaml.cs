@@ -11,8 +11,6 @@ namespace Hunt.Mobile.Common
 {
 	public partial class TreasureDetailsPage : BaseContentPage<TreasureDetailsViewModel>
 	{
-		bool _isWaitingForLandscape;
-
 		public TreasureDetailsPage()
 		{
 			if(IsDesignMode)
@@ -36,21 +34,6 @@ namespace Hunt.Mobile.Common
 		void TakePhotoClicked(object sender, EventArgs e)
 		{
 			DisplayCameraView();
-		}
-
-		protected override void OnOrientationChanged(Orientation orientation)
-		{
-			base.OnOrientationChanged(orientation);
-
-			if(orientation == Orientation.Landscape)
-			{
-				if(_isWaitingForLandscape)
-				{
-					_isWaitingForLandscape = false;
-					Hud.Instance.Dismiss();
-					DisplayCameraView();
-				}
-			}
 		}
 
 		async void DisplayCameraView()

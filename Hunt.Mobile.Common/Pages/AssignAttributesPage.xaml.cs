@@ -6,14 +6,14 @@ using Xamarin.Forms;
 
 namespace Hunt.Mobile.Common
 {
-	public partial class AssignAttributesPage : BaseContentPage<AddTreasureViewModel>
+	public partial class AssignAttributesPage : BaseContentPage<AddGenericTreasureViewModel>
 	{
 		public AssignAttributesPage()
 		{
 			Initialize();
 		}
 
-		public AssignAttributesPage(AddTreasureViewModel viewModel)
+		public AssignAttributesPage(AddGenericTreasureViewModel viewModel)
 		{
 			ViewModel = viewModel;
 			Initialize();
@@ -89,6 +89,8 @@ namespace Hunt.Mobile.Common
 			rootView.Children.Add(rootGrid);
 		}
 
+		#endregion
+
 		void AttributeButtonClicked(object sender, EventArgs e)
 		{
 			var btn = sender as Button;
@@ -100,7 +102,7 @@ namespace Hunt.Mobile.Common
 					Hud.Instance.ShowToast("Please unselect a tag first.");
 					return;
 				}
-				
+
 				btn.CommandParameter = true;
 				btn.BackgroundColor = Color.FromHex("#1FFF");
 				btn.FontAttributes = FontAttributes.Bold;
@@ -122,11 +124,7 @@ namespace Hunt.Mobile.Common
 			if(!success)
 				return;
 
-
-			Navigation.RemoveSecondToLastPage();
-			await Navigation.PopAsync();
+			await Navigation.PopToPageType(typeof(GameDetailsPage));
 		}
-
-		#endregion
 	}
 }

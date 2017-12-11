@@ -10,6 +10,8 @@
     <PackageReference Include="Microsoft.Azure.DocumentDB" Version="1.18.0" />
     <PackageReference Include="Microsoft.Azure.NotificationHubs" Version="1.0.9" />
     <PackageReference Include="Microsoft.Azure.WebJobs.ServiceBus" Version="2.1.0-beta4" />
+    <PackageReference Include="Microsoft.Cognitive.CustomVision.Prediction" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Cognitive.CustomVision.Training" Version="1.0.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="Microsoft.ProjectOxford.Vision" Version="1.0.393" />

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	x:TypeArguments="local:BaseAddTreasureViewModel"
+	x:Class="Hunt.Mobile.Common.TreasureTypePage">
+
+	<local:BaseContentPage.RootContent>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				Title="Choose Treasure Type"
+				CanClose="true" 
+				CanMoveBack="false" />
+			
+			<ScrollView x:Name="scrollView"
+				Grid.Row="1">
+
+				<StackLayout
+					VerticalOptions="Center"
+					Spacing="20">
+					
+					<Label Text="To use existing known objects in Azure, like a baseball, choose Generic Treasure."
+						Margin="40,0"
+						FontSize="Medium"
+						HorizontalTextAlignment="Center" />
+
+					<Label Text="To train a custom object, such as a landmark, choose Custom Treasure"
+						Margin="40,20"
+						FontSize="Medium"
+						HorizontalTextAlignment="Center" />
+
+					<Button Text="Generic Treasure"
+						Clicked="GenericTreasureClicked"
+						Margin="0,20"/>
+					
+					<Button Text="Custom Treasure"
+						Clicked="CustomTreasureClicked"/>
+				</StackLayout>
+			</ScrollView>
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>

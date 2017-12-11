@@ -20,6 +20,9 @@ namespace Hunt.Backend.Functions
 		public string NotificationHubProductionName;
 		public string VisionUrl;
 		public string VisionServiceKey;
+		public string CustomVisionTrainingKey;
+		public string CustomVisionPredictionKey;
+		public double CustomVisionMinimumPredictionProbability = .6;
 
 		public const string EndGameBusName = "endgame";
 		public const string BlobImageContainer = "images";
@@ -33,69 +36,31 @@ namespace Hunt.Backend.Functions
 				ServiceBusAccountKey = Environment.GetEnvironmentVariable("SERVICEBUS_ACCOUNTKEY"),
 				ServiceBusAccountName = Environment.GetEnvironmentVariable("SERVICEBUS_ACCOUNTNAME"),
 				ServiceBusAccountNamespace = Environment.GetEnvironmentVariable("SERVICEBUS_NAMESPACE"),
+
 				BlobSharedStorageKey = Environment.GetEnvironmentVariable("BLOB_SHAREDSTORAGEKEY"),
+
 				ContentModeratorKey = Environment.GetEnvironmentVariable("CONTENTMODERATOR_KEY"),
 				ContentModeratorUrl = Environment.GetEnvironmentVariable("CONTENTMODERATOR_URL"),
+
 				CosmosKey = Environment.GetEnvironmentVariable("COSMOS_KEY"),
 				CosmosUrl = Environment.GetEnvironmentVariable("COSMOS_URL"),
+
 				NotificationHubSandboxConnectionString = Environment.GetEnvironmentVariable("HUB_SANDBOX_CONNECTIONSTRING"),
 				NotificationHubSandboxName = Environment.GetEnvironmentVariable("HUB_SANDBOX_NAME"),
 				NotificationHubProductionConnectionString = Environment.GetEnvironmentVariable("HUB_PRODUCTION_CONNECTIONSTRING"),
 				NotificationHubProductionName = Environment.GetEnvironmentVariable("HUB_PRODUCTION_NAME"),
+
 				VisionUrl = Environment.GetEnvironmentVariable("VISION_URL"),
 				VisionServiceKey = Environment.GetEnvironmentVariable("VISION_SERVICEKEY"),
+
+				CustomVisionTrainingKey = Environment.GetEnvironmentVariable("CUSTOMVISION_TRAININGKEY"),
+				CustomVisionPredictionKey = Environment.GetEnvironmentVariable("CUSTOMVISION_PREDICTIONKEY"),
 			};
+
+			var probability = Environment.GetEnvironmentVariable("CUSTOMVISION_MINIMUM_PREDICTION_PROBABILITY");
+			if (double.TryParse(probability, out var i)) config.CustomVisionMinimumPredictionProbability = i;
 
 			return config;
 		}
-	}
-
-	//ServiceBus
-	public class ServiceBusConfig
-	{
-		//Queues
-
-		//Account
-		public string AccountName;
-		public string AccountKey;
-		public string AccountNamespace;
-	}
-
-	//Blob
-	public class BlobConfig
-	{
-		public string SharedStorageKey;
-		public string ImageContainer;
-	}
-
-	//Vision
-	public class VisionConfig
-	{
-		public string Url;
-		public string ServiceKey;
-	}
-
-	public class CosmosConfig
-	{
-		public string Url;
-		public string Key;
-	}
-
-	public class ContentModeratorConfig
-	{
-		public string Url;
-		public string Key;
-	}
-
-	public class NotificationHubConfig
-	{
-		public HubMode Sandbox = new HubMode();
-		public HubMode Production = new HubMode();
-	}
-
-	public class HubMode
-	{
-		public string Name;
-		public string ConnectionString;
 	}
 }

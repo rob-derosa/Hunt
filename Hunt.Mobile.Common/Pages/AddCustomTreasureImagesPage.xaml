@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+	xmlns:local="clr-namespace:Hunt.Mobile.Common"
+	xmlns:ci="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+	x:TypeArguments="local:AddCustomTreasureViewModel"
+	x:Class="Hunt.Mobile.Common.AddCustomTreasureImagesPage">
+	
+	<local:BaseContentPage.RootContent>
+		<Grid RowSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<local:NavigationBar
+				CanMoveBack="true"
+				CanClose="true"
+				Title="Add Custom Treasure" />
+
+			<ScrollView Grid.Row="1">
+				<Grid x:Name="rootGrid" Margin="4,10" RowSpacing="8" ColumnSpacing="8" />
+			</ScrollView>
+		</Grid>
+	</local:BaseContentPage.RootContent>
+</local:BaseContentPage>
