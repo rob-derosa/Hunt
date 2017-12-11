@@ -242,14 +242,18 @@ namespace Hunt.Backend.Functions
 			if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(message) && players.Count > 0)
 			{
 				devices = players.Where(pl => pl.Id != null).Select(pl => pl.Id).ToList();
+				var payload = new Dictionary<string, string> { { "gameId", game.Id } };
 
 				if (playerId != null)
+				{
+					payload.Add("playerId", playerId);
 					devices.Remove(playerId);
+				}
 
 				if (devices.Count > 0)
 				{
 					var instance = game.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
-					await instance.SendNotification(message, devices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
+					await instance.SendNotification(message, devices.ToArray(), payload);
 				}
 			}
 
@@ -257,14 +261,18 @@ namespace Hunt.Backend.Functions
 			{
 				var allPlayers = game.GetAllPlayers();
 				var allDevices = allPlayers.Where(pl => pl.Id != null && !devices.Contains(pl.Id)).Select(pl => pl.Id).ToList();
+				var payload = new Dictionary<string, string> { { "gameId", game.Id } };
 
 				if (playerId != null)
+				{
+					payload.Add("playerId", playerId);
 					allDevices.Remove(playerId);
+				}
 
 				if (allDevices.Count> 0)
 				{
 					var instance = game.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
-					instance.SendSilentNotification(allDevices.ToArray(), new Dictionary<string, string> { { "gameId", game.Id } });
+					instance.SendSilentNotification(devices.ToArray(), payload);
 				}
 			}
 		}
