@@ -22,6 +22,7 @@ namespace Hunt.Backend.Functions
 		public string VisionServiceKey;
 		public string CustomVisionTrainingKey;
 		public string CustomVisionPredictionKey;
+		public double CustomVisionMinimumPredictionProbability = .6;
 
 		public const string EndGameBusName = "endgame";
 		public const string BlobImageContainer = "images";
@@ -55,6 +56,9 @@ namespace Hunt.Backend.Functions
 				CustomVisionTrainingKey = Environment.GetEnvironmentVariable("CUSTOMVISION_TRAININGKEY"),
 				CustomVisionPredictionKey = Environment.GetEnvironmentVariable("CUSTOMVISION_PREDICTIONKEY"),
 			};
+
+			var probability = Environment.GetEnvironmentVariable("CUSTOMVISION_MINIMUM_PREDICTION_PROBABILITY");
+			if (double.TryParse(probability, out var i)) config.CustomVisionMinimumPredictionProbability = i;
 
 			return config;
 		}

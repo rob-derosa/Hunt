@@ -7,21 +7,18 @@ using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
-using Microsoft.ProjectOxford.Vision.Contract;
 using Microsoft.ApplicationInsights.DataContracts;
-using Microsoft.ApplicationInsights.Extensibility;
-
-using Newtonsoft.Json;
 
 using Hunt.Backend.Analytics;
 using Microsoft.Cognitive.CustomVision;
 using Newtonsoft.Json.Linq;
 using Hunt.Common;
 using Microsoft.Cognitive.CustomVision.Models;
+using System.Threading;
 
 namespace Hunt.Backend.Functions
 {
-    public static class TrainClassifier
+	public static class TrainClassifier
 	{
         [FunctionName(nameof(TrainClassifier))]
 
@@ -49,10 +46,16 @@ namespace Hunt.Backend.Functions
 					
 					//Get the existing project for this game if there is one
 					if(!string.IsNullOrEmpty(game.CustomVisionProjectId))
-						project = api.GetProject(Guid.Parse(game.CustomVisionProjectId));
-					
+					{
+						try
+						{
+							project = api.GetProject(Guid.Parse(game.CustomVisionProjectId));
+						}
+catch (Exception) { }
+					}
+
 					//Otherwise create a new project and associate it with the game
-					if(project == null)
+					if (project == null)
 					{
 						project = api.CreateProject(game.Name, game.Id);
 						game.CustomVisionProjectId = project.Id.ToString();
@@ -63,7 +66,7 @@ namespace Hunt.Backend.Functions
 					var tagModels = new List<ImageTagModel>();
 					foreach(string tag in tags)
 					{
-						var model = api.CreateTag(project.Id, tag);
+						var model = api.CreateTag(project.Id, tag.Trim());
 						tagModels.Add(model);
 					}
 
@@ -76,6 +79,13 @@ namespace Hunt.Backend.Functions
 
 					//Traing the classifier and generate a new iteration, that we'll set as the default
 					var iteration = api.TrainProject(project.Id);
+
+					while (iteration.Status == "Training")
+					{
+						Thread.Sleep(1000);
+						iteration = api.GetIteration(project.Id, iteration.Id);
+					}
+
 					iteration.IsDefault = true;
 					api.UpdateIteration(project.Id, iteration.Id, iteration);
 
