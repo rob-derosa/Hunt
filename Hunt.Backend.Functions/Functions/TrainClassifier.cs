@@ -47,23 +47,21 @@ namespace Hunt.Backend.Functions
 					//Get the existing project for this game if there is one
 					if(!string.IsNullOrEmpty(game.CustomVisionProjectId))
 					{
-						try
-						{
-							project = api.GetProject(Guid.Parse(game.CustomVisionProjectId));
-						}
-catch (Exception) { }
+						try	{ project = api.GetProject(Guid.Parse(game.CustomVisionProjectId)); }
+						catch (Exception) { }
 					}
 
 					//Otherwise create a new project and associate it with the game
 					if (project == null)
 					{
-						project = api.CreateProject(game.Name, game.Id);
+						project = api.CreateProject($"{game.Name}_{DateTime.Now.ToString()}_{Guid.NewGuid().ToString()}", game.Id);
 						game.CustomVisionProjectId = project.Id.ToString();
 						CosmosDataService.Instance.UpdateItemAsync<Game>(game).Wait();
 					}
 
 					//Generate tag models for training
 					var tagModels = new List<ImageTagModel>();
+
 					foreach(string tag in tags)
 					{
 						var model = api.CreateTag(project.Id, tag.Trim());
@@ -94,7 +92,6 @@ catch (Exception) { }
 				catch (Exception e)
 				{
 					analytic.TrackException(e);
-
 					return req.CreateErrorResponse(HttpStatusCode.BadRequest, e);
 				}
             }
