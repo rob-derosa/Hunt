@@ -3,8 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:Hunt.Mobile.Common"
 	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
-	x:TypeArguments="local:GameDetailsViewModel"
 	xmlns:lot="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+	x:TypeArguments="local:GameDetailsViewModel"
  	x:Class="Hunt.Mobile.Common.GameDetailsPage">
 
 	<local:BaseContentPage.RootContent>

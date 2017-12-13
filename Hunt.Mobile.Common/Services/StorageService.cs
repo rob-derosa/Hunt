@@ -14,7 +14,7 @@ namespace Hunt.Mobile.Common
 				var task = new Task<string>(() => App.Instance.DataService.GetStorageToken(blobId).Result);
 				await task.RunProtected();
 
-				if(task.IsFaulted)
+				if(!task.WasSuccessful())
 					return null;
 
 				var token = task.Result;

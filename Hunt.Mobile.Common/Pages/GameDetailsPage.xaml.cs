@@ -8,6 +8,8 @@ namespace Hunt.Mobile.Common
 {
 	public partial class GameDetailsPage : BaseContentPage<GameDetailsViewModel>
 	{
+		ShareGameInvitePage _shareInvitePage;
+
 		public GameDetailsPage()
 		{
 			if(App.Instance.IsDesignMode)
@@ -20,6 +22,8 @@ namespace Hunt.Mobile.Common
 		{
 			ViewModel.SetGame(game);
 			Initialize();
+
+			Task.Run(() => _shareInvitePage = new ShareGameInvitePage());
 		}
 
 		void Initialize()
@@ -81,7 +85,7 @@ namespace Hunt.Mobile.Common
 
 		async void ShareGameClicked(object sender, EventArgs e)
 		{
-			await Navigation.PushModalAsync(new ShareGameInvitePage());
+			await Navigation.PushModalAsync(_shareInvitePage);
 		}
 
 		async void ViewTeamsClicked(object sender, EventArgs e)

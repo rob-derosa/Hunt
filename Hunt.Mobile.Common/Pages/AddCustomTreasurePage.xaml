@@ -35,7 +35,7 @@
 						HorizontalOptions="Center"
 						VerticalOptions="Center">
 
-						<Label Text="Enter a hint for the players and at least 2 tags, separated by commas, for the object below, then we can train the classifier."
+						<Label Text="Enter a hint for the players and some tags, separated by commas, for the object below, then we can train the classifier."
 							FontSize="Medium"
 							LineBreakMode="WordWrap"
 							VerticalOptions="Center"
@@ -61,7 +61,7 @@
 						
 						<Entry
 							Margin="20,10"
-							Placeholder="Enter at least 2 tags that define this object"
+							Placeholder="Enter at least 1 tag that defines this object"
 							Text="{Binding AssignedTags}"
 							HorizontalOptions="FillAndExpand"
 							AutomationId="tagEntry"

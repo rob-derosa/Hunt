@@ -9,16 +9,16 @@ namespace Hunt.Mobile.Common
 		public ShareGameInvitePage()
 		{
 			InitializeComponent();
-		}
-
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
 
 			if(ViewModel.QRCodeImage == null)
 			{
 				ViewModel.GenerateQRCode();
 			}
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
 		}
 	}
 }

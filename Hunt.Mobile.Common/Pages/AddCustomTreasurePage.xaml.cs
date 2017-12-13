@@ -28,9 +28,9 @@ namespace Hunt.Mobile.Common
 
 		async void SubmitClicked(object sender, EventArgs e)
 		{
-			if(string.IsNullOrWhiteSpace(ViewModel.AssignedTags) || ViewModel.AssignedTags.Split(',').Length < 2)
+			if(string.IsNullOrWhiteSpace(ViewModel.AssignedTags))
 			{
-				Hud.Instance.ShowToast("Please enter at least 2 comma-separated tags that define this object");
+				Hud.Instance.ShowToast("Please enter some comma-separated tags that define this object");
 				return;
 			}
 

@@ -287,11 +287,12 @@ namespace Hunt.Mobile.Common
 			AbsoluteLayout.SetLayoutFlags(_contentView, AbsoluteLayoutFlags.All);
 			AbsoluteLayout.SetLayoutBounds(_contentView, new Rectangle(0,0,1,1));
 
+			AbsoluteLayout.SetLayoutFlags(_toastRoot, AbsoluteLayoutFlags.All);
+			AbsoluteLayout.SetLayoutBounds(_toastRoot, new Rectangle(0, 0, 1, 1));
+
 			AbsoluteLayout.SetLayoutFlags(_hudRoot, AbsoluteLayoutFlags.All);
 			AbsoluteLayout.SetLayoutBounds(_hudRoot, new Rectangle(0, 0, 1, 1));
 
-			AbsoluteLayout.SetLayoutFlags(_toastRoot, AbsoluteLayoutFlags.All);
-			AbsoluteLayout.SetLayoutBounds(_toastRoot, new Rectangle(0, 0, 1, 1));
 			_toastRoot.TranslationY = NavigationBar.YOffset * -1;
 
 			_rootLayout.Children.Add(_contentView);

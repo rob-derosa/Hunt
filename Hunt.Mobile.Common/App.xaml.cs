@@ -49,6 +49,7 @@ namespace Hunt.Mobile.Common
 		{
 			_instance = this;
 
+			//Hack to determine if this page is being rendered within the Visual Studio Forms Previewer or at runtime
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
 			{

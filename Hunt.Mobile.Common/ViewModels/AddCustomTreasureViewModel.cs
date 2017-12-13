@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hunt.Common;
@@ -64,9 +65,15 @@ namespace Hunt.Mobile.Common
 					i++;
 				}
 
-				var tags = AssignedTags.Split(',');
+				var tags = new List<string>(AssignedTags.Split(',').ToList());
+				while(tags.Count < 2)
+					tags.Add("random_tag");
+
+				for(int j = 0; i < tags.Count; i++)
+					tags[j] = $"{tags[j].Trim()}_{Guid.NewGuid().ToString()}";
+				
 				Hud.Instance.HudMessage = $"Training the classifier";
-				var task = new Task<bool>(() => App.Instance.DataService.TrainClassifier(Game, imageUrls, tags).Result);
+				var task = new Task<bool>(() => App.Instance.DataService.TrainClassifier(Game, imageUrls, tags.ToArray()).Result);
 				await task.RunProtected();
 
 				if(!task.WasSuccessful() || !task.Result)
