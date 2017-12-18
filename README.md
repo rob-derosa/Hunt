@@ -68,7 +68,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 
 ### Technologies Utilized
 * #### Front-end
-  * [Xamarin Forms](http://xamarin.com/forms)
+  * [Xamarin.Forms](http://xamarin.com/forms)
   * [App Center](http://mobile.azure.com)
     * Build
     * Test
