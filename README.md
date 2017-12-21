@@ -44,7 +44,9 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Treasure
   * A treasure consists of a hint and a tagged photograph supplied by the Coordinator.
   * There must be at least 2 treasures added to the game before it can be started.
-  * Photos taken by the Coordinator are analyzed by [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) and a set of associated tags is presented, of which up to 2 can be selected.
+  * Photos taken by the Coordinator are analyzed by
+    * [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) and a set of associated tags is presented, of which up to 2 can be selected. Generic treasures are acquired if the player snaps a pucture of the object and the analyzation result contains at least one of the tags assigned to the treasure. 
+    * [Custom Vision](https://azure.microsoft.com/en-us/services/cognitive-services/custom-vision-service/) where non-generic objects (landmarks, retail items, etc), are photographed 5 - 10 times from different angles which generates a trained model. Custom Vision treasures are acquired if the player snaps a picture of the object and the analyzation result is of .7 degree of probability of higher.
   * If teams solve the hint and take a photo of a similar object with any matching tags, the treasure is acquired.
   * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
     
@@ -76,14 +78,14 @@ The first team to acquire all the treasures will win the game. If no team acquir
     * Crashes
     * Distribution
   * 3rd Party SDKs
-    * SkiaSharp (vector and SVG render kit)
-    * Lottie (animations)
-    * PullToRefreshPage (pull to refresh on non-ListView pages)
-    * ImageCircle (better than a square)
-    * CrossMedia (capturing camera photos)
-    * CrossConnectivity (determining device network connectivity)
-    * ZXing (QR code generation/scanning)
-    * XFGloss (styled switches and sliders, background gradient)
+    * [SkiaSharp](https://github.com/mono/SkiaSharp) (vector and SVG render kit)
+    * [Lottie](https://github.com/martijn00/LottieXamarin) (animations)
+    * [PullToRefreshPage](https://github.com/jamesmontemagno/Xamarin.Forms-PullToRefreshLayout) (pull to refresh on non-ListView pages)
+    * [ImageCircle](https://github.com/jamesmontemagno/Xamarin.Plugins/tree/master/ImageCircle) (better than a square)
+    * [CrossMedia](https://github.com/jamesmontemagno/MediaPlugin) (capturing camera photos)
+    * [CrossConnectivity](https://github.com/jamesmontemagno/Xamarin.Plugins/tree/master/Connectivity) (determining device network connectivity)
+    * [ZXing](https://github.com/Redth/ZXing.Net.Mobile) (QR code generation/scanning)
+    * [XFGloss](https://github.com/tbaggett/xfgloss) (styled switches and sliders, background gradient)
     
 * #### Back-end
   * [Functions (C#)](https://azure.microsoft.com/en-us/services/functions)
@@ -92,8 +94,9 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * [Application Insights](https://azure.microsoft.com/en-us/services/application-insights/)
   * [Notification Hubs](https://azure.microsoft.com/en-us/services/notification-hubs/)
   * Cognitive Services
-    * [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
-    * [Content Moderator API](https://azure.microsoft.com/en-us/services/cognitive-services/content-moderator/)
+    * [Custom Vision](https://azure.microsoft.com/en-us/services/cognitive-services/custom-vision-service/) 
+    * [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
+    * [Content Moderator](https://azure.microsoft.com/en-us/services/cognitive-services/content-moderator/)
   * [Service Bus (timed brokered message to end games)](https://azure.microsoft.com/en-us/services/service-bus/)
   * Unit tested on commit
   * [Deployment via ARM Templates](https://azure.microsoft.com/en-us/resources/templates/)
