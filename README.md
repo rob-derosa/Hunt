@@ -45,7 +45,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * A treasure consists of a hint and a tagged photograph supplied by the Coordinator.
   * There must be at least 2 treasures added to the game before it can be started.
   * Photos taken by the Coordinator are analyzed by
-    * [Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) and a set of associated tags is presented, of which up to 2 can be selected. Generic treasures are acquired if the player snaps a pucture of the object and the analyzation result contains at least one of the tags assigned to the treasure. 
+    * [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) and a set of associated tags is presented, of which up to 2 can be selected. Generic treasures are acquired if the player snaps a pucture of the object and the analyzation result contains at least one of the tags assigned to the treasure. 
     * [Custom Vision](https://azure.microsoft.com/en-us/services/cognitive-services/custom-vision-service/) where non-generic objects (landmarks, retail items, etc), are photographed 5 - 10 times from different angles which generates a trained model. Custom Vision treasures are acquired if the player snaps a picture of the object and the analyzation result is of .7 degree of probability of higher.
   * If teams solve the hint and take a photo of a similar object with any matching tags, the treasure is acquired.
   * As a Coordinator, when adding treasure, the hint should not give away the object - the intent is to make the players solve a riddle or puzzle and then take a photograph of the answer.
@@ -65,7 +65,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 ### Back-end Patterns
 * Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers a game refresh.
 * Version conflicts are raised if the associated document timestamp is out of order - it is up to the client to handle this exception and resolve the conflict. See `ViewModel.SaveGameSafe`.
-* All images are stored in blob storage and passed to the Vision API via the blob URL.
+* All images are stored in blob storage and passed to the Computer Vision or Custom Vision via the blob URL.
 
 
 ### Technologies Utilized
