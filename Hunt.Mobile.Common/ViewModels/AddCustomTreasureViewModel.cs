@@ -69,12 +69,12 @@ namespace Hunt.Mobile.Common
 				while(tags.Count < 2)
 					tags.Add("random_tag");
 
-				//for(int j = 0; j < tags.Count; j++)
-					//tags[j] = $"{tags[j].Trim()}_{Guid.NewGuid().ToString()}";
-				
+				for(int j = 0; j < tags.Count; j++)
+					tags[j] = $"{tags[j].Trim()}{Guid.NewGuid().ToString().Split('-')[0]}";
+
 				Hud.Instance.HudMessage = $"Training the classifier";
 				var task = new Task<bool>(() => App.Instance.DataService.TrainClassifier(Game, imageUrls, tags.ToArray()).Result);
-				await task.RunProtected();
+                await task.RunProtected(NotifyMode.Throw);
 
 				if(!task.WasSuccessful() || !task.Result)
 					return false;

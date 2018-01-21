@@ -231,9 +231,8 @@ namespace Hunt.Mobile.Common
 			catch(Exception e)
 			{
 				Log.Instance.LogException(e);
+                throw;
 			}
-
-			return false;
 		}
 
 		async public Task<string[]> AnalyseImage(string[] imageUrls)
