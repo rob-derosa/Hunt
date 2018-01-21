@@ -124,7 +124,7 @@ namespace Hunt.Mobile.Common
 			if(!success)
 				return;
 
-			await Navigation.PopToPageType(typeof(GameDetailsPage));
+            await Navigation.PopModalAsync();
 		}
 	}
 }

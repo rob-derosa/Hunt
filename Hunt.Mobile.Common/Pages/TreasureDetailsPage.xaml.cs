@@ -79,8 +79,8 @@ namespace Hunt.Mobile.Common
 
 			var options = new StoreCameraMediaOptions
 			{
-				CompressionQuality = 50,
-				PhotoSize = PhotoSize.Small,
+				CompressionQuality = 80,
+				PhotoSize = PhotoSize.Medium,
 			};
 
 			var file = await CrossMedia.Current.TakePhotoAsync(options);

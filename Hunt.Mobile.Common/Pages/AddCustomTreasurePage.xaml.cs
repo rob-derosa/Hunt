@@ -40,16 +40,23 @@ namespace Hunt.Mobile.Common
 				return;
 			}
 
-			var success = await ViewModel.SaveTreasure();
+            try
+            {
+                var success = await ViewModel.SaveTreasure();
 
-			if(success)
-			{
-				await Navigation.PopModalAsync();
-			}
-			else
-			{
-				Hud.Instance.ShowToast($"There was an error - shrug");
-			}
+                if (success)
+                {
+                    await Navigation.PopModalAsync();
+                }
+                else
+                {
+                    Hud.Instance.ShowToast($"There was an error - shrug");
+                }
+            }
+            catch(Exception ex)
+            {
+                Hud.Instance.ShowToast(ex.Message);
+            }
 		}
 	}
 }
