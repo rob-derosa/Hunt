@@ -16,7 +16,7 @@
 				</Grid.RowDefinitions>
 
 				<StackLayout
-					VerticalOptions="Center"
+					VerticalOptions="End"
 					HorizontalOptions="Center"
 					Margin="40,0">
 
@@ -24,9 +24,9 @@
 						Margin="0,20,0,0"
 						Style="{StaticResource H1}"
 						Text="Hello friend" />
-					<Label
-						FontSize="Small"
-						Text="We're glad you're here. Please let us know who you are and we'll get you moving along." />
+                    <Label
+                        FontSize="Small"
+                        Text="Welcome to Hunt, a virtual scavenger hunt app that uses AI to determine if you've arrived at the correct conclusion.&#13;&#13;Please let us know who you are and we'll get you moving along." />
 				</StackLayout>
 
 				<Grid Grid.Row="1"

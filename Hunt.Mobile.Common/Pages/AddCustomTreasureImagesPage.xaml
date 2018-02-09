@@ -20,7 +20,12 @@
 				Title="Add Custom Treasure" />
 
 			<ScrollView Grid.Row="1">
-				<Grid x:Name="rootGrid" Margin="4,10" RowSpacing="8" ColumnSpacing="8" />
+                <StackLayout Spacing="0">
+                    <Label Margin="14"
+                        Text="Add 5 - 10 photos of the object from different angles and viewpoints so Azure can create and train a classifier."
+                        HorizontalTextAlignment="Center" />
+                    <Grid x:Name="rootGrid" Margin="4,10" RowSpacing="8" ColumnSpacing="8" />
+                </StackLayout>
 			</ScrollView>
 		</Grid>
 	</local:BaseContentPage.RootContent>

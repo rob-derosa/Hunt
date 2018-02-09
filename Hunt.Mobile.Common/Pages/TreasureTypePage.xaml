@@ -29,7 +29,7 @@
 						FontSize="Medium"
 						HorizontalTextAlignment="Center" />
 
-					<Label Text="To train a custom object, such as a landmark, choose Custom Treasure"
+					<Label Text="To train a custom object, such as a landmark or painting, choose Custom Treasure"
 						Margin="40,20"
 						FontSize="Medium"
 						HorizontalTextAlignment="Center" />
