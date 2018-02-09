@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using Hunt.Common;
 using Microsoft.Cognitive.CustomVision.Models;
 using System.Threading;
+using Microsoft.Rest;
 
 namespace Hunt.Backend.Functions
 {
@@ -72,8 +73,8 @@ namespace Hunt.Backend.Functions
 					var batch = new ImageUrlCreateBatch(tagModels.Select(m => m.Id).ToList(), imageUrls);
 					var summary = api.CreateImagesFromUrls(project.Id, batch);
 
-					if(!summary.IsBatchSuccessful)
-						return req.CreateErrorResponse(HttpStatusCode.BadRequest, "Image batch was unsuccessful");
+					//if(!summary.IsBatchSuccessful)
+					//	return req.CreateErrorResponse(HttpStatusCode.BadRequest, "Image batch was unsuccessful");
 
 					//Traing the classifier and generate a new iteration, that we'll set as the default
 					var iteration = api.TrainProject(project.Id);
@@ -92,7 +93,21 @@ namespace Hunt.Backend.Functions
 				catch (Exception e)
 				{
 					analytic.TrackException(e);
-					return req.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+
+					var baseException = e.GetBaseException();
+					var operationException = baseException as HttpOperationException;
+					var reason = baseException.Message;
+
+					if(operationException != null)
+					{
+						var jobj = JObject.Parse(operationException.Response.Content);
+						var code = jobj.GetValue("Code");
+
+						if(code != null && !string.IsNullOrWhiteSpace(code.ToString()))
+							reason = code.ToString();
+					}
+
+					return req.CreateErrorResponse(HttpStatusCode.BadRequest, reason);
 				}
             }
 		}
