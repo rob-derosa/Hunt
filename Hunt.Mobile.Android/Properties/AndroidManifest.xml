@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="15" android:versionName="1.5" android:largeHeap="true" package="com.microsoft.hunt">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="16" android:versionName="1.6" android:largeHeap="true" package="com.microsoft.hunt">
 	<uses-sdk android:minSdkVersion="21" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
@@ -12,5 +12,9 @@
 				<category android:name="${applicationId}" />
 			</intent-filter>
 		</receiver>
+		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.microsoft.hunt.fileprovider" android:exported="false" android:grantUriPermissions="true">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths">
+			</meta-data>
+		</provider>
 	</application>
 </manifest>
