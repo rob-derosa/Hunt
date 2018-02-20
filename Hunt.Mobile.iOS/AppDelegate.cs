@@ -24,7 +24,7 @@ namespace Hunt.Mobile.iOS
 		public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
 		{
 			//#if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
+			//Xamarin.Calabash.Start();
 			//#endif
 
 			ZXing.Net.Mobile.Forms.iOS.Platform.Init();

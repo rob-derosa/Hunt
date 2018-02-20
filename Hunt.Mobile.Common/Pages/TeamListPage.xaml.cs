@@ -137,6 +137,7 @@ namespace Hunt.Mobile.Common
 
 					if(player != null)
 					{
+						Console.WriteLine(player.Avatar);
 						if(!string.IsNullOrEmpty(player.Avatar))
 						{
 							var avatar = new CircleImage
@@ -145,7 +146,7 @@ namespace Hunt.Mobile.Common
 								WidthRequest = size,
 								Source = new UriImageSource
 								{
-									CachingEnabled = true,
+									//CachingEnabled = true,
 									Uri = new Uri(player.Avatar)
 								}
 							};

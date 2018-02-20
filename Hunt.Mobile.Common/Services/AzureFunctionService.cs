@@ -146,16 +146,18 @@ namespace Hunt.Mobile.Common
 
 		async public Task<Game> SaveGame(Game game, string action, IDictionary<string, string> args = null)
 		{
-			if(args == null)
+			if (args == null)
 				args = new KVP();
 
-			if(!args.ContainsKey("playerId"))
+			if (!args.ContainsKey("playerId"))
 				args.Add("playerId", App.Instance.Player.Id);
 
-			dynamic payload = new JObject();
-			payload.action = action;
-			payload.arguments = JObject.FromObject(args);
-			payload.game = JObject.FromObject(game);
+			JObject payload = new JObject
+			{
+				{ "action", action},
+				{ "arguments", JObject.FromObject(args)},
+				{ "game", JObject.FromObject(game)}
+			};
 
 			var url = nameof(FunctionNames.SaveGame).ToUrl();
 			var result = await SendPostRequest<Game>(url, payload);

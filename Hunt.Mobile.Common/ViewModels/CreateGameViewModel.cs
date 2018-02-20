@@ -53,8 +53,10 @@ namespace Hunt.Mobile.Common
 			}
 		}
 
-		bool _isCoordinator;
-		public bool IsCoordinator { get { return _isCoordinator; } set { SetPropertyChanged(ref _isCoordinator, value); } }
+		bool _isCoordinator = true;
+		public bool IsCoordinator {
+			get { return _isCoordinator; }
+			set { SetPropertyChanged(ref _isCoordinator, value); } }
 
 		bool _populateTreasure = true;
 		public bool PopulateTreasure
@@ -68,7 +70,10 @@ namespace Hunt.Mobile.Common
 		}
 
 		bool _populateAcquiredTreasure;
-		public bool PopulateAcquiredTreasure { get { return _populateAcquiredTreasure; } set { SetPropertyChanged(ref _populateAcquiredTreasure, value); } }
+		public bool PopulateAcquiredTreasure
+		{
+			get { return _populateAcquiredTreasure; }
+			set { SetPropertyChanged(ref _populateAcquiredTreasure, value); } }
 
 		bool _populateTeams = true;
 		public bool PopulateTeams
