@@ -26,9 +26,6 @@
     <PackageReference Include="Refractored.XamForms.PullToRefresh" Version="2.2.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hunt.Common\Hunt.Common.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="config.json" />
     <None Remove="Resources\accessory_right.svg" />
     <None Remove="Resources\alias.svg" />
@@ -83,5 +80,8 @@
     <EmbeddedResource Include="Resources\timer.svg" />
     <EmbeddedResource Include="Resources\treasures_acquired.svg" />
     <EmbeddedResource Include="Resources\vertical_dots.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hunt.Common\Hunt.Common.csproj" />
   </ItemGroup>
 </Project>

@@ -363,7 +363,7 @@
       <Name>Hunt.Mobile.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hunt.Common\Hunt.Common.csproj">
-      <Project>{0EE4DB9C-AB68-4547-8F76-D24550F192E6}</Project>
+      <Project>{BC34C3A3-FB4B-4747-A6C8-C3500E429950}</Project>
       <Name>Hunt.Common</Name>
     </ProjectReference>
   </ItemGroup>

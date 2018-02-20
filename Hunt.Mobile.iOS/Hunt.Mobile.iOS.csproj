@@ -313,6 +313,10 @@
       <Project>{332581C6-13C5-4080-B1C8-2A3FB1196F97}</Project>
       <Name>Hunt.Mobile.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hunt.Common\Hunt.Common.csproj">
+      <Project>{BC34C3A3-FB4B-4747-A6C8-C3500E429950}</Project>
+      <Name>Hunt.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\launch_icon.png" />
