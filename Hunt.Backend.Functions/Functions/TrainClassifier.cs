@@ -10,11 +10,12 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.ApplicationInsights.DataContracts;
 
 using Hunt.Backend.Analytics;
-using Microsoft.Cognitive.CustomVision;
 using Newtonsoft.Json.Linq;
 using Hunt.Common;
-using Microsoft.Cognitive.CustomVision.Models;
 using System.Threading;
+using Microsoft.Cognitive.CustomVision.Prediction;
+using Microsoft.Cognitive.CustomVision.Training;
+using Microsoft.Cognitive.CustomVision.Training.Models;
 using Microsoft.Rest;
 
 namespace Hunt.Backend.Functions
@@ -41,9 +42,8 @@ namespace Hunt.Backend.Functions
 					var tags = (JArray)j["tags"];
 
 					var game = CosmosDataService.Instance.GetItemAsync<Game>(gameId).Result;
-
-					var api = new TrainingApi(new TrainingApiCredentials(ConfigManager.Instance.CustomVisionTrainingKey));
-					ProjectModel project = null;
+					TrainingApi api = new TrainingApi { ApiKey = ConfigManager.Instance.CustomVisionTrainingKey };
+					Project project = null;
 					
 					//Get the existing project for this game if there is one
 					if(!string.IsNullOrEmpty(game.CustomVisionProjectId))
@@ -60,17 +60,11 @@ namespace Hunt.Backend.Functions
 						CosmosDataService.Instance.UpdateItemAsync<Game>(game).Wait();
 					}
 
-					//Generate tag models for training
-					var tagModels = new List<ImageTagModel>();
+                    var tagItems = tags.Select(t => api.CreateTag(project.Id, t.ToString().Trim()));
+                    var entries = imageUrls.Select(u => new ImageUrlCreateEntry(u)).ToList();
 
-					foreach(string tag in tags)
-					{
-						var model = api.CreateTag(project.Id, tag.Trim());
-						tagModels.Add(model);
-					}
-
-					//Batch the image urls that were sent up from Azure Storage (blob)
-					var batch = new ImageUrlCreateBatch(tagModels.Select(m => m.Id).ToList(), imageUrls);
+                    //Batch the image urls that were sent up from Azure Storage (blob)
+                    var batch = new ImageUrlCreateBatch(entries, tagItems.Select(t => t.Id).ToList());
 					var summary = api.CreateImagesFromUrls(project.Id, batch);
 
 					//if(!summary.IsBatchSuccessful)

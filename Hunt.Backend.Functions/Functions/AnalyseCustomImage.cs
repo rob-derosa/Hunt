@@ -7,14 +7,13 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.ApplicationInsights.DataContracts;
-using Microsoft.Cognitive.CustomVision;
+using Microsoft.Cognitive.CustomVision.Prediction;
+using Microsoft.Cognitive.CustomVision.Prediction.Models;
 
-using Newtonsoft.Json;
 using Hunt.Backend.Analytics;
 using Newtonsoft.Json.Linq;
 using Hunt.Common;
 using System.Linq;
-using Microsoft.Cognitive.CustomVision.Models;
 
 namespace Hunt.Backend.Functions
 {
@@ -46,12 +45,7 @@ namespace Hunt.Backend.Functions
 					if(treasure == null)
 						return req.CreateErrorResponse(HttpStatusCode.NotFound, "Treasure not found");
 
-					var api = new TrainingApi(new TrainingApiCredentials(ConfigManager.Instance.CustomVisionTrainingKey));
-					var account = api.GetAccountInfo();
-					var predictionKey = account.Keys.PredictionKeys.PrimaryKey;
-
-					var creds = new PredictionEndpointCredentials(predictionKey);
-					var endpoint = new PredictionEndpoint(creds);
+                    var endpoint = new PredictionEndpoint { ApiKey = ConfigManager.Instance.CustomVisionPredictionKey };
 
 					//This is where we run our prediction against the default iteration
 					var result = endpoint.PredictImageUrl(new Guid(game.CustomVisionProjectId), new ImageUrl(imageUrl));
