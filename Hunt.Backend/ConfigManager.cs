@@ -21,6 +21,8 @@ namespace Hunt.Backend.Functions
 		public string VisionUrl;
 		public string VisionServiceKey;
 		public string CustomVisionTrainingKey;
+		public string EventHubEntity;
+		public string EventHubEndpoint;
 		public string CustomVisionPredictionKey;
 		public double CustomVisionMinimumPredictionProbability = .6;
 
@@ -55,6 +57,9 @@ namespace Hunt.Backend.Functions
 
 				CustomVisionTrainingKey = Environment.GetEnvironmentVariable("CUSTOMVISION_TRAININGKEY"),
 				CustomVisionPredictionKey = Environment.GetEnvironmentVariable("CUSTOMVISION_PREDICTIONKEY"),
+
+				EventHubEndpoint = Environment.GetEnvironmentVariable("EVENTHUB_ENDPOINT"),
+				EventHubEntity = Environment.GetEnvironmentVariable("EVENTHUB_ENTITY"),
 			};
 
 			var probability = Environment.GetEnvironmentVariable("CUSTOMVISION_MINIMUM_PREDICTION_PROBABILITY");

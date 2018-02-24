@@ -16,11 +16,8 @@ namespace Hunt.Backend.Functions
 		{
 			try
 			{
-				var connectionString = "Endpoint=sb://huntappeventhub.servicebus.windows.net/;SharedAccessKeyName=SendListen;SharedAccessKey=5ZAynJMui0LEfsIkZEQTdmRzZQv1C3iHw2XLziS68AI=";
-				var entityPath = "games";
-
-				var factory = MessagingFactory.CreateFromConnectionString($"{connectionString};TransportType=Amqp");
-				var client = factory.CreateEventHubClient(entityPath);
+				var factory = MessagingFactory.CreateFromConnectionString($"{ConfigManager.Instance.EventHubEndpoint};TransportType=Amqp");
+				var client = factory.CreateEventHubClient(ConfigManager.Instance.EventHubEntity);
 
 				if (game != null)
 					message = $"{message}\n\tGame:\t{game.Name}";
