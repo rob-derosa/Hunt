@@ -7,14 +7,13 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.ApplicationInsights.DataContracts;
-using Microsoft.Cognitive.CustomVision;
+using Microsoft.Cognitive.CustomVision.Prediction;
+using Microsoft.Cognitive.CustomVision.Prediction.Models;
 
-using Newtonsoft.Json;
-using Hunt.Backend.Analytics;
 using Newtonsoft.Json.Linq;
 using Hunt.Common;
 using System.Linq;
-using Microsoft.Cognitive.CustomVision.Models;
+using System.Threading.Tasks;
 
 namespace Hunt.Backend.Functions
 {
@@ -22,7 +21,7 @@ namespace Hunt.Backend.Functions
 	{
         [FunctionName(nameof(AnalyseCustomImage))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(AnalyseCustomImage))]
+		async public static Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(AnalyseCustomImage))]
 			HttpRequestMessage req, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
@@ -44,33 +43,35 @@ namespace Hunt.Backend.Functions
 
 					var treasure = game.Treasures.SingleOrDefault(t => t.Id == treasureId);
 					if(treasure == null)
+					{
+						await EventHubService.Instance.SendEvent($"Custom image analyzed for treasure failed\n\tHint:\t\t\"{treasure.Hint}\"\n\tOriginal:\t\t{treasure.ImageSource}\n\tSubmitted:\t\t{imageUrl.First()}");
 						return req.CreateErrorResponse(HttpStatusCode.NotFound, "Treasure not found");
+					}
 
-					var api = new TrainingApi(new TrainingApiCredentials(ConfigManager.Instance.CustomVisionTrainingKey));
-					var account = api.GetAccountInfo();
-					var predictionKey = account.Keys.PredictionKeys.PrimaryKey;
-
-					var creds = new PredictionEndpointCredentials(predictionKey);
-					var endpoint = new PredictionEndpoint(creds);
+					var endpoint = new PredictionEndpoint { ApiKey = ConfigManager.Instance.CustomVisionPredictionKey };
 
 					//This is where we run our prediction against the default iteration
 					var result = endpoint.PredictImageUrl(new Guid(game.CustomVisionProjectId), new ImageUrl(imageUrl));
 
-					bool toReturn = false;
+
+					ImageTagPredictionModel goodTag = null;
 					// Loop over each prediction and write out the results
-					foreach(var outcome in result.Predictions)
+
+					foreach (var prediction in result.Predictions)
 					{
-						if(treasure.Attributes.Any(a => a.Name.Equals(outcome.Tag, StringComparison.InvariantCultureIgnoreCase)))
+						if(treasure.Attributes.Any(a => a.Name.Equals(prediction.Tag, StringComparison.InvariantCultureIgnoreCase)))
 						{
-							if(outcome.Probability >= ConfigManager.Instance.CustomVisionMinimumPredictionProbability)
+							if(prediction.Probability >= ConfigManager.Instance.CustomVisionMinimumPredictionProbability)
 							{
-								toReturn = true;
+								goodTag = prediction;
 								break;
 							}
 						}
 					}
 
-					return req.CreateResponse(HttpStatusCode.OK, toReturn);
+					var outcome = goodTag == null ? "failed" : $"succeeded\n\tTag(s):\t\t{goodTag.Tag}\n\tProbability:\t{goodTag.Probability.ToString("P")}";
+					await EventHubService.Instance.SendEvent($"Custom image analyzed for treasure {outcome}\n\tHint:\t\t\"{treasure.Hint}\"\n\tOriginal:\t{treasure.ImageSource}\n\tSubmitted:\t{imageUrl}");
+					return req.CreateResponse(HttpStatusCode.OK, goodTag != null);
 				}
 				catch (Exception e)
 				{

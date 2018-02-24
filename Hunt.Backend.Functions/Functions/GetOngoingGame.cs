@@ -9,14 +9,16 @@ using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 
-using Hunt.Backend.Analytics;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Hunt.Common;
 
 namespace Hunt.Backend.Functions
 {
 	public static class GetOngoingGame
 	{
         [FunctionName(nameof(GetOngoingGame))]
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(GetOngoingGame))]
+		async public static Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(GetOngoingGame))]
 		HttpRequestMessage req, TraceWriter log)
 		{
             using (var analytic = new AnalyticService(new RequestTelemetry
@@ -33,8 +35,11 @@ namespace Hunt.Backend.Functions
                         return req.CreateErrorResponse(HttpStatusCode.BadRequest, "email address required");
                     }
 
-                    var game = CosmosDataService.Instance.GetOngoingGame(email);
-                    return req.CreateResponse(HttpStatusCode.OK, game as Object);
+                    var json = CosmosDataService.Instance.GetOngoingGame(email);
+					var game = json == null ? null : JsonConvert.DeserializeObject<Game>(json.ToString()) as Game;
+					var outcome = json == null ? "no games found" : "a game found";
+					await EventHubService.Instance.SendEvent($"Looking for an ongoing game resulted in {outcome}\n\tEmail:\t{email}", game, null);
+					return req.CreateResponse(HttpStatusCode.OK, game);
                 }
                 catch (Exception e)
                 {

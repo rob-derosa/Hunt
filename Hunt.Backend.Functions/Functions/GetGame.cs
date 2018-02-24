@@ -9,7 +9,6 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 
-using Hunt.Backend.Analytics;
 using Hunt.Common;
 
 namespace Hunt.Backend.Functions

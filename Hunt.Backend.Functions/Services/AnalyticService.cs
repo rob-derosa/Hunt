@@ -4,7 +4,7 @@ using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.DataContracts;
 
-namespace Hunt.Backend.Analytics
+namespace Hunt.Backend.Functions
 {
 	public class AnalyticService : IDisposable
 	{
@@ -31,6 +31,7 @@ namespace Hunt.Backend.Analytics
 		{
 			// track exceptions that occur
 			_telemetryClient.TrackException(e);
+			EventHubService.Instance.SendEvent($"EXCEPTION OCCURRED\n\tMessage:\t{e.Message}\n\tStack:\t{e.StackTrace}");
 		}
 
 		public void Dispose()
