@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hunt.Backend.Functions", "Hunt.Backend.Functions\Hunt.Backend.Functions.csproj", "{7E87AD29-AFC6-4D34-94E5-CA958DBB1EE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hunt.Backend", "Hunt.Backend\Hunt.Backend.csproj", "{7E87AD29-AFC6-4D34-94E5-CA958DBB1EE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hunt.Common", "Hunt.Common\Hunt.Common.csproj", "{47520611-9DED-4661-957E-ABDEB18B08EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hunt.Backend.Functions.Test", "Hunt.Backend.Functions.Test\Hunt.Backend.Functions.Test.csproj", "{1507253B-CFFF-4C9B-9106-244F4A87B5DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hunt.Backend.Test", "Hunt.Backend.Test\Hunt.Backend.Test.csproj", "{1507253B-CFFF-4C9B-9106-244F4A87B5DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

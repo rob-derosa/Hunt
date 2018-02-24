@@ -86,8 +86,9 @@ namespace Hunt.Backend.Functions
 
 			notification.Add("title", "Game Update");
 			notification.Add("badge", "0");
-			notification.Add("payload", "");
+			notification.Add("payload", json);
 
+			await EventHubService.Instance.SendEvent($"Push notification sent\n\tMsg:\t\"{message}\"\n\tTags:\t{string.Join("\n\t\t", tags).Trim()}");
 			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
 			return true;
 		}
@@ -99,8 +100,9 @@ namespace Hunt.Backend.Functions
 
 			notification.Add("title", "");
 			notification.Add("badge", "0");
-			notification.Add("payload", "");
+			notification.Add("payload", json);
 
+			await EventHubService.Instance.SendEvent($"Silent push notification sent\n\tTags:\t{string.Join("\n\t\t", tags).Trim()}");
 			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
 			return true;
 		}
