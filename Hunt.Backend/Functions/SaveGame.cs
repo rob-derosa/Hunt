@@ -29,7 +29,7 @@ namespace Hunt.Backend.Functions
 				Name = nameof(SaveGame)
 			}))
 			{
-				var json = req.Content.ReadAsStringAsync().Result;
+				var json = await req.Content.ReadAsStringAsync();
 				var jobject = JsonConvert.DeserializeObject<JObject>(json);
 
 				var action = jobject["action"].ToString();
@@ -98,7 +98,7 @@ namespace Hunt.Backend.Functions
 								game.WinnningTeamId = teams[0].Id;
 						}
 
-						CosmosDataService.Instance.UpdateItemAsync(game).Wait();
+						await CosmosDataService.Instance.UpdateItemAsync(game);
 						await EventHubService.Instance.SendEvent($"Game saved successfully", game, player);
 
 						if (action == GameUpdateAction.StartGame)
@@ -116,7 +116,7 @@ namespace Hunt.Backend.Functions
 						}
 					}
 
-					savedGame = CosmosDataService.Instance.GetItemAsync<Game>(game.Id).Result; //Comment out at some point if not needed
+					savedGame = await CosmosDataService.Instance.GetItemAsync<Game>(game.Id); //Comment out at some point if not needed
 
 					return req.CreateResponse(HttpStatusCode.OK, savedGame);
 				}
@@ -131,12 +131,12 @@ namespace Hunt.Backend.Functions
 
 		#region Game Timer
 
-		static void SetEndGameTimer(Game game, AnalyticService analytic)
+		async static void SetEndGameTimer(Game game, AnalyticService analytic)
 		{
 			try
 			{
 				var client = new QueueService(ConfigManager.EndGameBusName);
-				client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes).Wait();
+				await client.SendBrokeredMessageAsync(game.DurationInMinutes, game.Id, "endgametime", (int)game.DurationInMinutes);
 			}
 			catch (Exception e)
 			{
@@ -239,7 +239,7 @@ namespace Hunt.Backend.Functions
 						
 						silentNotifyAllPlayers = true;
 
-						var evnt = $"Team {team.Name} acquired treasure\n\tHint:\t\t\"{treasure.Hint}\"\n\tPoints:\t\t{acquiredTreasure.ClaimedPoints}\n\tSubmitted:\t{acquiredTreasure.ImageSource}";
+						var evnt = $"Team {team.Name} acquired treasure\n\tHint:\t\"{treasure.Hint}\"\n\tPoints:\t{acquiredTreasure.ClaimedPoints}\n\tSent:\t{acquiredTreasure.ImageSource}";
 						await EventHubService.Instance.SendEvent(evnt, game, player);
 						break;
 					}
@@ -293,7 +293,7 @@ namespace Hunt.Backend.Functions
 				if (allDevices.Count > 0)
 				{
 					var instance = game.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
-					instance.SendSilentNotification(devices.ToArray(), payload);
+					instance.SendSilentNotification(allDevices.ToArray(), payload);
 				}
 			}
 		}
