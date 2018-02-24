@@ -11,13 +11,13 @@ namespace Hunt.Terminal
 	{
 		public Task CloseAsync(PartitionContext context, CloseReason reason)
 		{
-			Console.WriteLine($"EventProcessor shutting down. Partition '{context.PartitionId}', Reason: '{reason}'.");
+			Console.WriteLine($"EventProcessor shutting down. Partition {context.PartitionId}, Reason: '{reason}'.");
 			return Task.CompletedTask;
 		}
 
 		public Task OpenAsync(PartitionContext context)
 		{
-			Console.WriteLine($"EventProcessor initialized. Partition: '{context.PartitionId}'");
+			Console.WriteLine($"EventProcessor initialized. Partition: {context.PartitionId}");
 			return Task.CompletedTask;
 		}
 
@@ -31,8 +31,9 @@ namespace Hunt.Terminal
 		{
 			foreach (var eventData in messages)
 			{
+				var dt = DateTime.Now;
 				var data = Encoding.UTF8.GetString(eventData.Body.Array, eventData.Body.Offset, eventData.Body.Count);
-				Console.WriteLine($"{DateTime.Now.ToLongTimeString()} {data}\n");
+				Console.WriteLine($"{dt:MM/dd/yy h:mm:ss.ff}\n{data}\n");
 			}
 
 			return context.CheckpointAsync();
