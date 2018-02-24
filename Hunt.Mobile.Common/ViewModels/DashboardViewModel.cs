@@ -24,10 +24,18 @@ namespace Hunt.Mobile.Common
 		public bool IsUnableToConnect
 		{
 			get { return _isUnableToConnect; }
-			set { SetPropertyChanged(ref _isUnableToConnect, value); }
+			set { SetPropertyChanged(ref _isUnableToConnect, value); SetPropertyChanged(nameof(CanRetry)); }
 		}
 
+		public bool CanRetry { get => IsUnableToConnect && !IsBusy; }
+
 		#endregion
+
+		protected override void OnIsBusyChanged()
+		{
+			SetPropertyChanged(nameof(CanRetry));
+			base.OnIsBusyChanged();
+		}
 
 		async public Task<Game> GetGameByEntryCode()
 		{
@@ -135,17 +143,20 @@ namespace Hunt.Mobile.Common
 
 		public async Task<string> RegisterDevice(string playerId)
 		{
-			if(Push.Instance.DeviceToken == null)
-				return null;
-			
-			var task = new Task<string>(() => App.Instance.DataService.RegisterDevice(Push.Instance.DeviceToken, playerId).Result);
-			await task.RunProtected();
+			using(var busy = new Busy(this))
+			{
+				if (Push.Instance.DeviceToken == null)
+					return null;
 
-			if(!task.WasSuccessful() || task.Result == null)
-				return null;
+				var task = new Task<string>(() => App.Instance.DataService.RegisterDevice(Push.Instance.DeviceToken, playerId).Result);
+				await task.RunProtected();
 
-			Log.Instance.WriteLine($"Registration ID: {task.Result}");
-			return task.Result;
+				if (!task.WasSuccessful() || task.Result == null)
+					return null;
+
+				Log.Instance.WriteLine($"Registration ID: {task.Result}");
+				return task.Result;
+			}
 		}
 
 		public override void NotifyPropertiesChanged()
