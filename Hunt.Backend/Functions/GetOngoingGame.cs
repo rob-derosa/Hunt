@@ -38,7 +38,11 @@ namespace Hunt.Backend.Functions
 					var json = CosmosDataService.Instance.GetOngoingGame(email);
 					var game = json == null ? null : JsonConvert.DeserializeObject<Game>(json.ToString()) as Game;
 					var outcome = json == null ? "no games found" : "a game found";
-					await EventHubService.Instance.SendEvent($"Looking for an ongoing game resulted in {outcome}\n\tEmail:\t{email}", game, null);
+
+					var data = new Event($"Looking for an ongoing game resulted in {outcome}");
+					data.Add("email", email);
+
+					await EventHubService.Instance.SendEvent(data, game);
 					return req.CreateResponse(HttpStatusCode.OK, game);
 				}
 				catch (Exception e)
