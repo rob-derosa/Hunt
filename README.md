@@ -91,6 +91,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
   * [Functions (C#)](https://azure.microsoft.com/en-us/services/functions)
   * [Cosmos: Document DB](https://azure.microsoft.com/en-us/services/cosmos-db/)
   * [Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
+  * [Event Hubs](https://azure.microsoft.com/en-us/services/event-hubs/)
   * [Application Insights](https://azure.microsoft.com/en-us/services/application-insights/)
   * [Notification Hubs](https://azure.microsoft.com/en-us/services/notification-hubs/)
   * Cognitive Services

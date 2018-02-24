@@ -34,7 +34,7 @@ namespace Hunt.Mobile.Common
 
 	#endregion
 
-	public class AzureFunctionService
+	public class FunctionsService
 	{
 		#region Properties
 

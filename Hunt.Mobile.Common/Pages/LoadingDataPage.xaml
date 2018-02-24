@@ -45,7 +45,7 @@
 				</StackLayout>
 
 				<Button
-					IsVisible="{Binding IsUnableToConnect}"
+					IsVisible="{Binding CanRetry}"
 					Grid.Row="1"
 					Text="Retry"
 					Clicked="RetryClicked" />

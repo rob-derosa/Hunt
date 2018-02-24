@@ -117,7 +117,7 @@ namespace Hunt.Mobile.Common
 					return clone;
 				};
 
-				var game = await SaveGameSafe(action, GameUpdateAction.AddTreasure);
+				var game = await SaveGameSafe(action, GameUpdateAction.AddTreasure, new Dictionary<string, string> { { "treasureId", treasure.Id} });
 
 				if(game != null)
 				{
