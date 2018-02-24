@@ -65,6 +65,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers a game refresh.
 * Version conflicts are raised if the associated document timestamp is out of order - it is up to the client to handle this exception and resolve the conflict. See `ViewModel.SaveGameSafe`.
 * All images are stored in blob storage and passed to the Computer Vision or Custom Vision via the blob URL.
+* Event Hubs are used to get real-time, low-latency streaming telemtry on the actions that take place during a game, including any exceptions that might occur. It also serves as a way to keep track of the sequence of transactions executed for a specific game. Ingress happens on the back-end and a terminal app is provided to egress that data - both consumer and publisher utilize the AMQP protocol.
 
 
 ### Technologies Utilized
