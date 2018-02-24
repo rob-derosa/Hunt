@@ -14,7 +14,7 @@ using Microsoft.ApplicationInsights.DataContracts;
 using Newtonsoft.Json;
 
 using Hunt.Common;
-using Hunt.Backend.Analytics;
+using System.Threading.Tasks;
 
 namespace Hunt.Backend.Functions
 {
@@ -22,7 +22,7 @@ namespace Hunt.Backend.Functions
 	{
         [FunctionName(nameof(AnalyseText))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(AnalyseText))]
+		async public static Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(AnalyseText))]
 			HttpRequestMessage req, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
@@ -56,7 +56,9 @@ namespace Hunt.Backend.Functions
                             var json = response.Content.ReadAsStringAsync().Result;
                             var textModeration = JsonConvert.DeserializeObject<TextModeration>(json);
 
-                            return req.CreateResponse(HttpStatusCode.OK, textModeration.Terms == null);
+							var terms = textModeration.Terms == null ? "NONE" : string.Join(", ", textModeration.Terms.Select(t => t.TermString).ToArray()).Trim();
+							await EventHubService.Instance.SendEvent($"Analyzing text for appropriate content\n\tText:\t\"{text}\"\n\tTerms:\t{terms}");
+							return req.CreateResponse(HttpStatusCode.OK, textModeration.Terms == null);
                         }
                     }
 				}

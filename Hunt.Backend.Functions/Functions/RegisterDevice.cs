@@ -10,7 +10,7 @@ using Microsoft.ApplicationInsights.DataContracts;
 using Newtonsoft.Json;
 
 using Hunt.Common;
-using Hunt.Backend.Analytics;
+using System.Threading.Tasks;
 
 namespace Hunt.Backend.Functions
 {
@@ -18,7 +18,7 @@ namespace Hunt.Backend.Functions
 	{
         [FunctionName(nameof(RegisterDevice))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(RegisterDevice))]
+		async public static Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(RegisterDevice))]
 			HttpRequestMessage req, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
@@ -34,6 +34,7 @@ namespace Hunt.Backend.Functions
 					var instance = registration.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
 					var result = instance.Register(registration).Result;
 
+					await EventHubService.Instance.SendEvent($"Registering device\n\tMode:\t{registration.AppMode}\n\tOS:\t{registration.Platform}\n\tHandle:\t{registration.Handle}");
 					return req.CreateResponse(HttpStatusCode.OK, result);
 				}
 				catch (Exception e)

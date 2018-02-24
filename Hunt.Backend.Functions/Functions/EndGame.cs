@@ -7,7 +7,6 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ServiceBus.Messaging;
 
-using Hunt.Backend.Analytics;
 using Hunt.Backend.Functions;
 using Hunt.Common;
 using Newtonsoft.Json.Linq;

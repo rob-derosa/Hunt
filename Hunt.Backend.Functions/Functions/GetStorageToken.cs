@@ -14,7 +14,6 @@ using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 
 using Hunt.Backend.Functions.Models;
-using Hunt.Backend.Analytics;
 
 namespace Hunt.Backend.Functions
 {

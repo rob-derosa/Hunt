@@ -1,4 +1,4 @@
-using System.Linq;
+ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Hunt.Common;
-using Hunt.Backend.Analytics;
 using System.Text;
 
 namespace Hunt.Backend.Functions
@@ -22,7 +21,7 @@ namespace Hunt.Backend.Functions
 	{
 		[FunctionName(nameof(SaveGame))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(SaveGame))]
+		public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(SaveGame))]
 		HttpRequestMessage req, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
@@ -36,7 +35,11 @@ namespace Hunt.Backend.Functions
 				var action = jobject["action"].ToString();
 				var arguments = jobject["arguments"].ToObject<Dictionary<string, string>>();
 				var game = jobject["game"].ToObject<Game>();
-				arguments = arguments ?? new Dictionary<string, string>(); 
+				arguments = arguments ?? new Dictionary<string, string>();
+
+				Player player = null;
+				if (arguments.ContainsKey("playerId"))
+					player = game.GetPlayer(arguments["playerId"]);				
 
 				//Need to validate this player is not already part of another ongoing game or the coordinator of this game
 				if (game.EntryCode == null)
@@ -51,13 +54,17 @@ namespace Hunt.Backend.Functions
 				{
 					if (!game.IsPersisted)
 					{
-						CosmosDataService.Instance.InsertItemAsync(game).Wait();
+						await EventHubService.Instance.SendEvent($"New game created\n{JsonConvert.SerializeObject(game, Formatting.Indented)}", game, player);
+						await CosmosDataService.Instance.InsertItemAsync(game);
 					}
 					else
 					{
-						var existingGame = CosmosDataService.Instance.GetItemAsync<Game>(game.Id).Result;
+						var existingGame = await CosmosDataService.Instance.GetItemAsync<Game>(game.Id);
 						if (existingGame.TS != game.TS)
+						{
+							await EventHubService.Instance.SendEvent("Game save attempt resulted in version collision", game, player);
 							return req.CreateErrorResponse(HttpStatusCode.Conflict, "Unable to save game - version conflict. Please pull the latest version and reapply your changes.");
+						}
 
 						if (action == GameUpdateAction.EndGame && existingGame.HasEnded)
 							return req.CreateResponse(HttpStatusCode.OK);
@@ -73,13 +80,14 @@ namespace Hunt.Backend.Functions
 						{
 							//Need to evaluate the game first before we save as there might be a winner
 							var teamId = arguments["teamId"];
+							var team = game.Teams.Single(t => t.Id == teamId);
 							isWinningAcquisition = game.EvaluateGameForWinner(teamId);
 
 							if (isWinningAcquisition)
 								isEndOfgame = true;
 						}
 
-						if(isEndOfgame)
+						if (isEndOfgame)
 						{
 							game.EndDate = DateTime.UtcNow;
 							var teams = game.Teams.OrderByDescending(t => t.TotalPoints).ToArray();
@@ -91,13 +99,14 @@ namespace Hunt.Backend.Functions
 						}
 
 						CosmosDataService.Instance.UpdateItemAsync(game).Wait();
+						await EventHubService.Instance.SendEvent($"Game saved successfully", game, player);
 
 						if (action == GameUpdateAction.StartGame)
 						{
 							SetEndGameTimer(game, analytic);
 						}
 
-						if(isEndOfgame)
+						if (isEndOfgame)
 						{
 							SendTargetedNotifications(game, GameUpdateAction.EndGame, arguments);
 						}
@@ -119,7 +128,7 @@ namespace Hunt.Backend.Functions
 				}
 			}
 		}
-		
+
 		#region Game Timer
 
 		static void SetEndGameTimer(Game game, AnalyticService analytic)
@@ -146,13 +155,12 @@ namespace Hunt.Backend.Functions
 			List<Player> players = new List<Player>();
 			bool silentNotifyAllPlayers = false;
 
+			Player player = null;
+			if (args.ContainsKey("playerId"))
+				player = game.GetPlayer(args["playerId"]);
+
 			switch (action)
 			{
-				case GameUpdateAction.Create:
-					{
-						//Nothing really to do here
-						break;
-					}
 				case GameUpdateAction.StartGame:
 					{
 						//Notify all game players
@@ -160,6 +168,7 @@ namespace Hunt.Backend.Functions
 						message = $"Your hunt game has started! You have {game.DurationInMinutes}min to acquire all treasures - good luck and godspeed!";
 
 						players.AddRange(game.GetAllPlayers());
+						await EventHubService.Instance.SendEvent($"Game started at {game.StartDate.Value.ToLongTimeString()}", game, player);
 						break;
 					}
 				case GameUpdateAction.EndGame:
@@ -170,16 +179,16 @@ namespace Hunt.Backend.Functions
 						message = "Game over. This game ended in a draw.";
 
 						if (team != null)
-							message = $"Game Over. Team {team.Name} is the winner. Thanks for playing!";
+							message = $"Game Over. Team {team.Name} is the winner.";
 
 						players.AddRange(game.GetAllPlayers());
 
+						await EventHubService.Instance.SendEvent($"Game ended: {message}", game, player);
 						break;
 					}
 				case GameUpdateAction.JoinTeam:
 					{
 						silentNotifyAllPlayers = true;
-						var player = game.GetPlayer(args["playerId"]);
 						var team = game.Teams.Get(args["teamId"]);
 
 						if (team == null || player == null)
@@ -192,6 +201,7 @@ namespace Hunt.Backend.Functions
 						players.AddRange(team.Players);
 						players.Remove(player);
 
+						await EventHubService.Instance.SendEvent($"Player joined team {team.Name}", game, player);
 						break;
 					}
 				case GameUpdateAction.LeaveTeam:
@@ -208,35 +218,46 @@ namespace Hunt.Backend.Functions
 						message = $"{playerAlias} had to leave your team - they're sorry.";
 						players.AddRange(team.Players);
 
+						await EventHubService.Instance.SendEvent($"Player {playerAlias} left team {team.Name}", game, player);
 						break;
 					}
 				case GameUpdateAction.AcquireTreasure:
 					{
 						var team = game.Teams.Get(args["teamId"]);
 						var acquiredTreasure = team.AcquiredTreasure.Get(args["acquiredTreasureId"]);
-						var player = game.GetPlayer(acquiredTreasure.PlayerId);
+						var p = game.GetPlayer(acquiredTreasure.PlayerId);
 						var treasure = game.Treasures.Get(acquiredTreasure.TreasureId);
 
-						if (team == null || player == null || acquiredTreasure == null)
+						if (team == null || p == null || acquiredTreasure == null)
 							break;
 
 						//Notify team players
 						title = $"Treasure acquired for {treasure.Points} points!";
 						message = $"{player.Alias} just acquired the '{treasure.Hint}' treasure";
 						players.AddRange(team.Players);
-						players.Remove(player);
-
+						players.Remove(p);
+						
 						silentNotifyAllPlayers = true;
+
+						var evnt = $"Team {team.Name} acquired treasure\n\tHint:\t\t\"{treasure.Hint}\"\n\tPoints:\t\t{acquiredTreasure.ClaimedPoints}\n\tSubmitted:\t{acquiredTreasure.ImageSource}";
+						await EventHubService.Instance.SendEvent(evnt, game, player);
 						break;
 					}
+				case GameUpdateAction.AddTreasure:
+					{
+						if (!args.ContainsKey("treasureId"))
+							break;
+
+						var treasure = game.Treasures.Single(t => t.Id == args["treasureId"]);
+						var tags = string.Join(", ", treasure.Attributes.Select(t => t.Name).ToArray());
+						await EventHubService.Instance.SendEvent($"Treasure added to game\n\tHint:\t\"{treasure.Hint}\"\n\tTag(s):\t{tags}\n\tPoints:\t{treasure.Points}\n\tImage:\t{treasure.ImageSource}", game, player);
+						break;
+					}
+
 				default:
 					silentNotifyAllPlayers = true;
 					break;
 			}
-
-			string playerId = null;
-			if(args.ContainsKey("playerId"))
-				playerId = args["playerId"];
 
 			var devices = new List<string>();
 			if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(message) && players.Count > 0)
@@ -244,10 +265,10 @@ namespace Hunt.Backend.Functions
 				devices = players.Where(pl => pl.Id != null).Select(pl => pl.Id).ToList();
 				var payload = new Dictionary<string, string> { { "gameId", game.Id } };
 
-				if (playerId != null)
+				if (player != null)
 				{
-					payload.Add("playerId", playerId);
-					devices.Remove(playerId);
+					payload.Add("playerId", player.Id);
+					devices.Remove(player.Id);
 				}
 
 				if (devices.Count > 0)
@@ -263,13 +284,13 @@ namespace Hunt.Backend.Functions
 				var allDevices = allPlayers.Where(pl => pl.Id != null && !devices.Contains(pl.Id)).Select(pl => pl.Id).ToList();
 				var payload = new Dictionary<string, string> { { "gameId", game.Id } };
 
-				if (playerId != null)
+				if (player != null)
 				{
-					payload.Add("playerId", playerId);
-					allDevices.Remove(playerId);
+					payload.Add("playerId", player.Id);
+					allDevices.Remove(player.Id);
 				}
 
-				if (allDevices.Count> 0)
+				if (allDevices.Count > 0)
 				{
 					var instance = game.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
 					instance.SendSilentNotification(devices.ToArray(), payload);

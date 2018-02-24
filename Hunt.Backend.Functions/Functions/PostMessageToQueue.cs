@@ -8,7 +8,6 @@ using System;
 
 using Microsoft.ApplicationInsights.DataContracts;
 
-using Hunt.Backend.Analytics;
 
 namespace Hunt.Backend.Functions
 {

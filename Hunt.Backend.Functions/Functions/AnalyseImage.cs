@@ -13,7 +13,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 using Newtonsoft.Json;
 
-using Hunt.Backend.Analytics;
+using System.Threading.Tasks;
 
 namespace Hunt.Backend.Functions
 {
@@ -21,7 +21,7 @@ namespace Hunt.Backend.Functions
 	{
         [FunctionName(nameof(AnalyseImage))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(AnalyseImage))]
+		async public static Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(AnalyseImage))]
 			HttpRequestMessage req, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
@@ -58,6 +58,7 @@ namespace Hunt.Backend.Functions
 					var topAttributes = attributes.OrderByDescending(k => k.Value);
 					var toReturn = topAttributes.Select(k => k.Key).Take(10).ToArray();
 
+					await EventHubService.Instance.SendEvent($"Generic image analyzed for tags\n\tImage:\t{photoUrls.First()}\n\tTags:\t{string.Join(", ", toReturn).Trim()}");
 					return req.CreateResponse(HttpStatusCode.OK, toReturn);
 				}
 				catch (Exception e)

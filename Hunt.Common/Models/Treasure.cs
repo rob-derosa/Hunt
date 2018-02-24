@@ -32,7 +32,7 @@ namespace Hunt.Common
 			{
 				var a = Attributes[i];
 
-				if(i < Attributes.Count - 1)
+				if(i <= Attributes.Count - 1)
 					sb.Append($", {a.Name}");
 				else
 					sb.Append($" and {a.Name}");

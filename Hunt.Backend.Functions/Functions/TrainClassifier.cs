@@ -9,7 +9,6 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.ApplicationInsights.DataContracts;
 
-using Hunt.Backend.Analytics;
 using Newtonsoft.Json.Linq;
 using Hunt.Common;
 using System.Threading;
@@ -17,6 +16,7 @@ using Microsoft.Cognitive.CustomVision.Prediction;
 using Microsoft.Cognitive.CustomVision.Training;
 using Microsoft.Cognitive.CustomVision.Training.Models;
 using Microsoft.Rest;
+using System.Threading.Tasks;
 
 namespace Hunt.Backend.Functions
 {
@@ -24,7 +24,7 @@ namespace Hunt.Backend.Functions
 	{
         [FunctionName(nameof(TrainClassifier))]
 
-		public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(TrainClassifier))]
+		async public static Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = nameof(TrainClassifier))]
 			HttpRequestMessage req, TraceWriter log)
 		{
 			using (var analytic = new AnalyticService(new RequestTelemetry
@@ -82,6 +82,7 @@ namespace Hunt.Backend.Functions
 					iteration.IsDefault = true;
 					api.UpdateIteration(project.Id, iteration.Id, iteration);
 
+					await EventHubService.Instance.SendEvent($"Training classifier\n\tProject:\t{project.Name}\n\tIteration:\t{iteration.Id}");
 					return req.CreateResponse(HttpStatusCode.OK, true);
 				}
 				catch (Exception e)
