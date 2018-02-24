@@ -88,7 +88,10 @@ namespace Hunt.Backend.Functions
 			notification.Add("badge", "0");
 			notification.Add("payload", json);
 
-			await EventHubService.Instance.SendEvent($"Push notification sent\n\tMsg:\t\"{message}\"\n\tTags:\t{string.Join("\n\t\t", tags).Trim()}");
+			var data = new Event("Push notification sent");
+			data.Add("msg", message).Add("tags", string.Join(", ", tags).Trim());
+
+			await EventHubService.Instance.SendEvent(data);
 			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
 			return true;
 		}
@@ -102,7 +105,10 @@ namespace Hunt.Backend.Functions
 			notification.Add("badge", "0");
 			notification.Add("payload", json);
 
-			await EventHubService.Instance.SendEvent($"Silent push notification sent\n\tTags:\t{string.Join("\n\t\t", tags).Trim()}");
+			var data = new Event("Silent push notification sent");
+			data.Add("tags", string.Join(", ", tags).Trim());
+			await EventHubService.Instance.SendEvent(data);
+
 			var outcome = await _hub.SendTemplateNotificationAsync(notification, tags);
 			return true;
 		}

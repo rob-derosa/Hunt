@@ -54,7 +54,9 @@ namespace Hunt.Backend.Functions
 				{
 					if (!game.IsPersisted)
 					{
-						await EventHubService.Instance.SendEvent($"New game created\n{JsonConvert.SerializeObject(game, Formatting.Indented)}", game, player);
+						var data = new Event("New game created");
+						data.Add("json", JsonConvert.SerializeObject(game, Formatting.Indented));
+						await EventHubService.Instance.SendEvent(data, game);
 						await CosmosDataService.Instance.InsertItemAsync(game);
 					}
 					else
@@ -62,7 +64,8 @@ namespace Hunt.Backend.Functions
 						var existingGame = await CosmosDataService.Instance.GetItemAsync<Game>(game.Id);
 						if (existingGame.TS != game.TS)
 						{
-							await EventHubService.Instance.SendEvent("Game save attempt resulted in version collision", game, player);
+							var data = new Event("Game save attempt resulted in version collision");
+							await EventHubService.Instance.SendEvent(data, game, player);
 							return req.CreateErrorResponse(HttpStatusCode.Conflict, "Unable to save game - version conflict. Please pull the latest version and reapply your changes.");
 						}
 
@@ -99,7 +102,7 @@ namespace Hunt.Backend.Functions
 						}
 
 						await CosmosDataService.Instance.UpdateItemAsync(game);
-						await EventHubService.Instance.SendEvent($"Game saved successfully", game, player);
+						await EventHubService.Instance.SendEvent(new Event($"Game saved successfully"), game, player);
 
 						if (action == GameUpdateAction.StartGame)
 						{
@@ -168,7 +171,9 @@ namespace Hunt.Backend.Functions
 						message = $"Your hunt game has started! You have {game.DurationInMinutes}min to acquire all treasures - good luck and godspeed!";
 
 						players.AddRange(game.GetAllPlayers());
-						await EventHubService.Instance.SendEvent($"Game started at {game.StartDate.Value.ToLongTimeString()}", game, player);
+
+						var data = new Event($"Game started at {game.StartDate.Value.ToLongTimeString()}");
+						await EventHubService.Instance.SendEvent(data, game, player);
 						break;
 					}
 				case GameUpdateAction.EndGame:
@@ -183,7 +188,9 @@ namespace Hunt.Backend.Functions
 
 						players.AddRange(game.GetAllPlayers());
 
-						await EventHubService.Instance.SendEvent($"Game ended: {message}", game, player);
+						var data = new Event("Game ended");
+						data.Add("result", message);
+						await EventHubService.Instance.SendEvent(data, game, player);
 						break;
 					}
 				case GameUpdateAction.JoinTeam:
@@ -201,7 +208,9 @@ namespace Hunt.Backend.Functions
 						players.AddRange(team.Players);
 						players.Remove(player);
 
-						await EventHubService.Instance.SendEvent($"Player joined team {team.Name}", game, player);
+						var data = new Event("Player joined team");
+						data.Add("team", team.Name);
+						await EventHubService.Instance.SendEvent(data, game, player);
 						break;
 					}
 				case GameUpdateAction.LeaveTeam:
@@ -218,7 +227,9 @@ namespace Hunt.Backend.Functions
 						message = $"{playerAlias} had to leave your team - they're sorry.";
 						players.AddRange(team.Players);
 
-						await EventHubService.Instance.SendEvent($"Player {playerAlias} left team {team.Name}", game, player);
+						var data = new Event("Player left team");
+						data.Add("team", team.Name).Add("player", playerAlias);
+						await EventHubService.Instance.SendEvent(data, game, player);
 						break;
 					}
 				case GameUpdateAction.AcquireTreasure:
@@ -239,8 +250,9 @@ namespace Hunt.Backend.Functions
 						
 						silentNotifyAllPlayers = true;
 
-						var evnt = $"Team {team.Name} acquired treasure\n\tHint:\t\"{treasure.Hint}\"\n\tPoints:\t{acquiredTreasure.ClaimedPoints}\n\tSent:\t{acquiredTreasure.ImageSource}";
-						await EventHubService.Instance.SendEvent(evnt, game, player);
+						var data = new Event("Team acquired treasure");
+						data.Add("team", team.Name).Add("hint", treasure.Hint).Add("source", treasure.ImageSource).Add("points", acquiredTreasure.ClaimedPoints).Add("sent", acquiredTreasure.ImageSource);
+						await EventHubService.Instance.SendEvent(data, game, player);
 						break;
 					}
 				case GameUpdateAction.AddTreasure:
@@ -250,7 +262,10 @@ namespace Hunt.Backend.Functions
 
 						var treasure = game.Treasures.Single(t => t.Id == args["treasureId"]);
 						var tags = string.Join(", ", treasure.Attributes.Select(t => t.Name).ToArray());
-						await EventHubService.Instance.SendEvent($"Treasure added to game\n\tHint:\t\"{treasure.Hint}\"\n\tTag(s):\t{tags}\n\tPoints:\t{treasure.Points}\n\tImage:\t{treasure.ImageSource}", game, player);
+
+						var data = new Event("Treasure added to game");
+						data.Add("hint", treasure.Hint).Add("tags", tags).Add("points", treasure.Points).Add("source", treasure.ImageSource);
+						await EventHubService.Instance.SendEvent(data, game, player);
 						break;
 					}
 

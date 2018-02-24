@@ -57,7 +57,10 @@ namespace Hunt.Backend.Functions
                             var textModeration = JsonConvert.DeserializeObject<TextModeration>(json);
 
 							var terms = textModeration.Terms == null ? "NONE" : string.Join(", ", textModeration.Terms.Select(t => t.TermString).ToArray()).Trim();
-							await EventHubService.Instance.SendEvent($"Analyzing text for appropriate content\n\tText:\t\"{text}\"\n\tTerms:\t{terms}");
+							var data = new Event("Analyzing text for appropriate content");
+							data.Add("text", text).Add("terms", terms);
+							await EventHubService.Instance.SendEvent(data);
+
 							return req.CreateResponse(HttpStatusCode.OK, textModeration.Terms == null);
                         }
                     }

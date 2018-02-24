@@ -34,7 +34,10 @@ namespace Hunt.Backend.Functions
 					var instance = registration.AppMode == AppMode.Dev ? PushService.Dev : PushService.Production;
 					var result = instance.Register(registration).Result;
 
-					await EventHubService.Instance.SendEvent($"Registering device\n\tMode:\t{registration.AppMode}\n\tOS:\t{registration.Platform}\n\tHandle:\t{registration.Handle}\n\tTag(s):\t{string.Join(", ", registration.Tags).Trim()}");
+					var data = new Event("Registering device");
+					data.Add("mode", registration.AppMode).Add("OS", registration.Platform).Add("handle", registration.Handle).Add("tags", string.Join(", ", registration.Tags).Trim());
+					await EventHubService.Instance.SendEvent(data);
+
 					return req.CreateResponse(HttpStatusCode.OK, result);
 				}
 				catch (Exception e)

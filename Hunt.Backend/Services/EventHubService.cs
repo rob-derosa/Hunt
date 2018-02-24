@@ -21,17 +21,10 @@ namespace Hunt.Backend.Functions
 				var client = factory.CreateEventHubClient(ConfigManager.Instance.EventHubEntity);
 
 				if (game != null)
-				{
-					data.Metadata.Add("gameId", game.Id);
-					data.Metadata.Add("gameName", game.Name);
-				}
+					data.Add("game", game.Name);
 
 				if (player != null)
-				{
-					data.Metadata.Add("playerId", player.Id);
-					data.Metadata.Add("playerAlias", player.Alias);
-					data.Metadata.Add("playerEmail", player.Email);
-				}
+					data.Add("alias", player.Alias).Add("email", player.Email).Add("id", player.Id);
 
 				var json = JsonConvert.SerializeObject(data);
 				await client.SendAsync(new EventData(Encoding.UTF8.GetBytes(json)));
@@ -40,30 +33,7 @@ namespace Hunt.Backend.Functions
 			catch (Exception e)
 			{
 				var analytic = new AnalyticService(new RequestTelemetry());
-				analytic.TrackException(e.GetBaseException());
-			}
-		}
-
-		public async Task SendEvent(string message, Game game = null, Player player = null)
-		{
-			try
-			{
-				var factory = MessagingFactory.CreateFromConnectionString($"{ConfigManager.Instance.EventHubEndpoint};TransportType=Amqp");
-				var client = factory.CreateEventHubClient(ConfigManager.Instance.EventHubEntity);
-
-				if (game != null)
-					message = $"{message}\n\tGame:\t{game.Name}";
-
-				if (player != null)
-					message = $"{message}\n\tPlayer:\t{player.Alias}";
-
-				await client.SendAsync(new EventData(Encoding.UTF8.GetBytes(message)));
-				await client.CloseAsync();
-			}
-			catch (Exception e)
-			{
-				var analytic = new AnalyticService(new RequestTelemetry());
-				analytic.TrackException(e.GetBaseException());
+				analytic.TrackException(e);
 			}
 		}
 	}

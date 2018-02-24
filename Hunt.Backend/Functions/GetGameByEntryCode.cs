@@ -10,6 +10,7 @@ using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 
 using System.Threading.Tasks;
+using Hunt.Common;
 
 namespace Hunt.Backend.Functions
 {
@@ -34,13 +35,20 @@ namespace Hunt.Backend.Functions
 
                     if (existingGame != null)
 					{
-						await EventHubService.Instance.SendEvent($"Attempt to lookup game by entry code failed due to ongoing game\n\tCode:\t{entryCode}\n\tEmail:\t{email}");
+						var data = new Event("Attempt to lookup game by entry code failed due to ongoing game");
+						data.Add("code", entryCode).Add("email", email);
+						await EventHubService.Instance.SendEvent(data);
 						return req.CreateErrorResponse(HttpStatusCode.Conflict, "User already has an ongoing game");
 					}
 
 					var openGame = CosmosDataService.Instance.GetGameByEntryCode(entryCode);
 					var outcome = openGame == null ? "failed" : "succeeded";
-					await EventHubService.Instance.SendEvent($"Attempt to lookup game by entry code {outcome} > {entryCode} by {email}", openGame, null);
+
+					{
+						var data = new Event($"Attempt to lookup game by entry code {outcome}");
+						data.Add("code", entryCode).Add("email", email);
+						await EventHubService.Instance.SendEvent(data, openGame);
+					}
 
 					return req.CreateResponse(HttpStatusCode.OK, openGame);
                 }

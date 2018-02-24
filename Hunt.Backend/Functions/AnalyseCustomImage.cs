@@ -44,7 +44,9 @@ namespace Hunt.Backend.Functions
 					var treasure = game.Treasures.SingleOrDefault(t => t.Id == treasureId);
 					if(treasure == null)
 					{
-						await EventHubService.Instance.SendEvent($"Custom image analyzed for treasure failed\n\tHint:\t\"{treasure.Hint}\"\n\tSource:\t{treasure.ImageSource}\n\tSent:\t{imageUrl.First()}");
+						var data = new Event("Custom image analyzed for treasure failed");
+						data.Add("hint", treasure.Hint).Add("source", treasure.ImageSource).Add("sent", imageUrl);
+						await EventHubService.Instance.SendEvent(data);
 						return req.CreateErrorResponse(HttpStatusCode.NotFound, "Treasure not found");
 					}
 
@@ -69,8 +71,18 @@ namespace Hunt.Backend.Functions
 						}
 					}
 
-					var outcome = goodTag == null ? "failed" : $"succeeded\n\tTag(s):\t\t{goodTag.Tag}\n\tProbability:\t{goodTag.Probability.ToString("P")}";
-					await EventHubService.Instance.SendEvent($"Custom image analyzed for treasure {outcome}\n\tHint:\t\"{treasure.Hint}\"\n\tSource:\t{treasure.ImageSource}\n\tSent:\t{imageUrl}");
+					{
+						var outcome = goodTag == null ? "failed" : "succeeded";
+						var data = new Event($"Custom image analyzed for treasure {outcome}");
+
+						if (goodTag != null)
+							data.Add("tags", goodTag.Tag).Add("probability", goodTag.Probability.ToString("P"));
+
+						data.Add("hint", treasure.Hint).Add("source", treasure.ImageSource).Add("sent", imageUrl);
+
+						await EventHubService.Instance.SendEvent(data);
+					}
+
 					return req.CreateResponse(HttpStatusCode.OK, goodTag != null);
 				}
 				catch (Exception e)

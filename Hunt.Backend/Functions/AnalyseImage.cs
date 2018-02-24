@@ -14,6 +14,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Newtonsoft.Json;
 
 using System.Threading.Tasks;
+using Hunt.Common;
 
 namespace Hunt.Backend.Functions
 {
@@ -58,7 +59,9 @@ namespace Hunt.Backend.Functions
 					var topAttributes = attributes.OrderByDescending(k => k.Value);
 					var toReturn = topAttributes.Select(k => k.Key).Take(10).ToArray();
 
-					await EventHubService.Instance.SendEvent($"Generic image analyzed for tags\n\tImage:\t{photoUrls.First()}\n\tTags:\t{string.Join(", ", toReturn).Trim()}");
+					var data = new Event("Generic image analyzed for tags");
+					data.Add("image", photoUrls.First()).Add("tags", string.Join(", ", toReturn).Trim());
+					await EventHubService.Instance.SendEvent(data);
 					return req.CreateResponse(HttpStatusCode.OK, toReturn);
 				}
 				catch (Exception e)

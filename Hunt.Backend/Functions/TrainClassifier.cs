@@ -82,7 +82,11 @@ namespace Hunt.Backend.Functions
 					iteration.IsDefault = true;
 					api.UpdateIteration(project.Id, iteration.Id, iteration);
 
-					await EventHubService.Instance.SendEvent($"Training classifier\n\tProject:\t{project.Name}\n\tIteration:\t{iteration.Id}");
+					var data = new Event("Training classifier");
+					data.Add("project", project.Name);
+					data.Add("iteration", iteration.Id);
+					await EventHubService.Instance.SendEvent(data);
+
 					return req.CreateResponse(HttpStatusCode.OK, true);
 				}
 				catch (Exception e)

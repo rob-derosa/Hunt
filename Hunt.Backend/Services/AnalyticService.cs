@@ -3,6 +3,7 @@
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.DataContracts;
+using Hunt.Common;
 
 namespace Hunt.Backend.Functions
 {
@@ -31,7 +32,10 @@ namespace Hunt.Backend.Functions
 		{
 			// track exceptions that occur
 			_telemetryClient.TrackException(e);
-			EventHubService.Instance.SendEvent($"EXCEPTION OCCURRED\n\tMessage:\t{e.Message}\n\tStack:\t{e.StackTrace}");
+
+			var data = new Event(e.Message);
+			data.Exception = e.StackTrace;
+			EventHubService.Instance.SendEvent(data);
 		}
 
 		public void Dispose()
