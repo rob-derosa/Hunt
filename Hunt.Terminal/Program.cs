@@ -16,11 +16,11 @@ namespace Hunt.Terminal
 		{
 			Console.WriteLine("Registering EventProcessor...");
 
-			var connectionString = "Endpoint=sb://huntappeventhub.servicebus.windows.net/;SharedAccessKeyName=SendListen;SharedAccessKey=5ZAynJMui0LEfsIkZEQTdmRzZQv1C3iHw2XLziS68AI=";
+			var connectionString = "Endpoint=sb://huntappeventhub.servicebus.windows.net/;SharedAccessKeyName=SendListen;SharedAccessKey=....";
 			var entityPath = "games";
 			var storageAccountName = "huntappstorage";
 			var storageAccountContainer = "events";
-			var storageAccountKey = "rrttFty/b52ET/e8VqpMSN+ZqAUP7hcXVkdekrPX58gsMZyOCrE+igN07t3lyi7tAV0+OrJFBaDtMe06YJ2tFw==";
+			var storageAccountKey = "rrttFty/b52ET/e8VqpMSN+ZqAU.....";
 			var storageAccountConnectionString = string.Format($"DefaultEndpointsProtocol=https;AccountName={storageAccountName};AccountKey={storageAccountKey}");
 
 			var eventProcessorHost = new EventProcessorHost(

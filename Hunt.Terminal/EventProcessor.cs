@@ -33,7 +33,7 @@ namespace Hunt.Terminal
 		{
 			foreach (var eventData in messages)
 			{
-				var dt = DateTime.Now;
+				var dt = (DateTime)eventData.Properties["x-opt-enqueued-time"];
 				var json = Encoding.UTF8.GetString(eventData.Body.Array, eventData.Body.Offset, eventData.Body.Count);
 				var data = JsonConvert.DeserializeObject<Event>(json);
 				var output = new StringBuilder();
@@ -57,7 +57,7 @@ namespace Hunt.Terminal
 					output.AppendLine($"\t{kvp.Key}:\t{kvp.Value}");
 				}
 
-				Console.WriteLine($"{dt:MM/dd/yy h:mm:ss.ff}\n{output}");
+				Console.WriteLine($"{dt.ToLocalTime():MM/dd/yy h:mm:ss.ff}\n{output}");
 			}
 
 			return context.CheckpointAsync();
