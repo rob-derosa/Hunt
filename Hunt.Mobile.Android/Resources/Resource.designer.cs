@@ -242,6 +242,8 @@ namespace Hunt.Mobile.Android
 			global::Lottie.Forms.Droid.Resource.Attribute.lottie_loop = global::Hunt.Mobile.Android.Resource.Attribute.lottie_loop;
 			global::Lottie.Forms.Droid.Resource.Attribute.lottie_progress = global::Hunt.Mobile.Android.Resource.Attribute.lottie_progress;
 			global::Lottie.Forms.Droid.Resource.Attribute.lottie_rawRes = global::Hunt.Mobile.Android.Resource.Attribute.lottie_rawRes;
+			global::Lottie.Forms.Droid.Resource.Attribute.lottie_repeatCount = global::Hunt.Mobile.Android.Resource.Attribute.lottie_repeatCount;
+			global::Lottie.Forms.Droid.Resource.Attribute.lottie_repeatMode = global::Hunt.Mobile.Android.Resource.Attribute.lottie_repeatMode;
 			global::Lottie.Forms.Droid.Resource.Attribute.lottie_scale = global::Hunt.Mobile.Android.Resource.Attribute.lottie_scale;
 			global::Lottie.Forms.Droid.Resource.Attribute.maxActionInlineWidth = global::Hunt.Mobile.Android.Resource.Attribute.maxActionInlineWidth;
 			global::Lottie.Forms.Droid.Resource.Attribute.maxButtonHeight = global::Hunt.Mobile.Android.Resource.Attribute.maxButtonHeight;
@@ -1036,6 +1038,8 @@ namespace Hunt.Mobile.Android
 			global::Lottie.Forms.Droid.Resource.Id.progress_circular = global::Hunt.Mobile.Android.Resource.Id.progress_circular;
 			global::Lottie.Forms.Droid.Resource.Id.progress_horizontal = global::Hunt.Mobile.Android.Resource.Id.progress_horizontal;
 			global::Lottie.Forms.Droid.Resource.Id.radio = global::Hunt.Mobile.Android.Resource.Id.radio;
+			global::Lottie.Forms.Droid.Resource.Id.restart = global::Hunt.Mobile.Android.Resource.Id.restart;
+			global::Lottie.Forms.Droid.Resource.Id.reverse = global::Hunt.Mobile.Android.Resource.Id.reverse;
 			global::Lottie.Forms.Droid.Resource.Id.right = global::Hunt.Mobile.Android.Resource.Id.right;
 			global::Lottie.Forms.Droid.Resource.Id.right_icon = global::Hunt.Mobile.Android.Resource.Id.right_icon;
 			global::Lottie.Forms.Droid.Resource.Id.right_side = global::Hunt.Mobile.Android.Resource.Id.right_side;
@@ -1953,6 +1957,8 @@ namespace Hunt.Mobile.Android
 			global::Lottie.Forms.Droid.Resource.Styleable.LottieAnimationView_lottie_loop = global::Hunt.Mobile.Android.Resource.Styleable.LottieAnimationView_lottie_loop;
 			global::Lottie.Forms.Droid.Resource.Styleable.LottieAnimationView_lottie_progress = global::Hunt.Mobile.Android.Resource.Styleable.LottieAnimationView_lottie_progress;
 			global::Lottie.Forms.Droid.Resource.Styleable.LottieAnimationView_lottie_rawRes = global::Hunt.Mobile.Android.Resource.Styleable.LottieAnimationView_lottie_rawRes;
+			global::Lottie.Forms.Droid.Resource.Styleable.LottieAnimationView_lottie_repeatCount = global::Hunt.Mobile.Android.Resource.Styleable.LottieAnimationView_lottie_repeatCount;
+			global::Lottie.Forms.Droid.Resource.Styleable.LottieAnimationView_lottie_repeatMode = global::Hunt.Mobile.Android.Resource.Styleable.LottieAnimationView_lottie_repeatMode;
 			global::Lottie.Forms.Droid.Resource.Styleable.LottieAnimationView_lottie_scale = global::Hunt.Mobile.Android.Resource.Styleable.LottieAnimationView_lottie_scale;
 			global::Lottie.Forms.Droid.Resource.Styleable.MediaRouteButton = global::Hunt.Mobile.Android.Resource.Styleable.MediaRouteButton;
 			global::Lottie.Forms.Droid.Resource.Styleable.MediaRouteButton_android_minHeight = global::Hunt.Mobile.Android.Resource.Styleable.MediaRouteButton_android_minHeight;
@@ -4964,32 +4970,38 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f010157
 			public const int lottie_autoPlay = 2130772311;
 			
-			// aapt resource value: 0x7f01015c
-			public const int lottie_cacheStrategy = 2130772316;
+			// aapt resource value: 0x7f01015e
+			public const int lottie_cacheStrategy = 2130772318;
+			
+			// aapt resource value: 0x7f01015f
+			public const int lottie_colorFilter = 2130772319;
 			
 			// aapt resource value: 0x7f01015d
-			public const int lottie_colorFilter = 2130772317;
-			
-			// aapt resource value: 0x7f01015b
-			public const int lottie_enableMergePathsForKitKatAndAbove = 2130772315;
+			public const int lottie_enableMergePathsForKitKatAndAbove = 2130772317;
 			
 			// aapt resource value: 0x7f010155
 			public const int lottie_fileName = 2130772309;
 			
-			// aapt resource value: 0x7f010159
-			public const int lottie_imageAssetsFolder = 2130772313;
+			// aapt resource value: 0x7f01015b
+			public const int lottie_imageAssetsFolder = 2130772315;
 			
 			// aapt resource value: 0x7f010158
 			public const int lottie_loop = 2130772312;
 			
-			// aapt resource value: 0x7f01015a
-			public const int lottie_progress = 2130772314;
+			// aapt resource value: 0x7f01015c
+			public const int lottie_progress = 2130772316;
 			
 			// aapt resource value: 0x7f010156
 			public const int lottie_rawRes = 2130772310;
 			
-			// aapt resource value: 0x7f01015e
-			public const int lottie_scale = 2130772318;
+			// aapt resource value: 0x7f01015a
+			public const int lottie_repeatCount = 2130772314;
+			
+			// aapt resource value: 0x7f010159
+			public const int lottie_repeatMode = 2130772313;
+			
+			// aapt resource value: 0x7f010160
+			public const int lottie_scale = 2130772320;
 			
 			// aapt resource value: 0x7f010136
 			public const int maxActionInlineWidth = 2130772278;
@@ -7141,41 +7153,41 @@ namespace Hunt.Mobile.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c00a1
-			public const int action0 = 2131493025;
+			// aapt resource value: 0x7f0c00a3
+			public const int action0 = 2131493027;
 			
-			// aapt resource value: 0x7f0c0067
-			public const int action_bar = 2131492967;
+			// aapt resource value: 0x7f0c0069
+			public const int action_bar = 2131492969;
 			
 			// aapt resource value: 0x7f0c0001
 			public const int action_bar_activity_content = 2131492865;
 			
-			// aapt resource value: 0x7f0c0066
-			public const int action_bar_container = 2131492966;
+			// aapt resource value: 0x7f0c0068
+			public const int action_bar_container = 2131492968;
 			
-			// aapt resource value: 0x7f0c0062
-			public const int action_bar_root = 2131492962;
+			// aapt resource value: 0x7f0c0064
+			public const int action_bar_root = 2131492964;
 			
 			// aapt resource value: 0x7f0c0002
 			public const int action_bar_spinner = 2131492866;
 			
-			// aapt resource value: 0x7f0c0045
-			public const int action_bar_subtitle = 2131492933;
+			// aapt resource value: 0x7f0c0047
+			public const int action_bar_subtitle = 2131492935;
 			
-			// aapt resource value: 0x7f0c0044
-			public const int action_bar_title = 2131492932;
+			// aapt resource value: 0x7f0c0046
+			public const int action_bar_title = 2131492934;
 			
-			// aapt resource value: 0x7f0c009e
-			public const int action_container = 2131493022;
+			// aapt resource value: 0x7f0c00a0
+			public const int action_container = 2131493024;
 			
-			// aapt resource value: 0x7f0c0068
-			public const int action_context_bar = 2131492968;
+			// aapt resource value: 0x7f0c006a
+			public const int action_context_bar = 2131492970;
 			
-			// aapt resource value: 0x7f0c00a5
-			public const int action_divider = 2131493029;
+			// aapt resource value: 0x7f0c00a7
+			public const int action_divider = 2131493031;
 			
-			// aapt resource value: 0x7f0c009f
-			public const int action_image = 2131493023;
+			// aapt resource value: 0x7f0c00a1
+			public const int action_image = 2131493025;
 			
 			// aapt resource value: 0x7f0c0003
 			public const int action_menu_divider = 2131492867;
@@ -7183,29 +7195,29 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0004
 			public const int action_menu_presenter = 2131492868;
 			
-			// aapt resource value: 0x7f0c0064
-			public const int action_mode_bar = 2131492964;
+			// aapt resource value: 0x7f0c0066
+			public const int action_mode_bar = 2131492966;
 			
-			// aapt resource value: 0x7f0c0063
-			public const int action_mode_bar_stub = 2131492963;
+			// aapt resource value: 0x7f0c0065
+			public const int action_mode_bar_stub = 2131492965;
 			
-			// aapt resource value: 0x7f0c0046
-			public const int action_mode_close_button = 2131492934;
+			// aapt resource value: 0x7f0c0048
+			public const int action_mode_close_button = 2131492936;
 			
-			// aapt resource value: 0x7f0c00a0
-			public const int action_text = 2131493024;
+			// aapt resource value: 0x7f0c00a2
+			public const int action_text = 2131493026;
 			
-			// aapt resource value: 0x7f0c00ae
-			public const int actions = 2131493038;
+			// aapt resource value: 0x7f0c00b0
+			public const int actions = 2131493040;
 			
-			// aapt resource value: 0x7f0c0047
-			public const int activity_chooser_view_content = 2131492935;
+			// aapt resource value: 0x7f0c0049
+			public const int activity_chooser_view_content = 2131492937;
 			
 			// aapt resource value: 0x7f0c001f
 			public const int add = 2131492895;
 			
-			// aapt resource value: 0x7f0c005b
-			public const int alertTitle = 2131492955;
+			// aapt resource value: 0x7f0c005d
+			public const int alertTitle = 2131492957;
 			
 			// aapt resource value: 0x7f0c003e
 			public const int all = 2131492926;
@@ -7222,11 +7234,11 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0029
 			public const int bottom = 2131492905;
 			
-			// aapt resource value: 0x7f0c004e
-			public const int buttonPanel = 2131492942;
+			// aapt resource value: 0x7f0c0050
+			public const int buttonPanel = 2131492944;
 			
-			// aapt resource value: 0x7f0c00a2
-			public const int cancel_action = 2131493026;
+			// aapt resource value: 0x7f0c00a4
+			public const int cancel_action = 2131493028;
 			
 			// aapt resource value: 0x7f0c0031
 			public const int center = 2131492913;
@@ -7237,11 +7249,11 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0033
 			public const int center_vertical = 2131492915;
 			
-			// aapt resource value: 0x7f0c005e
-			public const int checkbox = 2131492958;
+			// aapt resource value: 0x7f0c0060
+			public const int checkbox = 2131492960;
 			
-			// aapt resource value: 0x7f0c00aa
-			public const int chronometer = 2131493034;
+			// aapt resource value: 0x7f0c00ac
+			public const int chronometer = 2131493036;
 			
 			// aapt resource value: 0x7f0c003a
 			public const int clip_horizontal = 2131492922;
@@ -7252,56 +7264,56 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0025
 			public const int collapseActionView = 2131492901;
 			
-			// aapt resource value: 0x7f0c0078
-			public const int container = 2131492984;
+			// aapt resource value: 0x7f0c007a
+			public const int container = 2131492986;
 			
-			// aapt resource value: 0x7f0c00b5
-			public const int contentFrame = 2131493045;
+			// aapt resource value: 0x7f0c00b7
+			public const int contentFrame = 2131493047;
 			
-			// aapt resource value: 0x7f0c0051
-			public const int contentPanel = 2131492945;
-			
-			// aapt resource value: 0x7f0c0079
-			public const int coordinator = 2131492985;
-			
-			// aapt resource value: 0x7f0c0058
-			public const int custom = 2131492952;
-			
-			// aapt resource value: 0x7f0c0057
-			public const int customPanel = 2131492951;
-			
-			// aapt resource value: 0x7f0c0065
-			public const int decor_content_parent = 2131492965;
-			
-			// aapt resource value: 0x7f0c004a
-			public const int default_activity_button = 2131492938;
+			// aapt resource value: 0x7f0c0053
+			public const int contentPanel = 2131492947;
 			
 			// aapt resource value: 0x7f0c007b
-			public const int design_bottom_sheet = 2131492987;
+			public const int coordinator = 2131492987;
+			
+			// aapt resource value: 0x7f0c005a
+			public const int custom = 2131492954;
+			
+			// aapt resource value: 0x7f0c0059
+			public const int customPanel = 2131492953;
+			
+			// aapt resource value: 0x7f0c0067
+			public const int decor_content_parent = 2131492967;
+			
+			// aapt resource value: 0x7f0c004c
+			public const int default_activity_button = 2131492940;
+			
+			// aapt resource value: 0x7f0c007d
+			public const int design_bottom_sheet = 2131492989;
+			
+			// aapt resource value: 0x7f0c0084
+			public const int design_menu_item_action_area = 2131492996;
+			
+			// aapt resource value: 0x7f0c0083
+			public const int design_menu_item_action_area_stub = 2131492995;
 			
 			// aapt resource value: 0x7f0c0082
-			public const int design_menu_item_action_area = 2131492994;
+			public const int design_menu_item_text = 2131492994;
 			
 			// aapt resource value: 0x7f0c0081
-			public const int design_menu_item_action_area_stub = 2131492993;
-			
-			// aapt resource value: 0x7f0c0080
-			public const int design_menu_item_text = 2131492992;
-			
-			// aapt resource value: 0x7f0c007f
-			public const int design_navigation_view = 2131492991;
+			public const int design_navigation_view = 2131492993;
 			
 			// aapt resource value: 0x7f0c0013
 			public const int disableHome = 2131492883;
 			
-			// aapt resource value: 0x7f0c0069
-			public const int edit_query = 2131492969;
+			// aapt resource value: 0x7f0c006b
+			public const int edit_query = 2131492971;
 			
 			// aapt resource value: 0x7f0c0022
 			public const int end = 2131492898;
 			
-			// aapt resource value: 0x7f0c00b4
-			public const int end_padder = 2131493044;
+			// aapt resource value: 0x7f0c00b6
+			public const int end_padder = 2131493046;
 			
 			// aapt resource value: 0x7f0c002b
 			public const int enterAlways = 2131492907;
@@ -7312,11 +7324,11 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c002d
 			public const int exitUntilCollapsed = 2131492909;
 			
-			// aapt resource value: 0x7f0c0048
-			public const int expand_activities_button = 2131492936;
+			// aapt resource value: 0x7f0c004a
+			public const int expand_activities_button = 2131492938;
 			
-			// aapt resource value: 0x7f0c005d
-			public const int expanded_menu = 2131492957;
+			// aapt resource value: 0x7f0c005f
+			public const int expanded_menu = 2131492959;
 			
 			// aapt resource value: 0x7f0c003c
 			public const int fill = 2131492924;
@@ -7336,50 +7348,50 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0014
 			public const int homeAsUp = 2131492884;
 			
-			// aapt resource value: 0x7f0c004c
-			public const int icon = 2131492940;
+			// aapt resource value: 0x7f0c004e
+			public const int icon = 2131492942;
 			
-			// aapt resource value: 0x7f0c00af
-			public const int icon_group = 2131493039;
+			// aapt resource value: 0x7f0c00b1
+			public const int icon_group = 2131493041;
 			
 			// aapt resource value: 0x7f0c0026
 			public const int ifRoom = 2131492902;
 			
-			// aapt resource value: 0x7f0c0049
-			public const int image = 2131492937;
+			// aapt resource value: 0x7f0c004b
+			public const int image = 2131492939;
 			
-			// aapt resource value: 0x7f0c00ab
-			public const int info = 2131493035;
+			// aapt resource value: 0x7f0c00ad
+			public const int info = 2131493037;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int item_touch_helper_previous_elevation = 2131492864;
 			
-			// aapt resource value: 0x7f0c0077
-			public const int largeLabel = 2131492983;
+			// aapt resource value: 0x7f0c0079
+			public const int largeLabel = 2131492985;
 			
 			// aapt resource value: 0x7f0c0035
 			public const int left = 2131492917;
 			
-			// aapt resource value: 0x7f0c00b0
-			public const int line1 = 2131493040;
-			
 			// aapt resource value: 0x7f0c00b2
-			public const int line3 = 2131493042;
+			public const int line1 = 2131493042;
+			
+			// aapt resource value: 0x7f0c00b4
+			public const int line3 = 2131493044;
 			
 			// aapt resource value: 0x7f0c0010
 			public const int listMode = 2131492880;
 			
-			// aapt resource value: 0x7f0c004b
-			public const int list_item = 2131492939;
+			// aapt resource value: 0x7f0c004d
+			public const int list_item = 2131492941;
 			
 			// aapt resource value: 0x7f0c000f
 			public const int lottie_layer_name = 2131492879;
 			
-			// aapt resource value: 0x7f0c00b7
-			public const int masked = 2131493047;
+			// aapt resource value: 0x7f0c00b9
+			public const int masked = 2131493049;
 			
-			// aapt resource value: 0x7f0c00a4
-			public const int media_actions = 2131493028;
+			// aapt resource value: 0x7f0c00a6
+			public const int media_actions = 2131493030;
 			
 			// aapt resource value: 0x7f0c0023
 			public const int middle = 2131492899;
@@ -7387,86 +7399,86 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c003f
 			public const int mini = 2131492927;
 			
-			// aapt resource value: 0x7f0c0090
-			public const int mr_art = 2131493008;
-			
-			// aapt resource value: 0x7f0c0085
-			public const int mr_chooser_list = 2131492997;
-			
-			// aapt resource value: 0x7f0c0088
-			public const int mr_chooser_route_desc = 2131493000;
-			
-			// aapt resource value: 0x7f0c0086
-			public const int mr_chooser_route_icon = 2131492998;
+			// aapt resource value: 0x7f0c0092
+			public const int mr_art = 2131493010;
 			
 			// aapt resource value: 0x7f0c0087
-			public const int mr_chooser_route_name = 2131492999;
-			
-			// aapt resource value: 0x7f0c0084
-			public const int mr_chooser_title = 2131492996;
-			
-			// aapt resource value: 0x7f0c008d
-			public const int mr_close = 2131493005;
-			
-			// aapt resource value: 0x7f0c0093
-			public const int mr_control_divider = 2131493011;
-			
-			// aapt resource value: 0x7f0c0099
-			public const int mr_control_playback_ctrl = 2131493017;
-			
-			// aapt resource value: 0x7f0c009c
-			public const int mr_control_subtitle = 2131493020;
-			
-			// aapt resource value: 0x7f0c009b
-			public const int mr_control_title = 2131493019;
-			
-			// aapt resource value: 0x7f0c009a
-			public const int mr_control_title_container = 2131493018;
-			
-			// aapt resource value: 0x7f0c008e
-			public const int mr_custom_control = 2131493006;
-			
-			// aapt resource value: 0x7f0c008f
-			public const int mr_default_control = 2131493007;
+			public const int mr_chooser_list = 2131492999;
 			
 			// aapt resource value: 0x7f0c008a
-			public const int mr_dialog_area = 2131493002;
+			public const int mr_chooser_route_desc = 2131493002;
+			
+			// aapt resource value: 0x7f0c0088
+			public const int mr_chooser_route_icon = 2131493000;
 			
 			// aapt resource value: 0x7f0c0089
-			public const int mr_expandable_area = 2131493001;
+			public const int mr_chooser_route_name = 2131493001;
 			
-			// aapt resource value: 0x7f0c009d
-			public const int mr_group_expand_collapse = 2131493021;
+			// aapt resource value: 0x7f0c0086
+			public const int mr_chooser_title = 2131492998;
 			
-			// aapt resource value: 0x7f0c0091
-			public const int mr_media_main_control = 2131493009;
-			
-			// aapt resource value: 0x7f0c008c
-			public const int mr_name = 2131493004;
-			
-			// aapt resource value: 0x7f0c0092
-			public const int mr_playback_control = 2131493010;
-			
-			// aapt resource value: 0x7f0c008b
-			public const int mr_title_bar = 2131493003;
-			
-			// aapt resource value: 0x7f0c0094
-			public const int mr_volume_control = 2131493012;
+			// aapt resource value: 0x7f0c008f
+			public const int mr_close = 2131493007;
 			
 			// aapt resource value: 0x7f0c0095
-			public const int mr_volume_group_list = 2131493013;
+			public const int mr_control_divider = 2131493013;
+			
+			// aapt resource value: 0x7f0c009b
+			public const int mr_control_playback_ctrl = 2131493019;
+			
+			// aapt resource value: 0x7f0c009e
+			public const int mr_control_subtitle = 2131493022;
+			
+			// aapt resource value: 0x7f0c009d
+			public const int mr_control_title = 2131493021;
+			
+			// aapt resource value: 0x7f0c009c
+			public const int mr_control_title_container = 2131493020;
+			
+			// aapt resource value: 0x7f0c0090
+			public const int mr_custom_control = 2131493008;
+			
+			// aapt resource value: 0x7f0c0091
+			public const int mr_default_control = 2131493009;
+			
+			// aapt resource value: 0x7f0c008c
+			public const int mr_dialog_area = 2131493004;
+			
+			// aapt resource value: 0x7f0c008b
+			public const int mr_expandable_area = 2131493003;
+			
+			// aapt resource value: 0x7f0c009f
+			public const int mr_group_expand_collapse = 2131493023;
+			
+			// aapt resource value: 0x7f0c0093
+			public const int mr_media_main_control = 2131493011;
+			
+			// aapt resource value: 0x7f0c008e
+			public const int mr_name = 2131493006;
+			
+			// aapt resource value: 0x7f0c0094
+			public const int mr_playback_control = 2131493012;
+			
+			// aapt resource value: 0x7f0c008d
+			public const int mr_title_bar = 2131493005;
+			
+			// aapt resource value: 0x7f0c0096
+			public const int mr_volume_control = 2131493014;
 			
 			// aapt resource value: 0x7f0c0097
-			public const int mr_volume_item_icon = 2131493015;
+			public const int mr_volume_group_list = 2131493015;
 			
-			// aapt resource value: 0x7f0c0098
-			public const int mr_volume_slider = 2131493016;
+			// aapt resource value: 0x7f0c0099
+			public const int mr_volume_item_icon = 2131493017;
+			
+			// aapt resource value: 0x7f0c009a
+			public const int mr_volume_slider = 2131493018;
 			
 			// aapt resource value: 0x7f0c001a
 			public const int multiply = 2131492890;
 			
-			// aapt resource value: 0x7f0c007e
-			public const int navigation_header_container = 2131492990;
+			// aapt resource value: 0x7f0c0080
+			public const int navigation_header_container = 2131492992;
 			
 			// aapt resource value: 0x7f0c0027
 			public const int never = 2131492903;
@@ -7477,20 +7489,20 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0011
 			public const int normal = 2131492881;
 			
-			// aapt resource value: 0x7f0c00ad
-			public const int notification_background = 2131493037;
+			// aapt resource value: 0x7f0c00af
+			public const int notification_background = 2131493039;
 			
-			// aapt resource value: 0x7f0c00a7
-			public const int notification_main_column = 2131493031;
+			// aapt resource value: 0x7f0c00a9
+			public const int notification_main_column = 2131493033;
 			
-			// aapt resource value: 0x7f0c00a6
-			public const int notification_main_column_container = 2131493030;
+			// aapt resource value: 0x7f0c00a8
+			public const int notification_main_column_container = 2131493032;
 			
 			// aapt resource value: 0x7f0c0038
 			public const int parallax = 2131492920;
 			
-			// aapt resource value: 0x7f0c0050
-			public const int parentPanel = 2131492944;
+			// aapt resource value: 0x7f0c0052
+			public const int parentPanel = 2131492946;
 			
 			// aapt resource value: 0x7f0c0039
 			public const int pin = 2131492921;
@@ -7501,17 +7513,23 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0007
 			public const int progress_horizontal = 2131492871;
 			
-			// aapt resource value: 0x7f0c0060
-			public const int radio = 2131492960;
+			// aapt resource value: 0x7f0c0062
+			public const int radio = 2131492962;
+			
+			// aapt resource value: 0x7f0c0042
+			public const int restart = 2131492930;
+			
+			// aapt resource value: 0x7f0c0043
+			public const int reverse = 2131492931;
 			
 			// aapt resource value: 0x7f0c0036
 			public const int right = 2131492918;
 			
-			// aapt resource value: 0x7f0c00ac
-			public const int right_icon = 2131493036;
+			// aapt resource value: 0x7f0c00ae
+			public const int right_icon = 2131493038;
 			
-			// aapt resource value: 0x7f0c00a8
-			public const int right_side = 2131493032;
+			// aapt resource value: 0x7f0c00aa
+			public const int right_side = 2131493034;
 			
 			// aapt resource value: 0x7f0c001b
 			public const int screen = 2131492891;
@@ -7519,53 +7537,53 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c002e
 			public const int scroll = 2131492910;
 			
-			// aapt resource value: 0x7f0c0056
-			public const int scrollIndicatorDown = 2131492950;
+			// aapt resource value: 0x7f0c0058
+			public const int scrollIndicatorDown = 2131492952;
 			
-			// aapt resource value: 0x7f0c0052
-			public const int scrollIndicatorUp = 2131492946;
+			// aapt resource value: 0x7f0c0054
+			public const int scrollIndicatorUp = 2131492948;
 			
-			// aapt resource value: 0x7f0c0053
-			public const int scrollView = 2131492947;
+			// aapt resource value: 0x7f0c0055
+			public const int scrollView = 2131492949;
 			
 			// aapt resource value: 0x7f0c0041
 			public const int scrollable = 2131492929;
 			
-			// aapt resource value: 0x7f0c006b
-			public const int search_badge = 2131492971;
-			
-			// aapt resource value: 0x7f0c006a
-			public const int search_bar = 2131492970;
+			// aapt resource value: 0x7f0c006d
+			public const int search_badge = 2131492973;
 			
 			// aapt resource value: 0x7f0c006c
-			public const int search_button = 2131492972;
-			
-			// aapt resource value: 0x7f0c0071
-			public const int search_close_btn = 2131492977;
-			
-			// aapt resource value: 0x7f0c006d
-			public const int search_edit_frame = 2131492973;
-			
-			// aapt resource value: 0x7f0c0073
-			public const int search_go_btn = 2131492979;
+			public const int search_bar = 2131492972;
 			
 			// aapt resource value: 0x7f0c006e
-			public const int search_mag_icon = 2131492974;
+			public const int search_button = 2131492974;
+			
+			// aapt resource value: 0x7f0c0073
+			public const int search_close_btn = 2131492979;
 			
 			// aapt resource value: 0x7f0c006f
-			public const int search_plate = 2131492975;
-			
-			// aapt resource value: 0x7f0c0070
-			public const int search_src_text = 2131492976;
-			
-			// aapt resource value: 0x7f0c0074
-			public const int search_voice_btn = 2131492980;
+			public const int search_edit_frame = 2131492975;
 			
 			// aapt resource value: 0x7f0c0075
-			public const int select_dialog_listview = 2131492981;
+			public const int search_go_btn = 2131492981;
 			
-			// aapt resource value: 0x7f0c005f
-			public const int shortcut = 2131492959;
+			// aapt resource value: 0x7f0c0070
+			public const int search_mag_icon = 2131492976;
+			
+			// aapt resource value: 0x7f0c0071
+			public const int search_plate = 2131492977;
+			
+			// aapt resource value: 0x7f0c0072
+			public const int search_src_text = 2131492978;
+			
+			// aapt resource value: 0x7f0c0076
+			public const int search_voice_btn = 2131492982;
+			
+			// aapt resource value: 0x7f0c0077
+			public const int select_dialog_listview = 2131492983;
+			
+			// aapt resource value: 0x7f0c0061
+			public const int shortcut = 2131492961;
 			
 			// aapt resource value: 0x7f0c0016
 			public const int showCustom = 2131492886;
@@ -7576,20 +7594,20 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0018
 			public const int showTitle = 2131492888;
 			
-			// aapt resource value: 0x7f0c0076
-			public const int smallLabel = 2131492982;
+			// aapt resource value: 0x7f0c0078
+			public const int smallLabel = 2131492984;
 			
-			// aapt resource value: 0x7f0c007d
-			public const int snackbar_action = 2131492989;
+			// aapt resource value: 0x7f0c007f
+			public const int snackbar_action = 2131492991;
 			
-			// aapt resource value: 0x7f0c007c
-			public const int snackbar_text = 2131492988;
+			// aapt resource value: 0x7f0c007e
+			public const int snackbar_text = 2131492990;
 			
 			// aapt resource value: 0x7f0c002f
 			public const int snap = 2131492911;
 			
-			// aapt resource value: 0x7f0c004f
-			public const int spacer = 2131492943;
+			// aapt resource value: 0x7f0c0051
+			public const int spacer = 2131492945;
 			
 			// aapt resource value: 0x7f0c0008
 			public const int split_action_bar = 2131492872;
@@ -7606,35 +7624,35 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c0037
 			public const int start = 2131492919;
 			
-			// aapt resource value: 0x7f0c00a3
-			public const int status_bar_latest_event_content = 2131493027;
+			// aapt resource value: 0x7f0c00a5
+			public const int status_bar_latest_event_content = 2131493029;
 			
-			// aapt resource value: 0x7f0c0042
-			public const int strong = 2131492930;
+			// aapt resource value: 0x7f0c0044
+			public const int strong = 2131492932;
 			
-			// aapt resource value: 0x7f0c0061
-			public const int submenuarrow = 2131492961;
+			// aapt resource value: 0x7f0c0063
+			public const int submenuarrow = 2131492963;
 			
-			// aapt resource value: 0x7f0c0072
-			public const int submit_area = 2131492978;
+			// aapt resource value: 0x7f0c0074
+			public const int submit_area = 2131492980;
 			
 			// aapt resource value: 0x7f0c0012
 			public const int tabMode = 2131492882;
 			
+			// aapt resource value: 0x7f0c00b5
+			public const int text = 2131493045;
+			
 			// aapt resource value: 0x7f0c00b3
-			public const int text = 2131493043;
+			public const int text2 = 2131493043;
 			
-			// aapt resource value: 0x7f0c00b1
-			public const int text2 = 2131493041;
+			// aapt resource value: 0x7f0c0057
+			public const int textSpacerNoButtons = 2131492951;
 			
-			// aapt resource value: 0x7f0c0055
-			public const int textSpacerNoButtons = 2131492949;
+			// aapt resource value: 0x7f0c0056
+			public const int textSpacerNoTitle = 2131492950;
 			
-			// aapt resource value: 0x7f0c0054
-			public const int textSpacerNoTitle = 2131492948;
-			
-			// aapt resource value: 0x7f0c0083
-			public const int text_input_password_toggle = 2131492995;
+			// aapt resource value: 0x7f0c0085
+			public const int text_input_password_toggle = 2131492997;
 			
 			// aapt resource value: 0x7f0c000c
 			public const int textinput_counter = 2131492876;
@@ -7642,26 +7660,26 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c000d
 			public const int textinput_error = 2131492877;
 			
-			// aapt resource value: 0x7f0c00a9
-			public const int time = 2131493033;
+			// aapt resource value: 0x7f0c00ab
+			public const int time = 2131493035;
 			
-			// aapt resource value: 0x7f0c004d
-			public const int title = 2131492941;
+			// aapt resource value: 0x7f0c004f
+			public const int title = 2131492943;
+			
+			// aapt resource value: 0x7f0c005e
+			public const int titleDividerNoCustom = 2131492958;
 			
 			// aapt resource value: 0x7f0c005c
-			public const int titleDividerNoCustom = 2131492956;
-			
-			// aapt resource value: 0x7f0c005a
-			public const int title_template = 2131492954;
+			public const int title_template = 2131492956;
 			
 			// aapt resource value: 0x7f0c002a
 			public const int top = 2131492906;
 			
-			// aapt resource value: 0x7f0c0059
-			public const int topPanel = 2131492953;
+			// aapt resource value: 0x7f0c005b
+			public const int topPanel = 2131492955;
 			
-			// aapt resource value: 0x7f0c007a
-			public const int touch_outside = 2131492986;
+			// aapt resource value: 0x7f0c007c
+			public const int touch_outside = 2131492988;
 			
 			// aapt resource value: 0x7f0c000a
 			public const int transition_current_scene = 2131492874;
@@ -7678,14 +7696,14 @@ namespace Hunt.Mobile.Android
 			// aapt resource value: 0x7f0c000e
 			public const int view_offset_helper = 2131492878;
 			
-			// aapt resource value: 0x7f0c00b6
-			public const int visible = 2131493046;
+			// aapt resource value: 0x7f0c00b8
+			public const int visible = 2131493048;
 			
-			// aapt resource value: 0x7f0c0096
-			public const int volume_item_container = 2131493014;
+			// aapt resource value: 0x7f0c0098
+			public const int volume_item_container = 2131493016;
 			
-			// aapt resource value: 0x7f0c0043
-			public const int weak = 2131492931;
+			// aapt resource value: 0x7f0c0045
+			public const int weak = 2131492933;
 			
 			// aapt resource value: 0x7f0c0028
 			public const int withText = 2131492904;
@@ -10714,37 +10732,45 @@ namespace Hunt.Mobile.Android
 					2130772315,
 					2130772316,
 					2130772317,
-					2130772318};
+					2130772318,
+					2130772319,
+					2130772320};
 			
 			// aapt resource value: 2
 			public const int LottieAnimationView_lottie_autoPlay = 2;
 			
-			// aapt resource value: 7
-			public const int LottieAnimationView_lottie_cacheStrategy = 7;
+			// aapt resource value: 9
+			public const int LottieAnimationView_lottie_cacheStrategy = 9;
+			
+			// aapt resource value: 10
+			public const int LottieAnimationView_lottie_colorFilter = 10;
 			
 			// aapt resource value: 8
-			public const int LottieAnimationView_lottie_colorFilter = 8;
-			
-			// aapt resource value: 6
-			public const int LottieAnimationView_lottie_enableMergePathsForKitKatAndAbove = 6;
+			public const int LottieAnimationView_lottie_enableMergePathsForKitKatAndAbove = 8;
 			
 			// aapt resource value: 0
 			public const int LottieAnimationView_lottie_fileName = 0;
 			
-			// aapt resource value: 4
-			public const int LottieAnimationView_lottie_imageAssetsFolder = 4;
+			// aapt resource value: 6
+			public const int LottieAnimationView_lottie_imageAssetsFolder = 6;
 			
 			// aapt resource value: 3
 			public const int LottieAnimationView_lottie_loop = 3;
 			
-			// aapt resource value: 5
-			public const int LottieAnimationView_lottie_progress = 5;
+			// aapt resource value: 7
+			public const int LottieAnimationView_lottie_progress = 7;
 			
 			// aapt resource value: 1
 			public const int LottieAnimationView_lottie_rawRes = 1;
 			
-			// aapt resource value: 9
-			public const int LottieAnimationView_lottie_scale = 9;
+			// aapt resource value: 5
+			public const int LottieAnimationView_lottie_repeatCount = 5;
+			
+			// aapt resource value: 4
+			public const int LottieAnimationView_lottie_repeatMode = 4;
+			
+			// aapt resource value: 11
+			public const int LottieAnimationView_lottie_scale = 11;
 			
 			public static int[] MediaRouteButton = new int[] {
 					16843071,
