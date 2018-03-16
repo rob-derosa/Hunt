@@ -7,10 +7,6 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
     <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="2.4.1" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.4.0" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.4.0" />
-    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="1.4.0" />
-    <PackageReference Include="Microsoft.AppCenter" Version="1.4.0" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.1.1" />
     <PackageReference Include="SkiaSharp" Version="1.59.3" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="1.59.3" />
@@ -25,6 +21,10 @@
     <PackageReference Include="Refractored.XamForms.PullToRefresh" Version="2.2.1" />
     <PackageReference Include="Microsoft.Azure.EventHubs" Version="1.1.0" />
     <PackageReference Include="Ansuria.XFGloss" Version="1.1.2.89" />
+    <PackageReference Include="Microsoft.AppCenter" Version="1.5.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.5.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.5.0" />
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="1.5.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="config.json" />
