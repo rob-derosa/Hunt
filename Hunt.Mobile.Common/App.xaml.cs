@@ -54,6 +54,10 @@ namespace Hunt.Mobile.Common
 			_instance = this;
 			CurrentVersion = CrossVersionTracking.Current.CurrentVersion;
 
+			#if DEBUG
+			CurrentVersion = $"{CurrentVersion}d";
+			#endif
+
 			//Hack to determine if this page is being rendered within the Visual Studio Forms Previewer or at runtime
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
 			if(IsDesignMode)
@@ -89,11 +93,13 @@ namespace Hunt.Mobile.Common
 
 		#region Lifecycle
 
-		protected override void OnStart()
+		async protected override void OnStart()
 		{
+			await Distribute.SetEnabledAsync(false);
 			Distribute.ReleaseAvailable = OnReleaseAvailable;
+
 			AppCenter.Start($"android={ConfigManager.Instance.AppCenterAndroidToken};ios={ConfigManager.Instance.AppCenteriOSToken}",
-				typeof(Analytics), typeof(Crashes)/*, typeof(Distribute)*/);
+				typeof(Analytics), typeof(Crashes), typeof(Distribute));
 
 			CrossConnectivity.Current.ConnectivityChanged += OnConnectivityChanged;
 			if(false) { var l = new AnimationView(); }//Warm up the library
@@ -145,7 +151,7 @@ namespace Hunt.Mobile.Common
 			#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 		}
 
-		#endregion
+			#endregion
 
 		#region New Release Availability
 

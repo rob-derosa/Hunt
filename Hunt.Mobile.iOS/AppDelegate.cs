@@ -33,7 +33,7 @@ namespace Hunt.Mobile.iOS
 			AnimationViewRenderer.Init();
 			ImageCircleRenderer.Init();
 			XFGloss.iOS.Library.Init();
-			//Distribute.DontCheckForUpdatesInDebug();
+			Distribute.DontCheckForUpdatesInDebug();
 
 			LoadApplication(new App());
 
@@ -47,8 +47,7 @@ namespace Hunt.Mobile.iOS
 
 			var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, new NSSet());
 			UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
-			UIApplication.SharedApplication.RegisterForRemoteNotifications(); 			UIApplication.SharedApplication.RegisterForRemoteNotifications();
-
+			UIApplication.SharedApplication.RegisterForRemoteNotifications(); 
 			return base.FinishedLaunching(uiApplication, launchOptions);
 		}
 
