@@ -54,7 +54,7 @@
     <CodesignEntitlements></CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
-    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
     <MtouchUseLlvm>true</MtouchUseLlvm>
     <CodesignProvision></CodesignProvision>
@@ -275,6 +275,12 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <HintPath>..\packages\WindowsAzure.Storage.9.1.0\lib\netstandard1.3\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.VersionTracking.Abstractions">
+      <HintPath>..\packages\Plugin.VersionTracking.2.1.0\lib\Xamarin.iOS10\Plugin.VersionTracking.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.VersionTracking">
+      <HintPath>..\packages\Plugin.VersionTracking.2.1.0\lib\Xamarin.iOS10\Plugin.VersionTracking.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

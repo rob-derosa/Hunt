@@ -133,7 +133,7 @@
 						<Label FontSize="Small"
 							VerticalOptions="Center"
 							Opacity=".6"
-							Text="Hunt is brought to you by" />
+							Text="{Binding CurrentVersion, StringFormat='Hunt v{0} is brought to you by', Source={x:Static local:App.Instance}}" />
 
 						<Button Text="Microsoft"
 							Clicked="MicrosoftClicked"

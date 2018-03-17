@@ -4,6 +4,7 @@ using Foundation;
 using Hunt.Mobile.Common;
 using ImageCircle.Forms.Plugin.iOS;
 using Lottie.Forms.iOS.Renderers;
+using Microsoft.AppCenter.Distribute;
 using Newtonsoft.Json;
 using Refractored.XamForms.PullToRefresh.iOS;
 using UIKit;
@@ -32,6 +33,7 @@ namespace Hunt.Mobile.iOS
 			AnimationViewRenderer.Init();
 			ImageCircleRenderer.Init();
 			XFGloss.iOS.Library.Init();
+			//Distribute.DontCheckForUpdatesInDebug();
 
 			LoadApplication(new App());
 
