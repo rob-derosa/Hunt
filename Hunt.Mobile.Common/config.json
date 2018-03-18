@@ -2,6 +2,6 @@
 	"AzureFunctionsUrl": "https://huntapp.azurewebsites.net/api",
 	"AzureStorageUrl": "https://huntappstorage.blob.core.windows.net",
 	"AzureCDNUrl": "https://huntapp.azureedge.net",
-	"AppCenteriOSToken": "",
-	"AppCenterAndroidToken": ""
+	"AppCenteriOSToken": "APPCENTER_IOS_SECRET",
+	"AppCenterAndroidToken": "APPCENTER_ANDROID_SECRET"
 }
