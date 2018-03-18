@@ -2,14 +2,36 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIdentifier</key>
+	<string>com.microsoft.hunt</string>
 	<key>CFBundleName</key>
 	<string>Hunt</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.95</string>
+	<string>1.925</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>appcenter-cc9ce6e3-a12d-427a-af56-7745ad9d0218</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1.925</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
 	<string>10.1</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow the camera to be used for scanning QR codes and taking pictures of treasure</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Only needed for simulator</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -21,39 +43,17 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Only needed for simulator</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Please allow the camera to be used for scanning QR codes and taking pictures of treasure</string>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleLightContent</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
-	<key>CFBundleIdentifier</key>
-	<string>com.microsoft.hunt</string>
-	<key>CFBundleVersion</key>
-	<string>1.95</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>appcenter-cc9ce6e3-a12d-427a-af56-7745ad9d0218</string>
-			</array>
-		</dict>
-	</array>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
 </dict>
 </plist>
