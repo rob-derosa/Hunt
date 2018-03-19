@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="194" android:versionName="1.94" android:largeHeap="true" package="com.microsoft.hunt">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2101" android:versionName="2.101" android:largeHeap="true" package="com.microsoft.hunt">
 	<uses-sdk android:minSdkVersion="21" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
