@@ -22,7 +22,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>10.1</string>
+	<string>11.0</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow the camera to be used for scanning QR codes and taking pictures of treasure</string>
 	<key>NSPhotoLibraryUsageDescription</key>
