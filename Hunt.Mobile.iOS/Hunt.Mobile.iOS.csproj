@@ -265,15 +265,6 @@
     <Reference Include="Microsoft.AppCenter.Distribute.iOS.Bindings">
       <HintPath>..\packages\Microsoft.AppCenter.Distribute.1.5.0\lib\Xamarin.iOS10\Microsoft.AppCenter.Distribute.iOS.Bindings.dll</HintPath>
     </Reference>
-    <Reference Include="Lottie.iOS">
-      <HintPath>..\packages\Com.Airbnb.iOS.Lottie.2.5.1\lib\xamarinios\Lottie.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="Lottie.Forms">
-      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.5.1\lib\xamarinios\Lottie.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Lottie.Forms.iOS">
-      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.5.1\lib\xamarinios\Lottie.Forms.iOS.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <HintPath>..\packages\WindowsAzure.Storage.9.1.0\lib\netstandard1.3\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
@@ -282,6 +273,15 @@
     </Reference>
     <Reference Include="Plugin.VersionTracking">
       <HintPath>..\packages\Plugin.VersionTracking.2.1.0\lib\Xamarin.iOS10\Plugin.VersionTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie.iOS">
+      <HintPath>..\packages\Com.Airbnb.iOS.Lottie.2.1.5.0\lib\xamarinios\Lottie.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie.Forms">
+      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.4.1\lib\xamarinios\Lottie.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie.Forms.iOS">
+      <HintPath>..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.4.1\lib\xamarinios\Lottie.Forms.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
