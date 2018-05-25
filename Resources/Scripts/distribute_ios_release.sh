@@ -41,13 +41,13 @@ newVersionNumber=
 versionNumber=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" $infoPlist)
 buildNumber=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" $infoPlist)
 echo "Current version:	$versionNumber"
-echo "Current build:		$buildNumber"
+echo "Current build:	$buildNumber"
 
 IncrementVersionNumber ()
 {
     version=$1
-	a=( ${version//./ } )			# replace points, split into array
-	((a[1]++))						# increment revision (or other part)
+	a=( ${version//./ } )					# replace points, split into array
+	((a[1]++))								# increment revision (or other part)
 	newVersionNumber="${a[0]}.${a[1]}"		# compose new version
 }
 

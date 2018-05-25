@@ -2,10 +2,11 @@
 
 ### Supported Platforms
 
+
 Platform | Build | Install
 --- | --- | ---
-iOS 10.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt/distribution_groups/public)
-Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt-android/distribution_groups/public)
+iOS 10.0 and up | [![Build status](https://build.appcenter.ms/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://appcenter.ms) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt/distribution_groups/public)
+Android 5.0 and up | [![Build status](https://build.appcenter.ms/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://appcenter.ms) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt-android/distribution_groups/public)
 
 ### Description
 Hunt is a virtual scavenger hunt app where players can join a game, select a team and solve hints to acquire treasure. The team with the most points wins.

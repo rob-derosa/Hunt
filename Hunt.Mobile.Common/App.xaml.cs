@@ -99,7 +99,7 @@ namespace Hunt.Mobile.Common
 			Distribute.ReleaseAvailable = OnReleaseAvailable;
 
 			AppCenter.Start($"android={ConfigManager.Instance.AppCenterAndroidToken};ios={ConfigManager.Instance.AppCenteriOSToken}",
-				typeof(Analytics), typeof(Crashes), typeof(Distribute));
+				typeof(Analytics), typeof(Crashes));
 
 			CrossConnectivity.Current.ConnectivityChanged += OnConnectivityChanged;
 			if(false) { var l = new AnimationView(); }//Warm up the library

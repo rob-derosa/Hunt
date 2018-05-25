@@ -33,7 +33,6 @@ namespace Hunt.Mobile.iOS
 			AnimationViewRenderer.Init();
 			ImageCircleRenderer.Init();
 			XFGloss.iOS.Library.Init();
-			Distribute.DontCheckForUpdatesInDebug();
 
 			LoadApplication(new App());
 
