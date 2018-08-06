@@ -35,8 +35,8 @@ namespace Hunt.Backend.Functions
 		{
             _queueName = queueName;
 
-            var credentials = TokenProvider.CreateSharedAccessSignatureTokenProvider(ConfigManager.Instance.ServiceBusAccountName,
-                ConfigManager.Instance.ServiceBusAccountKey);
+            var credentials = TokenProvider.CreateSharedAccessSignatureTokenProvider(ConfigManager.Instance.ServiceBusAccessPolicyName,
+                ConfigManager.Instance.ServiceBusAccessPolicyKey);
 
             var serviceBusUri = ServiceBusEnvironment.CreateServiceUri("sb", ConfigManager.Instance.ServiceBusAccountNamespace, string.Empty);
 

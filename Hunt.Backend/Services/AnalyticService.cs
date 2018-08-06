@@ -19,7 +19,7 @@ namespace Hunt.Backend.Functions
 			if(_telemetryClient == null)
 			{
 				_telemetryClient = new TelemetryClient(TelemetryConfiguration.Active);
-				_telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APP_INSIGHTS_KEY");
+				_telemetryClient.InstrumentationKey = ConfigManager.Instance.AppInsightsKey;
 			}
 
 			_requestTelemetry = requestTelemetry;

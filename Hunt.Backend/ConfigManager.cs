@@ -6,8 +6,9 @@ namespace Hunt.Backend.Functions
 	{
 		static ConfigManager _instance;
 		public static ConfigManager Instance => _instance ?? (_instance = Load());
-		public string ServiceBusAccountKey;
-		public string ServiceBusAccountName;
+		public string AppInsightsKey;
+		public string ServiceBusAccessPolicyKey;
+		public string ServiceBusAccessPolicyName;
 		public string ServiceBusAccountNamespace;
 		public string BlobSharedStorageKey;
 		public string ContentModeratorKey;
@@ -35,8 +36,8 @@ namespace Hunt.Backend.Functions
 		{
 			var config = new ConfigManager
 			{
-				ServiceBusAccountKey = Environment.GetEnvironmentVariable("SERVICEBUS_ACCOUNTKEY"),
-				ServiceBusAccountName = Environment.GetEnvironmentVariable("SERVICEBUS_ACCOUNTNAME"),
+				ServiceBusAccessPolicyKey = Environment.GetEnvironmentVariable("SERVICEBUS_ACCESS_POLICY_KEY"),
+				ServiceBusAccessPolicyName = Environment.GetEnvironmentVariable("SERVICEBUS_ACCESS_POLICY_NAME"),
 				ServiceBusAccountNamespace = Environment.GetEnvironmentVariable("SERVICEBUS_NAMESPACE"),
 
 				BlobSharedStorageKey = Environment.GetEnvironmentVariable("BLOB_SHAREDSTORAGEKEY"),
@@ -60,6 +61,8 @@ namespace Hunt.Backend.Functions
 
 				EventHubEndpoint = Environment.GetEnvironmentVariable("EVENTHUB_ENDPOINT"),
 				EventHubEntity = Environment.GetEnvironmentVariable("EVENTHUB_ENTITY"),
+
+				AppInsightsKey = Environment.GetEnvironmentVariable("APP_INSIGHTS_KEY"),
 			};
 
 			var probability = Environment.GetEnvironmentVariable("CUSTOMVISION_MINIMUM_PREDICTION_PROBABILITY");
