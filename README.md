@@ -2,10 +2,11 @@
 
 ### Supported Platforms
 
+
 Platform | Build | Install
 --- | --- | ---
-iOS 10.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/e282924c-141c-4f66-8575-093291d8b5c1/branches/master/badge)](https://mobile.azure.com) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt/distribution_groups/public)
-Android 5.0 and up | [![Build status](https://build.mobile.azure.com/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://mobile.azure.com) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt-android/distribution_groups/public)
+iOS 10.0 and up | [![Build status](https://build.appcenter.ms/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://appcenter.ms) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt/distribution_groups/public)
+Android 5.0 and up | [![Build status](https://build.appcenter.ms/v0.1/apps/61439d5f-9b86-461b-8128-738730c45b6b/branches/master/badge)](https://appcenter.ms) | [latest release](https://install.mobile.azure.com/orgs/hunt-app/apps/hunt-android/distribution_groups/public)
 
 ### Description
 Hunt is a virtual scavenger hunt app where players can join a game, select a team and solve hints to acquire treasure. The team with the most points wins.
@@ -23,8 +24,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 
 ### Screenshots
 <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/login_page_completed.jpg" alt="Registration page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/loading.jpg" alt="Loading profile" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/dashboard.jpg" alt="Dashboard page" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/add_treasure_complete.jpg" alt="Coordinator adding new treasure" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/coordinator_game_not_started.jpg" alt="Coordinator view of pre-game" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/share_game.jpg" alt="Share game invite" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/teams.jpg" alt="Teams list" Width="210" /> <img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/player_game_started.jpg" alt="Player view of started game" Width="210" />
-
-
+<img src="https://huntappstorage.blob.core.windows.net/assets/screenshots/iOS/terminal_egress.jpg" alt="Terminal app displaying Event Hub streaming analytics" />
 ### Rules
   
 * Roles
@@ -66,6 +66,7 @@ The first team to acquire all the treasures will win the game. If no team acquir
 * Games are saved as documents in DocumentDB. Games contain the teams, players, treasures and acquired treasures in a single document. Whenever the game is updated, players of the game are notified via silent push notification which triggers a game refresh.
 * Version conflicts are raised if the associated document timestamp is out of order - it is up to the client to handle this exception and resolve the conflict. See `ViewModel.SaveGameSafe`.
 * All images are stored in blob storage and passed to the Computer Vision or Custom Vision via the blob URL.
+* Event Hubs are used to broadcast real-time, low-latency streaming telemtry on the actions that take place during a game, including any exceptions that might occur. It also serves as a way to keep track of the sequence of transactions executed for a specific game. Ingress happens on the back-end and a terminal app is provided to egress that data - both consumer and publisher utilize the AMQP protocol (this requires a constant open socket).
 
 
 ### Technologies Utilized

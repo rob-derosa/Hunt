@@ -4,6 +4,7 @@ using Foundation;
 using Hunt.Mobile.Common;
 using ImageCircle.Forms.Plugin.iOS;
 using Lottie.Forms.iOS.Renderers;
+using Microsoft.AppCenter.Distribute;
 using Newtonsoft.Json;
 using Refractored.XamForms.PullToRefresh.iOS;
 using UIKit;
@@ -45,8 +46,7 @@ namespace Hunt.Mobile.iOS
 
 			var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, new NSSet());
 			UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
-			UIApplication.SharedApplication.RegisterForRemoteNotifications(); 			UIApplication.SharedApplication.RegisterForRemoteNotifications();
-
+			UIApplication.SharedApplication.RegisterForRemoteNotifications(); 
 			return base.FinishedLaunching(uiApplication, launchOptions);
 		}
 

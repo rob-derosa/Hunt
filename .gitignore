@@ -1,4 +1,6 @@
 /packages
+/Builds
+/builds
 */bin
 */obj
 *.cache

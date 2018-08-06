@@ -1,14 +1,17 @@
 #region Usings
 
 using System;
+using System.Threading.Tasks;
 using Hunt.Common;
 using Lottie.Forms;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Distribute;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
+using Plugin.VersionTracking;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -42,12 +45,18 @@ namespace Hunt.Mobile.Common
 
 		public bool IsDesignMode { get; set; }
 		public string Assemblies { get; set; }
+		public string CurrentVersion { get; set; }
 
 		#endregion
 
 		public App()
 		{
 			_instance = this;
+			CurrentVersion = CrossVersionTracking.Current.CurrentVersion;
+
+			#if DEBUG
+			CurrentVersion = $"{CurrentVersion}d";
+			#endif
 
 			//Hack to determine if this page is being rendered within the Visual Studio Forms Previewer or at runtime
 			IsDesignMode = Type.GetType("MonoTouch.Design.Parser,MonoTouch.Design") != null;
@@ -84,8 +93,11 @@ namespace Hunt.Mobile.Common
 
 		#region Lifecycle
 
-		protected override void OnStart()
+		async protected override void OnStart()
 		{
+			await Distribute.SetEnabledAsync(false);
+			Distribute.ReleaseAvailable = OnReleaseAvailable;
+
 			AppCenter.Start($"android={ConfigManager.Instance.AppCenterAndroidToken};ios={ConfigManager.Instance.AppCenteriOSToken}",
 				typeof(Analytics), typeof(Crashes));
 
@@ -137,6 +149,51 @@ namespace Hunt.Mobile.Common
 			#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			DataService.WakeUpServer();
 			#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+		}
+
+			#endregion
+
+		#region New Release Availability
+
+		bool OnReleaseAvailable(ReleaseDetails releaseDetails)
+		{
+			// Look at releaseDetails public properties to get version information, release notes text or release notes URL
+			string versionName = releaseDetails.ShortVersion;
+			string versionCodeOrBuildNumber = releaseDetails.Version;
+			string releaseNotes = releaseDetails.ReleaseNotes;
+			Uri releaseNotesUrl = releaseDetails.ReleaseNotesUrl;
+
+			// custom dialog
+			var title = $"Version {versionName} available!";
+			Task answer;
+
+			// On mandatory update, user cannot postpone
+			if (releaseDetails.MandatoryUpdate)
+			{
+				answer = Current.MainPage.DisplayAlert(title, releaseNotes, "Download and Install");
+			}
+			else
+			{
+				answer = Current.MainPage.DisplayAlert(title, releaseNotes, "Download and Install", "Maybe tomorrow...");
+			}
+			answer.ContinueWith((task) =>
+			{
+				// If mandatory or if answer was positive
+				if (releaseDetails.MandatoryUpdate || (task as Task<bool>).Result)
+				{
+					// Notify SDK that user selected update
+					Distribute.NotifyUpdateAction(UpdateAction.Update);
+				}
+				else
+				{
+					// Notify SDK that user selected postpone (for 1 day)
+					// Note that this method call is ignored by the SDK if the update is mandatory
+					Distribute.NotifyUpdateAction(UpdateAction.Postpone);
+				}
+			});
+
+			// Return true if you are using your own dialog, false otherwise
+			return true;
 		}
 
 		#endregion

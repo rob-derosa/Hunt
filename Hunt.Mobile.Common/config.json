@@ -3,5 +3,5 @@
 	"AzureStorageUrl": "https://huntappstorage.blob.core.windows.net",
 	"AzureCDNUrl": "https://huntapp.azureedge.net",
 	"AppCenteriOSToken": "cc9ce6e3-a12d-427a-af56-7745ad9d0218",
-	"AppCenterAndroidToken": "4f5a3f94-5d09-4dd0-b4ba-de5e8c83bee2",
+	"AppCenterAndroidToken": "4f5a3f94-5d09-4dd0-b4ba-de5e8c83bee2"
 }

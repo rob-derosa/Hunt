@@ -81,6 +81,13 @@
 								IsVisible="{Binding HasExistingGame}"
 								VerticalOptions="Center"
 								HorizontalTextAlignment="Center" />
+
+							<Label FontSize="Small"
+								HorizontalTextAlignment="Center"
+								VerticalOptions="Center"
+								Margin="0,-25,0,-10"
+								Text="{Binding CurrentVersion, StringFormat='version {0}', Source={x:Static local:App.Instance}}" />
+							
 						</StackLayout>
 
 						<ContentView

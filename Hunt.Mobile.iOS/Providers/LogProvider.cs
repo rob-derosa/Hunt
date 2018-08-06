@@ -2,6 +2,7 @@ using System;
 using Xamarin.Forms;
 using Hunt.Mobile.Common;
 using System.Diagnostics;
+using Microsoft.AppCenter.Crashes;
 
 [assembly: Dependency(typeof(Hunt.Mobile.iOS.LogProvider))]
 
@@ -17,7 +18,7 @@ namespace Hunt.Mobile.iOS
 				Console.Write(exception);
 			#endif
 
-			//TODO: log to Mobile Center as events until caught exceptions are supported
+			Crashes.TrackError(exception);
 		}
 
 
