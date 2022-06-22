@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.Cognitive.CustomVision.Training" Version="1.2.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.8" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.10" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Microsoft.ProjectOxford.Vision" Version="1.0.393" />
   </ItemGroup>
   <ItemGroup>
